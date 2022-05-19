@@ -36,7 +36,6 @@ pipeline {
                 echo 'Deploying..'
 				echo 'No deployment implemented yet: skipping deployment.'
 			}
-            }
         }
     }
 }
