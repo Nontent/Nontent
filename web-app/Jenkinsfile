@@ -5,6 +5,7 @@ pipeline {
         stage('Dependencies') {
             steps {
                 echo 'Retrieving dependencies..'
+				sh 'cd web-app/'
 				sh 'npm install'
                 echo 'Installation completed successfully.'
             }
