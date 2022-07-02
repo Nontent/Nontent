@@ -31,9 +31,20 @@ pipeline {
 				echo 'No tests implemented yet: skipping tests.'
             }
         }
-        stage('Deployment') {
+        stage('Deploying to PreProd') {
             steps {
                 echo 'Deploying..'
+				sh 'cd web-app/ && docker build -t nontent-web-app-preprod:latest .'
+				echo 'Removing outdated container...'
+				sh 'docker rm -f container nontent-web-app-preprod'
+				echo 'starting new container'
+				sh 'docker run -d --name nontent-web-app-preprod -p 3000:3000 nontent-web-app-preprod:latest'
+				echo 'Deployment completed successfully.'
+			}
+		}
+		stage('Deploying to Prod') {
+			steps {
+				echo 'Deploying..'
 				echo 'No deployment implemented yet: skipping deployment.'
 			}
         }
