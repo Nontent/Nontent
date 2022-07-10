@@ -32,6 +32,9 @@ pipeline {
             }
         }
         stage('Deploying to PreProd') {
+			when {
+				branch 'main'
+			}
             steps {
                 echo 'Deploying..'
 				sh 'cd web-app/ && docker build -t nontent-web-app-preprod:latest .'
@@ -42,11 +45,11 @@ pipeline {
 				echo 'Deployment completed successfully.'
 			}
 		}
-		stage('Deploying to Prod') {
-			steps {
-				echo 'Deploying..'
-				echo 'No deployment implemented yet: skipping deployment.'
-			}
-        }
+		// stage('Deploying to Prod') {
+		// 	steps {
+		// 		echo 'Deploying..'
+		// 		echo 'No deployment implemented yet: skipping deployment.'
+		// 	}
+        // }
     }
 }
