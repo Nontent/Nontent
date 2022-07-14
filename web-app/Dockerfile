@@ -1,9 +1,13 @@
-FROM node:8.16-alpine
+FROM node:alpine3.16
+
+RUN mkdir /web-app
 
 WORKDIR /web-app
 
-COPY . .
+COPY package.json /web-app
 
 RUN npm install
 
-RUN npm start
+COPY . /web-app
+
+CMD ["npm", "start"]
