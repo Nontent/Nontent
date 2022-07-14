@@ -1,4 +1,4 @@
-FROM node:alpine3.16
+FROM node
 
 RUN mkdir /web-app
 
@@ -11,3 +11,5 @@ RUN npm install
 COPY . /web-app
 
 CMD ["npm", "start"]
+
+EXPOSE 3000
