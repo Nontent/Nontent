@@ -22,13 +22,34 @@
 				</v-btn>
 			</v-card-text>
 		</v-card>
+		<span class="text-h4 mt-2">Tes profils connectés</span>
+		<SocialProfileViewer
+			v-for="(profile, index) in profiles"
+			:key="index"
+			:profile="profile"
+		/>
 	</div>
 </template>
 
 <script>
+import SocialProfileViewer from '../components/SocialProfileViewer.vue'
 
 export default {
+	components: { SocialProfileViewer },
 	name: 'IndexPage',
 	methods: {},
+	data() {
+		return {
+			profiles: [
+				{
+					provider: 'twitter',
+					name: '@johndoe',
+					avatar: 'https://pbs.twimg.com/profile_images/874276197357596672/kUuht00m_400x400.jpg',
+					followers: 3246132162510,
+					following: 2115,
+				},
+			],
+		}
+	},
 }
 </script>
