@@ -20,6 +20,7 @@ export default {
 		})
 	},
 	beforeCreate() {
+		this.$store.commit('incrementCounter')
 		this.$store.commit('initialiseStore')
 	},
 }

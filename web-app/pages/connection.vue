@@ -81,7 +81,15 @@ export default {
 					email: '',
 					password: '',
 					mainBtnClick: () => {
+						// TODO: @Samuel GALIERE - Add API call to log-in
+						this.$store.commit('incrementCounter')
 						this.$store.commit('toggleConnection', true)
+
+						this.$store.commit('incrementCounter')
+						this.$store.commit('setCurrentUser', {
+							email: this.connectionItems[0].email,
+							password: this.connectionItems[0].password,
+						})
 						this.$router.push('/')
 					},
 					secondaryBtnClick: () => {
@@ -99,6 +107,15 @@ export default {
 						this.connectionCarouselModel++
 					},
 					mainBtnClick: () => {
+						// TODO: @Samuel GALIERE - Add API call to register
+						this.$store.commit('incrementCounter')
+						this.$store.commit('toggleConnection', true)
+
+						this.$store.commit('incrementCounter')
+						this.$store.commit('setCurrentUser', {
+							email: this.connectionItems[0].email,
+							password: this.connectionItems[0].password,
+						})
 						this.$router.push('/')
 					},
 				},

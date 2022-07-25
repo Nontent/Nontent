@@ -77,6 +77,7 @@ export default {
 					link: '/connection',
 					icon: 'mdi-logout',
 					action: () => {
+						this.$store.commit('incrementCounter')
 						this.$store.commit('toggleConnection', false)
 					},
 				},
