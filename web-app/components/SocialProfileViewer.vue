@@ -11,10 +11,10 @@
 					<img :src="profile.avatar" />
 				</v-avatar>
 				<br />
-				<span class="text-h4 mt-2"
+				<span class="text-h6 mt-2"
 					>{{ profile.followers }} followers |</span
 				>
-				<span class="text-h4 mt-2"
+				<span class="text-h6 mt-2"
 					>{{ profile.following }} following</span
 				>
 			</v-card-text>
