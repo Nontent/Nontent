@@ -81,6 +81,7 @@ export default {
 					email: '',
 					password: '',
 					mainBtnClick: () => {
+						this.$store.commit('toggleConnection', true)
 						this.$router.push('/')
 					},
 					secondaryBtnClick: () => {
