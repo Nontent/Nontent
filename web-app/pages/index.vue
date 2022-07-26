@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<h1>Bienvenue!</h1>
 		<v-card class="mb-4">
-			<v-card-text>
-				Connecte toi à tes différents profils!
+			<v-card-title>
+			<span>Bienvenue!</span> <v-spacer></v-spacer>
+					<span>Connecte toi à tes différents profils!
 				<v-icon>mdi-arrow-right</v-icon>
 				<v-btn color="primary" icon>
 					<v-icon>mdi-twitter</v-icon>
@@ -20,7 +20,8 @@
 				<v-btn color="primary" icon>
 					<v-icon>mdi-linkedin</v-icon>
 				</v-btn>
-			</v-card-text>
+					</span>
+			</v-card-title>
 		</v-card>
 		<span class="text-h4">Tes profils connectés</span>
 		<SocialProfileViewer
@@ -53,3 +54,10 @@ export default {
 	},
 }
 </script>
+<style>
+
+.Welcome {
+	text-align: left;
+ }
+
+</style>
