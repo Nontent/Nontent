@@ -5,7 +5,7 @@
 				Profil - {{ $store.state.currentUser.email }}
 			</span>
 			<!-- User account info card -->
-			<v-card class="mb-5">
+			<v-card class="mb-5 mt-3">
 				<v-form>
 					<v-container>
 						<!-- Current user info -->
@@ -138,4 +138,5 @@ export default {
 }
 </script>
 <style>
+
 </style>
