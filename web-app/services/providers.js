@@ -10,19 +10,19 @@ class Http {
   }
 
   static async get(url, params = {}) {
-    return axios.get(url, { params: params })
+    return axios.get(url, params)
   }
 
-  static async post(url, params = {}) {
-    return axios.post(url, { params: params })
+  static async post(url, data = {}) {
+    return axios.post(url, data)
   }
 
-  static async put(url, params = {}) {
-    return axios.put(url, { params: params })
+  static async put(url, data = {}) {
+    return axios.put(url, data)
   }
 
   static async delete(url, params = {}) {
-    return axios.delete(url, { params: params })
+    return axios.delete(url, params)
   }
 }
 
