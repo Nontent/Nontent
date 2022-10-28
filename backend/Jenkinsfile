@@ -27,7 +27,7 @@ pipeline {
         stage('Deploying to PreProd') {
             steps {
                 echo 'Deploying..'
-				sh 'cd backend/ && docker build -t nontent-backendend-preprod:latest .'
+				sh 'cd backend/ && docker build -t nontent-backend-preprod:latest .'
 				echo 'Removing outdated container...'
 				sh 'docker rm -f container nontent-web-app-preprod'
 				echo 'starting new container'
