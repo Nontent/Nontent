@@ -2,7 +2,7 @@ FROM node
 
 RUN mkdir /backend
 
-WORKDIR /backend
+WORKDIR /backend/src
 
 COPY package.json /backend
 

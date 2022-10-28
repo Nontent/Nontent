@@ -5,7 +5,7 @@ pipeline {
         stage('Dependencies') {
             steps {
                 echo 'Retrieving dependencies..'
-				sh 'cd backend/ && sudo npm install'
+				sh 'cd backend/src/ && sudo npm install'
                 echo 'Installation completed successfully.'
             }
         }
