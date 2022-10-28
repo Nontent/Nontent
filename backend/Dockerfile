@@ -10,6 +10,6 @@ RUN npm install
 
 COPY . /backend
 
-CMD ["npm", "start"]
+CMD ["cd", "src/", "&&", "npm", "start"]
 
 EXPOSE 3000
