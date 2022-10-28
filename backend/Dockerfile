@@ -2,9 +2,9 @@ FROM node
 
 RUN mkdir /backend
 
-WORKDIR /backend/src
+WORKDIR /backend
 
-COPY package.json /backend
+COPY src/package.json /backend
 
 RUN npm install
 
