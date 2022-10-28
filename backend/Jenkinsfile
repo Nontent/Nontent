@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Dependencies') {
+            steps {
+                echo 'Retrieving dependencies..'
+				sh 'cd backend/ && npm install'
+                echo 'Installation completed successfully.'
+            }
+        }
+		stage('SonarQube analysis') {
+			steps {
+				echo 'Running SonarQube analysis..'
+				withSonarQubeEnv('sq-main') { 
+					sh "/home/yohark/utils/sonarscanner/sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner"
+				}
+				echo 'SonarQube analysis completed successfully.'
+			}
+		}
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+				echo 'No tests implemented yet: skipping tests.'
+            }
+        }
+        stage('Deploying to PreProd') {
+            steps {
+                echo 'Deploying..'
+				sh 'cd backend/ && docker build -t nontent-backendend-preprod:latest .'
+				echo 'Removing outdated container...'
+				sh 'docker rm -f container nontent-web-app-preprod'
+				echo 'starting new container'
+				sh 'docker run -d --name nontent-backend-preprod -p 3001:3000 nontent-backend-preprod:latest'
+				echo 'Deployment completed successfully.'
+			}
+		}
+		// stage('Deploying to Prod') {
+		// 	steps {
+		// 		echo 'Deploying..'
+		// 		echo 'No deployment implemented yet: skipping deployment.'
+		// 	}
+        // }
+    }
+}
