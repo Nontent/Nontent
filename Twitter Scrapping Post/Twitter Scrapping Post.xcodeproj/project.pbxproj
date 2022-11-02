@@ -1,0 +1,951 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A03EEF5B2912B26A00E2B8CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03EEF5A2912B26A00E2B8CF /* AppDelegate.swift */; };
+		A03EEF5D2912B26A00E2B8CF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03EEF5C2912B26A00E2B8CF /* SceneDelegate.swift */; };
+		A03EEF602912B26A00E2B8CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF5E2912B26A00E2B8CF /* LaunchScreen.storyboard */; };
+		A03EEF632912B26A00E2B8CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF612912B26A00E2B8CF /* Main.storyboard */; };
+		A03EEF6C2912B26A00E2B8CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03EEF6B2912B26A00E2B8CF /* AppDelegate.swift */; };
+		A03EEF6F2912B26A00E2B8CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF6D2912B26A00E2B8CF /* Main.storyboard */; };
+		A03EEF772912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A03EEF762912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A03EEF812912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A03EEF802912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A03EEF872912B26A00E2B8CF /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4A2912B26900E2B8CF /* Main.html */; };
+		A03EEF882912B26A00E2B8CF /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4A2912B26900E2B8CF /* Main.html */; };
+		A03EEF892912B26A00E2B8CF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4C2912B26900E2B8CF /* Icon.png */; };
+		A03EEF8A2912B26A00E2B8CF /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4C2912B26900E2B8CF /* Icon.png */; };
+		A03EEF8B2912B26A00E2B8CF /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4D2912B26900E2B8CF /* Style.css */; };
+		A03EEF8C2912B26A00E2B8CF /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4D2912B26900E2B8CF /* Style.css */; };
+		A03EEF8D2912B26A00E2B8CF /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4E2912B26900E2B8CF /* Script.js */; };
+		A03EEF8E2912B26A00E2B8CF /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF4E2912B26900E2B8CF /* Script.js */; };
+		A03EEF8F2912B26A00E2B8CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03EEF4F2912B26900E2B8CF /* ViewController.swift */; };
+		A03EEF902912B26A00E2B8CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03EEF4F2912B26900E2B8CF /* ViewController.swift */; };
+		A03EEF912912B26A00E2B8CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF502912B26A00E2B8CF /* Assets.xcassets */; };
+		A03EEF922912B26A00E2B8CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A03EEF502912B26A00E2B8CF /* Assets.xcassets */; };
+		A03EEF932912B26A00E2B8CF /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03EEF522912B26A00E2B8CF /* SafariWebExtensionHandler.swift */; };
+		A03EEF942912B26A00E2B8CF /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03EEF522912B26A00E2B8CF /* SafariWebExtensionHandler.swift */; };
+		A03EEFAB2912B26A00E2B8CF /* popup in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA62912B26A00E2B8CF /* popup */; };
+		A03EEFAC2912B26A00E2B8CF /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA72912B26A00E2B8CF /* background.js */; };
+		A03EEFAD2912B26A00E2B8CF /* images in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA82912B26A00E2B8CF /* images */; };
+		A03EEFAE2912B26A00E2B8CF /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA92912B26A00E2B8CF /* scripts */; };
+		A03EEFAF2912B26A00E2B8CF /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFAA2912B26A00E2B8CF /* manifest.json */; };
+		A03EEFB02912B26A00E2B8CF /* popup in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA62912B26A00E2B8CF /* popup */; };
+		A03EEFB12912B26A00E2B8CF /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA72912B26A00E2B8CF /* background.js */; };
+		A03EEFB22912B26A00E2B8CF /* images in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA82912B26A00E2B8CF /* images */; };
+		A03EEFB32912B26A00E2B8CF /* scripts in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFA92912B26A00E2B8CF /* scripts */; };
+		A03EEFB42912B26A00E2B8CF /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = A03EEFAA2912B26A00E2B8CF /* manifest.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A03EEF782912B26A00E2B8CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A03EEF442912B26900E2B8CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A03EEF752912B26A00E2B8CF;
+			remoteInfo = "Twitter Scrapping Post Extension (iOS)";
+		};
+		A03EEF822912B26A00E2B8CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A03EEF442912B26900E2B8CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A03EEF7F2912B26A00E2B8CF;
+			remoteInfo = "Twitter Scrapping Post Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A03EEF9A2912B26A00E2B8CF /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A03EEF772912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEFA12912B26A00E2B8CF /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A03EEF812912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A03EEF4B2912B26900E2B8CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
+		A03EEF4C2912B26900E2B8CF /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		A03EEF4D2912B26900E2B8CF /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		A03EEF4E2912B26900E2B8CF /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		A03EEF4F2912B26900E2B8CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A03EEF502912B26A00E2B8CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A03EEF522912B26A00E2B8CF /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		A03EEF572912B26A00E2B8CF /* Twitter Scrapping Post.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter Scrapping Post.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A03EEF5A2912B26A00E2B8CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A03EEF5C2912B26A00E2B8CF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A03EEF5F2912B26A00E2B8CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A03EEF622912B26A00E2B8CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A03EEF642912B26A00E2B8CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A03EEF692912B26A00E2B8CF /* Twitter Scrapping Post.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter Scrapping Post.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A03EEF6B2912B26A00E2B8CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A03EEF6E2912B26A00E2B8CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A03EEF702912B26A00E2B8CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A03EEF712912B26A00E2B8CF /* Twitter Scrapping Post.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Twitter Scrapping Post.entitlements"; sourceTree = "<group>"; };
+		A03EEF762912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Twitter Scrapping Post Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A03EEF7B2912B26A00E2B8CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A03EEF802912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Twitter Scrapping Post Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A03EEF852912B26A00E2B8CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A03EEF862912B26A00E2B8CF /* Twitter Scrapping Post.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Twitter Scrapping Post.entitlements"; sourceTree = "<group>"; };
+		A03EEFA62912B26A00E2B8CF /* popup */ = {isa = PBXFileReference; lastKnownFileType = folder; name = popup; path = ../../extension/popup; sourceTree = "<group>"; };
+		A03EEFA72912B26A00E2B8CF /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = ../../extension/background.js; sourceTree = "<group>"; };
+		A03EEFA82912B26A00E2B8CF /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../extension/images; sourceTree = "<group>"; };
+		A03EEFA92912B26A00E2B8CF /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; path = ../../extension/scripts; sourceTree = "<group>"; };
+		A03EEFAA2912B26A00E2B8CF /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../extension/manifest.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A03EEF542912B26A00E2B8CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF662912B26A00E2B8CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF732912B26A00E2B8CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF7D2912B26A00E2B8CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A03EEF432912B26900E2B8CF = {
+			isa = PBXGroup;
+			children = (
+				A03EEF482912B26900E2B8CF /* Shared (App) */,
+				A03EEF512912B26A00E2B8CF /* Shared (Extension) */,
+				A03EEF592912B26A00E2B8CF /* iOS (App) */,
+				A03EEF6A2912B26A00E2B8CF /* macOS (App) */,
+				A03EEF7A2912B26A00E2B8CF /* iOS (Extension) */,
+				A03EEF842912B26A00E2B8CF /* macOS (Extension) */,
+				A03EEF582912B26A00E2B8CF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A03EEF482912B26900E2B8CF /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEF4F2912B26900E2B8CF /* ViewController.swift */,
+				A03EEF502912B26A00E2B8CF /* Assets.xcassets */,
+				A03EEF492912B26900E2B8CF /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		A03EEF492912B26900E2B8CF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEF4A2912B26900E2B8CF /* Main.html */,
+				A03EEF4C2912B26900E2B8CF /* Icon.png */,
+				A03EEF4D2912B26900E2B8CF /* Style.css */,
+				A03EEF4E2912B26900E2B8CF /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A03EEF512912B26A00E2B8CF /* Shared (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEFA52912B26A00E2B8CF /* Resources */,
+				A03EEF522912B26A00E2B8CF /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		A03EEF582912B26A00E2B8CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEF572912B26A00E2B8CF /* Twitter Scrapping Post.app */,
+				A03EEF692912B26A00E2B8CF /* Twitter Scrapping Post.app */,
+				A03EEF762912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */,
+				A03EEF802912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A03EEF592912B26A00E2B8CF /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEF5A2912B26A00E2B8CF /* AppDelegate.swift */,
+				A03EEF5C2912B26A00E2B8CF /* SceneDelegate.swift */,
+				A03EEF5E2912B26A00E2B8CF /* LaunchScreen.storyboard */,
+				A03EEF612912B26A00E2B8CF /* Main.storyboard */,
+				A03EEF642912B26A00E2B8CF /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		A03EEF6A2912B26A00E2B8CF /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEF6B2912B26A00E2B8CF /* AppDelegate.swift */,
+				A03EEF6D2912B26A00E2B8CF /* Main.storyboard */,
+				A03EEF702912B26A00E2B8CF /* Info.plist */,
+				A03EEF712912B26A00E2B8CF /* Twitter Scrapping Post.entitlements */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		A03EEF7A2912B26A00E2B8CF /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEF7B2912B26A00E2B8CF /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		A03EEF842912B26A00E2B8CF /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEF852912B26A00E2B8CF /* Info.plist */,
+				A03EEF862912B26A00E2B8CF /* Twitter Scrapping Post.entitlements */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		A03EEFA52912B26A00E2B8CF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A03EEFA62912B26A00E2B8CF /* popup */,
+				A03EEFA72912B26A00E2B8CF /* background.js */,
+				A03EEFA82912B26A00E2B8CF /* images */,
+				A03EEFA92912B26A00E2B8CF /* scripts */,
+				A03EEFAA2912B26A00E2B8CF /* manifest.json */,
+			);
+			name = Resources;
+			path = "Shared (Extension)";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A03EEF562912B26A00E2B8CF /* Twitter Scrapping Post (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A03EEF9B2912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post (iOS)" */;
+			buildPhases = (
+				A03EEF532912B26A00E2B8CF /* Sources */,
+				A03EEF542912B26A00E2B8CF /* Frameworks */,
+				A03EEF552912B26A00E2B8CF /* Resources */,
+				A03EEF9A2912B26A00E2B8CF /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A03EEF792912B26A00E2B8CF /* PBXTargetDependency */,
+			);
+			name = "Twitter Scrapping Post (iOS)";
+			productName = "Twitter Scrapping Post (iOS)";
+			productReference = A03EEF572912B26A00E2B8CF /* Twitter Scrapping Post.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A03EEF682912B26A00E2B8CF /* Twitter Scrapping Post (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A03EEFA22912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post (macOS)" */;
+			buildPhases = (
+				A03EEF652912B26A00E2B8CF /* Sources */,
+				A03EEF662912B26A00E2B8CF /* Frameworks */,
+				A03EEF672912B26A00E2B8CF /* Resources */,
+				A03EEFA12912B26A00E2B8CF /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A03EEF832912B26A00E2B8CF /* PBXTargetDependency */,
+			);
+			name = "Twitter Scrapping Post (macOS)";
+			productName = "Twitter Scrapping Post (macOS)";
+			productReference = A03EEF692912B26A00E2B8CF /* Twitter Scrapping Post.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A03EEF752912B26A00E2B8CF /* Twitter Scrapping Post Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A03EEF972912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post Extension (iOS)" */;
+			buildPhases = (
+				A03EEF722912B26A00E2B8CF /* Sources */,
+				A03EEF732912B26A00E2B8CF /* Frameworks */,
+				A03EEF742912B26A00E2B8CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Twitter Scrapping Post Extension (iOS)";
+			productName = "Twitter Scrapping Post Extension (iOS)";
+			productReference = A03EEF762912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		A03EEF7F2912B26A00E2B8CF /* Twitter Scrapping Post Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A03EEF9E2912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post Extension (macOS)" */;
+			buildPhases = (
+				A03EEF7C2912B26A00E2B8CF /* Sources */,
+				A03EEF7D2912B26A00E2B8CF /* Frameworks */,
+				A03EEF7E2912B26A00E2B8CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Twitter Scrapping Post Extension (macOS)";
+			productName = "Twitter Scrapping Post Extension (macOS)";
+			productReference = A03EEF802912B26A00E2B8CF /* Twitter Scrapping Post Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A03EEF442912B26900E2B8CF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					A03EEF562912B26A00E2B8CF = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+					A03EEF682912B26A00E2B8CF = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+					A03EEF752912B26A00E2B8CF = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+					A03EEF7F2912B26A00E2B8CF = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
+				};
+			};
+			buildConfigurationList = A03EEF472912B26900E2B8CF /* Build configuration list for PBXProject "Twitter Scrapping Post" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A03EEF432912B26900E2B8CF;
+			productRefGroup = A03EEF582912B26A00E2B8CF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A03EEF562912B26A00E2B8CF /* Twitter Scrapping Post (iOS) */,
+				A03EEF682912B26A00E2B8CF /* Twitter Scrapping Post (macOS) */,
+				A03EEF752912B26A00E2B8CF /* Twitter Scrapping Post Extension (iOS) */,
+				A03EEF7F2912B26A00E2B8CF /* Twitter Scrapping Post Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A03EEF552912B26A00E2B8CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEF892912B26A00E2B8CF /* Icon.png in Resources */,
+				A03EEF602912B26A00E2B8CF /* LaunchScreen.storyboard in Resources */,
+				A03EEF872912B26A00E2B8CF /* Main.html in Resources */,
+				A03EEF8D2912B26A00E2B8CF /* Script.js in Resources */,
+				A03EEF912912B26A00E2B8CF /* Assets.xcassets in Resources */,
+				A03EEF632912B26A00E2B8CF /* Main.storyboard in Resources */,
+				A03EEF8B2912B26A00E2B8CF /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF672912B26A00E2B8CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEF8A2912B26A00E2B8CF /* Icon.png in Resources */,
+				A03EEF8C2912B26A00E2B8CF /* Style.css in Resources */,
+				A03EEF6F2912B26A00E2B8CF /* Main.storyboard in Resources */,
+				A03EEF8E2912B26A00E2B8CF /* Script.js in Resources */,
+				A03EEF922912B26A00E2B8CF /* Assets.xcassets in Resources */,
+				A03EEF882912B26A00E2B8CF /* Main.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF742912B26A00E2B8CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEFB22912B26A00E2B8CF /* images in Resources */,
+				A03EEFB12912B26A00E2B8CF /* background.js in Resources */,
+				A03EEFB42912B26A00E2B8CF /* manifest.json in Resources */,
+				A03EEFB02912B26A00E2B8CF /* popup in Resources */,
+				A03EEFB32912B26A00E2B8CF /* scripts in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF7E2912B26A00E2B8CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEFAD2912B26A00E2B8CF /* images in Resources */,
+				A03EEFAC2912B26A00E2B8CF /* background.js in Resources */,
+				A03EEFAF2912B26A00E2B8CF /* manifest.json in Resources */,
+				A03EEFAB2912B26A00E2B8CF /* popup in Resources */,
+				A03EEFAE2912B26A00E2B8CF /* scripts in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A03EEF532912B26A00E2B8CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEF8F2912B26A00E2B8CF /* ViewController.swift in Sources */,
+				A03EEF5B2912B26A00E2B8CF /* AppDelegate.swift in Sources */,
+				A03EEF5D2912B26A00E2B8CF /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF652912B26A00E2B8CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEF902912B26A00E2B8CF /* ViewController.swift in Sources */,
+				A03EEF6C2912B26A00E2B8CF /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF722912B26A00E2B8CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEF932912B26A00E2B8CF /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A03EEF7C2912B26A00E2B8CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A03EEF942912B26A00E2B8CF /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A03EEF792912B26A00E2B8CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A03EEF752912B26A00E2B8CF /* Twitter Scrapping Post Extension (iOS) */;
+			targetProxy = A03EEF782912B26A00E2B8CF /* PBXContainerItemProxy */;
+		};
+		A03EEF832912B26A00E2B8CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A03EEF7F2912B26A00E2B8CF /* Twitter Scrapping Post Extension (macOS) */;
+			targetProxy = A03EEF822912B26A00E2B8CF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A03EEF4A2912B26900E2B8CF /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A03EEF4B2912B26900E2B8CF /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		A03EEF5E2912B26A00E2B8CF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A03EEF5F2912B26A00E2B8CF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A03EEF612912B26A00E2B8CF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A03EEF622912B26A00E2B8CF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A03EEF6D2912B26A00E2B8CF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A03EEF6E2912B26A00E2B8CF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A03EEF952912B26A00E2B8CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A03EEF962912B26A00E2B8CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		A03EEF982912B26A00E2B8CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post.Extension";
+				PRODUCT_NAME = "Twitter Scrapping Post Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A03EEF992912B26A00E2B8CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post.Extension";
+				PRODUCT_NAME = "Twitter Scrapping Post Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A03EEF9C2912B26A00E2B8CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post";
+				PRODUCT_NAME = "Twitter Scrapping Post";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A03EEF9D2912B26A00E2B8CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post";
+				PRODUCT_NAME = "Twitter Scrapping Post";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A03EEF9F2912B26A00E2B8CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twitter Scrapping Post.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post.Extension";
+				PRODUCT_NAME = "Twitter Scrapping Post Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A03EEFA02912B26A00E2B8CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twitter Scrapping Post.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post.Extension";
+				PRODUCT_NAME = "Twitter Scrapping Post Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A03EEFA32912B26A00E2B8CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twitter Scrapping Post.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post";
+				PRODUCT_NAME = "Twitter Scrapping Post";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A03EEFA42912B26A00E2B8CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twitter Scrapping Post.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twitter Scrapping Post";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yourCompany.Twitter-Scrapping-Post";
+				PRODUCT_NAME = "Twitter Scrapping Post";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A03EEF472912B26900E2B8CF /* Build configuration list for PBXProject "Twitter Scrapping Post" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A03EEF952912B26A00E2B8CF /* Debug */,
+				A03EEF962912B26A00E2B8CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A03EEF972912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A03EEF982912B26A00E2B8CF /* Debug */,
+				A03EEF992912B26A00E2B8CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A03EEF9B2912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A03EEF9C2912B26A00E2B8CF /* Debug */,
+				A03EEF9D2912B26A00E2B8CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A03EEF9E2912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A03EEF9F2912B26A00E2B8CF /* Debug */,
+				A03EEFA02912B26A00E2B8CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A03EEFA22912B26A00E2B8CF /* Build configuration list for PBXNativeTarget "Twitter Scrapping Post (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A03EEFA32912B26A00E2B8CF /* Debug */,
+				A03EEFA42912B26A00E2B8CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A03EEF442912B26900E2B8CF /* Project object */;
+}
