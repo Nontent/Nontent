@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Twitter Scrapping Post",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/popup.png"
+  },
+  "description": "Récupère les posts d'une page twitter",
+  "icons": {
+    "16": "images/popup.png",
+    "48": "images/popup.png",
+    "128": "images/popup.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": [
+        "https://twitter.com/home/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["activeTab"]
+}
