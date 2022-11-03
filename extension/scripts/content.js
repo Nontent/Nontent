@@ -1,13 +1,32 @@
-window.addEventListener('load', () => {
-    let nextFonctions = [(posts, nextFonctions) => getPostTwitter(posts, nextFonctions), (posts, nextFonctions) => sendPostTwitter(posts, nextFonctions)];
-    for (let nbScroll = 0; nbScroll < 10; nbScroll++) {
-        nextFonctions.push((posts, nextFonctions) => scrollBottomPage(posts, nextFonctions));
-        nextFonctions.push((posts, nextFonctions) => getPostTwitter(posts, nextFonctions));
-        nextFonctions.push((posts, nextFonctions) => sendPostTwitter(posts, nextFonctions));
+chrome.runtime.onMessage.addListener(
+    function(request) {
+        console.log(request);
+        buttonGetPostsTwitter();
     }
+);
 
-    detectPageLoad(100, () => articlePresent(), nextFonctions);
+let posts = [];
+let nbPostsSend = 0;
+let pageLoaded = false;
+
+window.addEventListener('load', () => {
+    pageLoaded = true;
 });
+
+function buttonGetPostsTwitter() {
+    if (pageLoaded) {
+        let nextFonctions = [(nextFonctions) => getPostTwitter(nextFonctions), (nextFonctions) => sendPostTwitter(nextFonctions)];
+        for (let nbScroll = 0; nbScroll < 10; nbScroll++) {
+            nextFonctions.push((nextFonctions) => scrollBottomPage(nextFonctions));
+            nextFonctions.push((nextFonctions) => getPostTwitter(nextFonctions));
+            nextFonctions.push((nextFonctions) => sendPostTwitter(nextFonctions));
+        }
+
+        detectPageLoad(100, () => articlePresent(), nextFonctions);
+    } else {
+        setTimeout(() => buttonGetPostsTwitter(), 1000);
+    }
+}
 
 /**
  * Exécute nextFonction() lorsque fonctionDetectionLoad() retourne true.
@@ -19,17 +38,17 @@ function detectPageLoad(nbMillisecondeRetry, fonctionDetectionLoad, nextFonction
     if (fonctionDetectionLoad()) {
         if (nextFonctions.length > 0) {
             let nextFonction = nextFonctions.shift();
-            nextFonction([], nextFonctions);
+            nextFonction(nextFonctions);
         }
     } else {
         setTimeout(() => detectPageLoad(Math.min(nbMillisecondeRetry + 20, 1000), fonctionDetectionLoad, nextFonctions), nbMillisecondeRetry);
     }
 }
 
-function next(posts, nextFonctions) {
+function next(nextFonctions) {
     let nextFonction = nextFonctions.shift();
     if (nextFonction) {
-        nextFonction(posts, nextFonctions);
+        nextFonction(nextFonctions);
     }
 }
 
@@ -60,10 +79,9 @@ function extractTextFromHTMLCollection(element) {
 
 /**
  * Récupère les posts de la page Twitter.
- * @param posts Posts déjà récupérés.
  * @param nextFonctions Fonctions à exécuter après avoir récupéré les posts.
  */
-function getPostTwitter(posts, nextFonctions) {
+function getPostTwitter(nextFonctions) {
     let articleDOM = document.getElementsByTagName("article");
     for (let nbArticle = 0; nbArticle < articleDOM.length; nbArticle++) {
         try {
@@ -84,14 +102,13 @@ function getPostTwitter(posts, nextFonctions) {
             // console.log(error);
         }
     }
+
     //delete doublon posts
     posts = posts.filter((post, index, self) => index === self.findIndex((t) => (t.nameAccount === post.nameAccount && t.contenuTweet === post.contenuTweet)));
-    next(posts, nextFonctions);
+    next(nextFonctions);
 }
 
-function sendPostTwitter(posts, nextFonctions) {
-    console.log(posts);
-    console.log("Il reste " + nextFonctions.length + " fonctions à exécuter.");
+function sendPostTwitter(nextFonctions) {
     try {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -99,7 +116,7 @@ function sendPostTwitter(posts, nextFonctions) {
         var raw = JSON.stringify({
             "username": "username",
             "password": "password",
-            "posts": posts
+            "posts": posts.slice(nbPostsSend)
         });
 
         var requestOptions = {
@@ -109,23 +126,32 @@ function sendPostTwitter(posts, nextFonctions) {
             redirect: 'follow'
         };
 
+        console.log(posts.slice(nbPostsSend))
+
+        nbPostsSend = posts.length;
+
         fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            // .then(result => {
+            //     console.log(result)
+            // })
+            .catch(error => console.log('error', error))
+            .finally(() => next(nextFonctions));
     } catch (error) {
         console.log(error);
+        next(nextFonctions);
     }
 
-    next(posts, nextFonctions);
+
 }
 
-function scrollBottomPage(posts, nextFonctions) {
+async function scrollBottomPage(nextFonctions) {
     window.scrollTo({
         top: document.body.scrollHeight,
         behavior: 'smooth',
     })
-    setTimeout(() => next(posts, nextFonctions), 3000);
+    setTimeout(() => next(nextFonctions), 2000);
+
 }
 
 console.log("content.js");
