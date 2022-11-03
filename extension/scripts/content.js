@@ -59,7 +59,9 @@ function extractTextFromHTMLCollection(element) {
 }
 
 /**
- *
+ * Récupère les posts de la page Twitter.
+ * @param posts Posts déjà récupérés.
+ * @param nextFonctions Fonctions à exécuter après avoir récupéré les posts.
  */
 function getPostTwitter(posts, nextFonctions) {
     let articleDOM = document.getElementsByTagName("article");
@@ -89,29 +91,28 @@ function getPostTwitter(posts, nextFonctions) {
 
 function sendPostTwitter(posts, nextFonctions) {
     console.log(posts);
-    console.log(nextFonctions);
-    //TODO: Envoyer les posts à l'API backend de Nontent. Régler le problème avec Cors
+    console.log("Il reste " + nextFonctions.length + " fonctions à exécuter.");
     try {
-        // var myHeaders = new Headers();
-        // myHeaders.append("Content-Type", "application/json");
-        //
-        // var raw = JSON.stringify({
-        //     "username": "username",
-        //     "password": "password",
-        //     "posts": posts
-        // });
-        //
-        // var requestOptions = {
-        //     method: 'POST',
-        //     headers: myHeaders,
-        //     body: raw,
-        //     redirect: 'follow'
-        // };
-        //
-        // fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
-        //     .then(response => response.text())
-        //     .then(result => console.log(result))
-        //     .catch(error => console.log('error', error));
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "username": "username",
+            "password": "password",
+            "posts": posts
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
     } catch (error) {
         console.log(error);
     }

@@ -16,8 +16,8 @@ exports.postPosts = async (body) => {
 
 
 
-        if (!username || !password) {
-            return reject({ error: 'Missing username or password' });
+        if (!username || !password || !posts) {
+            return reject({ error: 'Missing username, password or posts' });
         }
         resolve("Username: " + username + " Password: " + password + " Posts: " + posts);
     })
