@@ -1,5 +1,12 @@
 window.addEventListener('load', () => {
-    detectPageLoad(100, () => artcilePresent(), [(nextFonctions) => getPostTwitter(nextFonctions), (posts) => sendPostTwitter(posts), (posts, nextFonctions) => sendPostTwitter(posts, nextFonctions)]);
+    let nextFonctions = [(posts, nextFonctions) => getPostTwitter(posts, nextFonctions), (posts, nextFonctions) => sendPostTwitter(posts, nextFonctions)];
+    for (let nbScroll = 0; nbScroll < 10; nbScroll++) {
+        nextFonctions.push((posts, nextFonctions) => scrollBottomPage(posts, nextFonctions));
+        nextFonctions.push((posts, nextFonctions) => getPostTwitter(posts, nextFonctions));
+        nextFonctions.push((posts, nextFonctions) => sendPostTwitter(posts, nextFonctions));
+    }
+
+    detectPageLoad(100, () => articlePresent(), nextFonctions);
 });
 
 /**
@@ -12,10 +19,17 @@ function detectPageLoad(nbMillisecondeRetry, fonctionDetectionLoad, nextFonction
     if (fonctionDetectionLoad()) {
         if (nextFonctions.length > 0) {
             let nextFonction = nextFonctions.shift();
-            nextFonction(nextFonctions);
+            nextFonction([], nextFonctions);
         }
     } else {
         setTimeout(() => detectPageLoad(Math.min(nbMillisecondeRetry + 20, 1000), fonctionDetectionLoad, nextFonctions), nbMillisecondeRetry);
+    }
+}
+
+function next(posts, nextFonctions) {
+    let nextFonction = nextFonctions.shift();
+    if (nextFonction) {
+        nextFonction(posts, nextFonctions);
     }
 }
 
@@ -23,7 +37,7 @@ function detectPageLoad(nbMillisecondeRetry, fonctionDetectionLoad, nextFonction
  * Retourne true si un article est présent dans la page.
  * @returns {boolean} True si un article est présent dans la page. False sinon.
  */
-function artcilePresent() {
+function articlePresent() {
     return document.getElementsByTagName("article").length !== 0;
 }
 
@@ -47,9 +61,8 @@ function extractTextFromHTMLCollection(element) {
 /**
  *
  */
-function getPostTwitter(nextFonctions) {
+function getPostTwitter(posts, nextFonctions) {
     let articleDOM = document.getElementsByTagName("article");
-    let posts = [];
     for (let nbArticle = 0; nbArticle < articleDOM.length; nbArticle++) {
         try {
             let post = {};
@@ -66,18 +79,52 @@ function getPostTwitter(nextFonctions) {
             post.nbLike = nbLike;
             posts.push(post);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
-
     }
-    let nextFonction = nextFonctions.shift();
-    nextFonction(posts, nextFonctions);
+    //delete doublon posts
+    posts = posts.filter((post, index, self) => index === self.findIndex((t) => (t.nameAccount === post.nameAccount && t.contenuTweet === post.contenuTweet)));
+    next(posts, nextFonctions);
 }
 
 function sendPostTwitter(posts, nextFonctions) {
     console.log(posts);
     console.log(nextFonctions);
-    //TODO: Envoyer les posts à l'API backend de Nontent.
+    //TODO: Envoyer les posts à l'API backend de Nontent. Régler le problème avec Cors
+    try {
+        // var myHeaders = new Headers();
+        // myHeaders.append("Content-Type", "application/json");
+        //
+        // var raw = JSON.stringify({
+        //     "username": "username",
+        //     "password": "password",
+        //     "posts": posts
+        // });
+        //
+        // var requestOptions = {
+        //     method: 'POST',
+        //     headers: myHeaders,
+        //     body: raw,
+        //     redirect: 'follow'
+        // };
+        //
+        // fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
+        //     .then(response => response.text())
+        //     .then(result => console.log(result))
+        //     .catch(error => console.log('error', error));
+    } catch (error) {
+        console.log(error);
+    }
+
+    next(posts, nextFonctions);
+}
+
+function scrollBottomPage(posts, nextFonctions) {
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+    })
+    setTimeout(() => next(posts, nextFonctions), 3000);
 }
 
 console.log("content.js");
