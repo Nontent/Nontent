@@ -8,12 +8,18 @@ window.onload = function() {
     document.getElementById("email").addEventListener("change", onChangeEmail);
     document.getElementById("buttonGetPosts").addEventListener("click", buttonGetPosts);
 
+    /**
+     * Sauvegarde l'email dans le storage.
+     */
     function onChangeEmail() {
         chrome.storage.sync.set({email: document.getElementById("email").value}, function() {
             console.log('Value is set to ' + value);
         });
     }
 
+    /**
+     * Envoie la requête au script content.js pour récupérer les posts.
+     */
     function buttonGetPosts() {
         console.log("buttonGetPosts");
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {

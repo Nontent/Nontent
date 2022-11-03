@@ -145,6 +145,10 @@ function sendPostTwitter(nextFonctions) {
 
 }
 
+/**
+ * Descend en bas de la page.
+ * @param nextFonctions Fonctions à exécuter après être descendu de la page.
+ */
 async function scrollBottomPage(nextFonctions) {
     window.scrollTo({
         top: document.body.scrollHeight,
