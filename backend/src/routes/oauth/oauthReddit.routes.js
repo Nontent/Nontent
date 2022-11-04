@@ -1,3 +1,5 @@
+
+////TODO(@BLANC Nicolas): Move secretskeys in .env file 
 const REDDIT_CLIENT_ID = "TN6bnT8p1cfnwH7hkZTZuw";
 const REDDIT_CLIENT_SECRET = "ymZ7IBmNSn67SVb5ZDKhgZNXXUBfYA";
 const Auth = require('../../shared/auth/auth.service');
