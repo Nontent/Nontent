@@ -29,7 +29,6 @@ redditRouter.get('/', async (req, res) => {
             headers: {authorization: `Basic ${encodedHeader}`, 'Content-Type': 'application/x-www-form-urlencoded'}
         })
         let accessToken = await response.json();
-        res.header("Access-Control-Allow-Origin", "*");
         const options = {
             redditAccessToken: accessToken.access_token,
             redditTokenExpiration: Date.now(),
