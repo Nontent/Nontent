@@ -9,8 +9,34 @@ const CollectionSchema = new Mongoose.Schema({
     birthDate: String,
     imgUrl: String,
     socialNetworks: [String],
-    creationDate: Date,
-    accountDeleted: Boolean
+    creationDate: {
+        type: Date,
+        default: Date.now()
+    },
+    accountDeleted: {
+        type: Boolean,
+        default: false
+    },
+    twitterCodeVerifier: {
+        type: String,
+        default: null
+    },
+    twitterSessionState: {
+        type: String,
+        default: null
+    },
+    redditAccessToken: {
+        type: String,
+        default: null
+    },
+    redditTokenExpiration: {
+        type: String,
+        default: null
+    },
+    redditRefreshToken: {
+        type: String,
+        default: null
+    }
 });
 
 let Users;
