@@ -29,5 +29,6 @@ function generateSigninResponse(user) {
             socialNetworks: user.socialNetworks ?? []
         }),
         userId: user._id,
+        redditTokenExpiration: user.redditTokenExpiration
     }
 }
