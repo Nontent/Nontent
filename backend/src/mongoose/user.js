@@ -31,6 +31,18 @@ const CollectionSchema = new Mongoose.Schema({
         type: String,
         default: null
     },
+    redditAccessToken: {
+        type: String,
+        default: null
+    },
+    redditTokenExpiration: {
+        type: String,
+        default: null
+    },
+    redditRefreshToken: {
+        type: String,
+        default: null
+    }
 });
 
 let Users;

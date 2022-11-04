@@ -9,7 +9,7 @@
 					<v-icon>mdi-twitter</v-icon>
 				</v-btn>
 				<v-btn color="primary" icon>
-					<v-icon>mdi-reddit</v-icon>
+					<v-icon v-on:click="reddit">mdi-reddit</v-icon>
 				</v-btn>
 				<v-btn color="primary" icon>
 					<v-icon>mdi-facebook</v-icon>
@@ -33,11 +33,17 @@
 
 <script>
 import SocialProfileViewer from '../components/SocialProfileViewer.vue'
-
 export default {
 	components: { SocialProfileViewer },
 	name: 'IndexPage',
-	methods: {},
+	methods: {
+		reddit: function () {
+			window.open(
+            "https://www.reddit.com/api/v1/authorize?client_id=TN6bnT8p1cfnwH7hkZTZuw&response_type=code&state=test&redirect_uri=http://localhost:3000&duration=permanent&scope=identity",
+            "_self"
+        )
+    	}
+	},
 	data() {
 		return {
 			profiles: [
