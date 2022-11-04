@@ -1,20 +1,18 @@
-window.onload = function() {
-    chrome.storage.sync.get(['email'], function(result) {
-        if (result.email) {
-            document.getElementById("email").value = result.email;
+window.onload = function () {
+    chrome.storage.sync.get(['tokenNontent'], function (result) {
+        if (result.tokenNontent) {
+            document.getElementById("tokenNontent").value = result.tokenNontent;
         }
     });
 
-    document.getElementById("email").addEventListener("change", onChangeEmail);
+    document.getElementById("tokenNontent").addEventListener("change", onChangeEmail);
     document.getElementById("buttonGetPosts").addEventListener("click", buttonGetPosts);
 
     /**
-     * Sauvegarde l'email dans le storage.
+     * Sauvegarde l'tokenNontent dans le storage.
      */
     function onChangeEmail() {
-        chrome.storage.sync.set({email: document.getElementById("email").value}, function() {
-            console.log('Value is set to ' + value);
-        });
+        chrome.storage.sync.set({tokenNontent: document.getElementById("tokenNontent").value});
     }
 
     /**
@@ -23,7 +21,10 @@ window.onload = function() {
     function buttonGetPosts() {
         console.log("buttonGetPosts");
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {email: document.getElementById("email").value});
+            chrome.tabs.sendMessage(tabs[0].id, {
+                action: "getPostsTwitter",
+                tokenNontent: document.getElementById("tokenNontent").value
+            });
         });
     }
 

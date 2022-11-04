@@ -1,13 +1,18 @@
-chrome.runtime.onMessage.addListener(
-    function(request) {
-        console.log(request);
-        buttonGetPostsTwitter();
-    }
-);
-
 let posts = [];
 let nbPostsSend = 0;
 let pageLoaded = false;
+let tokenNontent = "tokenNontent";
+
+chrome.runtime.onMessage.addListener(
+    function(request) {
+        if (request.action === "getPostsTwitter") {
+            tokenNontent = request.tokenNontent;
+            buttonGetPostsTwitter();
+        }
+    }
+);
+
+
 
 window.addEventListener('load', () => {
     pageLoaded = true;
@@ -114,8 +119,7 @@ function sendPostTwitter(nextFonctions) {
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "username": "username",
-            "password": "password",
+            "tokenNontent": tokenNontent,
             "posts": posts.slice(nbPostsSend)
         });
 
