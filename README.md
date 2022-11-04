@@ -45,4 +45,6 @@ Update:
 2. Go to `chrome://extensions/`
 3. Clic on the reload icon
 
+### Liens utiles
 
+[Github du projet](https://github.com/Nontent/Nontent)
