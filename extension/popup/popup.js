@@ -1,4 +1,7 @@
 window.onload = function () {
+
+    let statusGetPostsTwitter = false;
+
     chrome.storage.sync.get(['tokenNontent'], function (result) {
         if (result.tokenNontent) {
             document.getElementById("tokenNontent").value = result.tokenNontent;
@@ -9,7 +12,7 @@ window.onload = function () {
     document.getElementById("buttonGetPosts").addEventListener("click", buttonGetPosts);
 
     /**
-     * Sauvegarde l'tokenNontent dans le storage.
+     * Sauvegarde le tokenNontent dans le storage.
      */
     function onChangeEmail() {
         chrome.storage.sync.set({tokenNontent: document.getElementById("tokenNontent").value});
@@ -20,9 +23,17 @@ window.onload = function () {
      */
     function buttonGetPosts() {
         console.log("buttonGetPosts");
+        statusGetPostsTwitter = !statusGetPostsTwitter;
+        if (statusGetPostsTwitter) {
+            document.getElementById("buttonGetPosts").innerText = "Cliquer pour arrêter d'extraire les posts";
+        } else {
+            document.getElementById("buttonGetPosts").innerText = "Cliquer pour extraire les posts";
+        }
+        console.log(statusGetPostsTwitter);
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {
                 action: "getPostsTwitter",
+                statusGetPostsTwitter: statusGetPostsTwitter,
                 tokenNontent: document.getElementById("tokenNontent").value
             });
         });

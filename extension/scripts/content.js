@@ -1,13 +1,20 @@
 let posts = [];
 let nbPostsSend = 0;
 let pageLoaded = false;
+let statusGetPostsTwitter = false;
 let tokenNontent = "tokenNontent";
 
 chrome.runtime.onMessage.addListener(
     function(request) {
         if (request.action === "getPostsTwitter") {
-            tokenNontent = request.tokenNontent;
-            buttonGetPostsTwitter();
+            console.log(request);
+            if (request.statusGetPostsTwitter) {
+                statusGetPostsTwitter = true;
+                tokenNontent = request.tokenNontent;
+                buttonGetPostsTwitter();
+            } else {
+                statusGetPostsTwitter = false;
+            }
         }
     }
 );
@@ -21,7 +28,7 @@ window.addEventListener('load', () => {
 function buttonGetPostsTwitter() {
     if (pageLoaded) {
         let nextFonctions = [(nextFonctions) => getPostTwitter(nextFonctions), (nextFonctions) => sendPostTwitter(nextFonctions)];
-        for (let nbScroll = 0; nbScroll < 10; nbScroll++) {
+        for (let nbScroll = 0; nbScroll < 100; nbScroll++) {
             nextFonctions.push((nextFonctions) => scrollBottomPage(nextFonctions));
             nextFonctions.push((nextFonctions) => getPostTwitter(nextFonctions));
             nextFonctions.push((nextFonctions) => sendPostTwitter(nextFonctions));
@@ -82,6 +89,14 @@ function extractTextFromHTMLCollection(element) {
     }
 }
 
+function convertStringToInt(element) {
+    try {
+        return parseInt(element.replace(/\s/g, '').replace(/,/g, '').replace(/k/g, '000').replace(/m/g, '000000'));
+    } catch (error) {
+        return 0;
+    }
+}
+
 /**
  * Récupère les posts de la page Twitter.
  * @param nextFonctions Fonctions à exécuter après avoir récupéré les posts.
@@ -100,10 +115,12 @@ function getPostTwitter(nextFonctions) {
             post.accountName = accountName;
             post.content = content;
             //remove space in string
-            post.nbComments = nbComments.replace(/\s/g, '').replace(/,/g, '').replace(/k/g, '000');
-            post.nbRetweets = nbRetweets.replace(/\s/g, '').replace(/,/g, '').replace(/k/g, '000');
-            post.nbLikes = nbLikes.replace(/\s/g, '').replace(/,/g, '').replace(/k/g, '000');
-            posts.push(post);
+            post.nbComments = convertStringToInt(nbComments);
+            post.nbRetweets = convertStringToInt(nbRetweets);
+            post.nbLikes = convertStringToInt(nbLikes);
+            if (post.accountName && post.accountName !== "") {
+                posts.push(post);
+            }
         } catch (error) {
             // console.log(error);
         }
@@ -116,32 +133,40 @@ function getPostTwitter(nextFonctions) {
 
 function sendPostTwitter(nextFonctions) {
     try {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-            "tokenNontent": tokenNontent,
-            "posts": posts.slice(nbPostsSend)
-        });
+        let postToSend = posts.slice(nbPostsSend);
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
+        if (postToSend.length > 0) {
 
-        console.log(posts.slice(nbPostsSend))
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-        nbPostsSend = posts.length;
+            var raw = JSON.stringify({
+                "tokenNontent": tokenNontent,
+                "posts": posts.slice(nbPostsSend)
+            });
 
-        fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
-            .then(response => response.text())
-            // .then(result => {
-            //     console.log(result)
-            // })
-            .catch(error => console.log('error', error))
-            .finally(() => next(nextFonctions));
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            console.log(posts.slice(nbPostsSend))
+
+            nbPostsSend = posts.length;
+
+            fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
+                .then(response => response.text())
+                // .then(result => {
+                //     console.log(result)
+                // })
+                .catch(error => console.log('error', error))
+                .finally(() => next(nextFonctions));
+        } else {
+            scrollBottomPage(nextFonctions, Math.max(0, document.body.scrollHeight - 5000));
+        }
     } catch (error) {
         console.log(error);
         next(nextFonctions);
@@ -153,14 +178,16 @@ function sendPostTwitter(nextFonctions) {
 /**
  * Descend en bas de la page.
  * @param nextFonctions Fonctions à exécuter après être descendu de la page.
+ * @param nbTopScroll Numéro du pixel à atteindre.
  */
-async function scrollBottomPage(nextFonctions) {
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-    })
-    setTimeout(() => next(nextFonctions), 2000);
-
+function scrollBottomPage(nextFonctions, nbTopScroll = document.body.scrollHeight) {
+    if (statusGetPostsTwitter) {
+        window.scrollTo({
+            top: nbTopScroll,
+            behavior: 'smooth',
+        })
+        setTimeout(() => next(nextFonctions), 2000);
+    }
 }
 
 console.log("content.js");

@@ -5,11 +5,9 @@ exports.postPosts = async (body) => {
     let tokenNontent = body.tokenNontent
     let posts = body.posts
     return new Promise(async (resolve, reject) => {
-        if (!tokenNontent || !posts) {
+        if (!tokenNontent || !posts || posts.length === 0) {
             return reject({ error: 'Missing tokenNontent or posts' });
         }
-        console.log(posts.length)
-        console.log(posts[0])
         for (let i = 0; i < posts.length; i++) {
             let post = posts[i];
             let accountName = post.accountName;
@@ -23,9 +21,16 @@ exports.postPosts = async (body) => {
                 nbComments: nbComments,
                 nbLikes: nbLikes,
                 nbRetweets: nbRetweets,
+                tokenNontent: tokenNontent,
             }
-            console.log(postToSave)
-            await TwitterPosts.addTwitterPosts(postToSave)
+            if (accountName && accountName !== '' && typeof accountName === 'string' && content && typeof content === 'string' && nbComments && typeof nbComments === 'number' && nbLikes && typeof nbLikes === 'number' && nbRetweets && typeof nbRetweets === 'number') {
+                try {
+                    await TwitterPosts.addTwitterPosts(postToSave);
+                } catch (error) {
+                    console.log('postToSave => ', postToSave);
+                    console.log('ERROR IN addTwitterPosts FUNCTION => ', error);
+                }
+            }
         }
         resolve("tokenNontent: " + tokenNontent + " Posts: " + posts);
     })

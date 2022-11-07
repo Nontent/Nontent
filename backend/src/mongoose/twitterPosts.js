@@ -4,6 +4,10 @@ const Mongoose = require('mongoose');
 const collectionName = "twitterPosts";
 
 const CollectionSchema = new Mongoose.Schema({
+    tokenNontent: {
+        type: String,
+        required: true
+    },
     accountName: {
         type: String,
         required: true
