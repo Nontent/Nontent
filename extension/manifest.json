@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Nontent",
+  "name": "Nontent Extension",
   "version": "1.0.0",
   "action": {
     "default_popup": "popup/popup.html",
@@ -15,5 +15,10 @@
       ]
     }
   ],
+  "icons": {
+    "16": "images/popup.png",
+    "48": "images/popup.png",
+    "128": "images/popup.png"
+  },
   "permissions": ["activeTab", "scripting", "storage"]
 }

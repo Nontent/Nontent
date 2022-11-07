@@ -1,3 +1,4 @@
+console.log("content.js");
 let posts = [];
 let nbPostsSend = 0;
 let pageLoaded = false;
@@ -190,4 +191,4 @@ function scrollBottomPage(nextFonctions, nbTopScroll = document.body.scrollHeigh
     }
 }
 
-console.log("content.js");
+

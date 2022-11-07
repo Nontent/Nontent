@@ -2,7 +2,7 @@
 //  SafariWebExtensionHandler.swift
 //  Shared (Extension)
 //
-//  Created by Lucas Bodin on 02/11/2022.
+//  Created by Lucas Bodin on 07/11/2022.
 //
 
 import SafariServices

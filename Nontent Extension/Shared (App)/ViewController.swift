@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Shared (App)
 //
-//  Created by Lucas Bodin on 02/11/2022.
+//  Created by Lucas Bodin on 07/11/2022.
 //
 
 import WebKit
@@ -16,7 +16,7 @@ import SafariServices
 typealias PlatformViewController = NSViewController
 #endif
 
-let extensionBundleIdentifier = "com.yourCompany.Twitter-Scrapping-Post.Extension"
+let extensionBundleIdentifier = "com.yourCompany.Nontent-Extension.Extension"
 
 class ViewController: PlatformViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
