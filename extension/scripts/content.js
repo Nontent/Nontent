@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
 function buttonGetPostsTwitter() {
     if (pageLoaded) {
         let nextFonctions = [(nextFonctions) => getPostTwitter(nextFonctions), (nextFonctions) => sendPostTwitter(nextFonctions)];
-        for (let nbScroll = 0; nbScroll < 100; nbScroll++) {
+        for (let nbScroll = 0; nbScroll < 10000; nbScroll++) {
             nextFonctions.push((nextFonctions) => scrollBottomPage(nextFonctions));
             nextFonctions.push((nextFonctions) => getPostTwitter(nextFonctions));
             nextFonctions.push((nextFonctions) => sendPostTwitter(nextFonctions));
