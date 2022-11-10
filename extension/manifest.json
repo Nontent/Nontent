@@ -1,17 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Twitter Scrapping Post",
+  "name": "Nontent Extension",
   "version": "1.0.0",
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": "images/popup.png"
   },
-  "description": "Récupère les posts d'une page twitter",
-  "icons": {
-    "16": "images/popup.png",
-    "48": "images/popup.png",
-    "128": "images/popup.png"
-  },
+  "description": "Récupère et envoie les posts de twitter à Nontent",
   "content_scripts": [
     {
       "js": ["scripts/content.js"],
@@ -20,8 +15,10 @@
       ]
     }
   ],
-  "background": {
-    "service_worker": "background.js"
+  "icons": {
+    "16": "images/popup.png",
+    "48": "images/popup.png",
+    "128": "images/popup.png"
   },
-  "permissions": ["activeTab"]
+  "permissions": ["activeTab", "scripting", "storage"]
 }
