@@ -158,7 +158,7 @@ function sendPostTwitter(nextFonctions) {
 
             nbPostsSend = posts.length;
 
-            fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
+            fetch("http://localhost:3001/api/scrapping/twitter/posts", requestOptions)
                 .then(response => response.text())
                 // .then(result => {
                 //     console.log(result)
