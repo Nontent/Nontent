@@ -20,7 +20,6 @@ redditRouter.get('/', async (req, res) => {
             message: "Unauthorized",
             status: 403
         });
-        console.log(user);
         let code = req.query.code;
         let encodedHeader = Buffer.from(`${REDDIT_CLIENT_ID}:${REDDIT_CLIENT_SECRET}`).toString("base64");
         let response = await fetch('https://www.reddit.com/api/v1/access_token', {
@@ -29,10 +28,17 @@ redditRouter.get('/', async (req, res) => {
             headers: {authorization: `Basic ${encodedHeader}`, 'Content-Type': 'application/x-www-form-urlencoded'}
         })
         let accessToken = await response.json();
+        // Retrieving username, needed for later uses
+        let userResponse = await fetch('https://oauth.reddit.com/api/v1/me', {
+            method: 'GET',
+            headers: {authorization: `Bearer ${accessToken.access_token}`} 
+        })
+        let userData = await userResponse.json();
         const options = {
             redditAccessToken: accessToken.access_token,
             redditTokenExpiration: Date.now(),
-            redditRefreshToken: accessToken.refresh_token
+            redditRefreshToken: accessToken.refresh_token,
+            redditUsername: userData.name
         }
         const updatedUser = await UserService.userUpdateService(user._id, options)
         if (!updatedUser) {
@@ -41,7 +47,7 @@ redditRouter.get('/', async (req, res) => {
             })
         }
         return res.status(200).json({
-            "accessToken": accessToken,
+            "tokenInfo": accessToken,
         });
         } 
     catch(e) {

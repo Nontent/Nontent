@@ -39,7 +39,7 @@ export default {
 	methods: {
 		reddit: function () {
 			window.open(
-            "https://www.reddit.com/api/v1/authorize?client_id=TN6bnT8p1cfnwH7hkZTZuw&response_type=code&state=test&redirect_uri=http://localhost:3000&duration=permanent&scope=identity",
+            "https://www.reddit.com/api/v1/authorize?client_id=TN6bnT8p1cfnwH7hkZTZuw&response_type=code&state=test&redirect_uri=http://localhost:3000&duration=permanent&scope=identity,mysubreddits,read,vote,history",
             "_self"
         )
     	}

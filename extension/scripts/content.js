@@ -1,13 +1,45 @@
-window.addEventListener('load', () => {
-    let nextFonctions = [(posts, nextFonctions) => getPostTwitter(posts, nextFonctions), (posts, nextFonctions) => sendPostTwitter(posts, nextFonctions)];
-    for (let nbScroll = 0; nbScroll < 10; nbScroll++) {
-        nextFonctions.push((posts, nextFonctions) => scrollBottomPage(posts, nextFonctions));
-        nextFonctions.push((posts, nextFonctions) => getPostTwitter(posts, nextFonctions));
-        nextFonctions.push((posts, nextFonctions) => sendPostTwitter(posts, nextFonctions));
-    }
+console.log("content.js");
+let posts = [];
+let nbPostsSend = 0;
+let pageLoaded = false;
+let statusGetPostsTwitter = false;
+let tokenNontent = "tokenNontent";
 
-    detectPageLoad(100, () => articlePresent(), nextFonctions);
+chrome.runtime.onMessage.addListener(
+    function(request) {
+        if (request.action === "getPostsTwitter") {
+            console.log(request);
+            if (request.statusGetPostsTwitter) {
+                statusGetPostsTwitter = true;
+                tokenNontent = request.tokenNontent;
+                buttonGetPostsTwitter();
+            } else {
+                statusGetPostsTwitter = false;
+            }
+        }
+    }
+);
+
+
+
+window.addEventListener('load', () => {
+    pageLoaded = true;
 });
+
+function buttonGetPostsTwitter() {
+    if (pageLoaded) {
+        let nextFonctions = [(nextFonctions) => getPostTwitter(nextFonctions), (nextFonctions) => sendPostTwitter(nextFonctions)];
+        for (let nbScroll = 0; nbScroll < 10000; nbScroll++) {
+            nextFonctions.push((nextFonctions) => scrollBottomPage(nextFonctions));
+            nextFonctions.push((nextFonctions) => getPostTwitter(nextFonctions));
+            nextFonctions.push((nextFonctions) => sendPostTwitter(nextFonctions));
+        }
+
+        detectPageLoad(100, () => articlePresent(), nextFonctions);
+    } else {
+        setTimeout(() => buttonGetPostsTwitter(), 1000);
+    }
+}
 
 /**
  * Exécute nextFonction() lorsque fonctionDetectionLoad() retourne true.
@@ -19,17 +51,17 @@ function detectPageLoad(nbMillisecondeRetry, fonctionDetectionLoad, nextFonction
     if (fonctionDetectionLoad()) {
         if (nextFonctions.length > 0) {
             let nextFonction = nextFonctions.shift();
-            nextFonction([], nextFonctions);
+            nextFonction(nextFonctions);
         }
     } else {
         setTimeout(() => detectPageLoad(Math.min(nbMillisecondeRetry + 20, 1000), fonctionDetectionLoad, nextFonctions), nbMillisecondeRetry);
     }
 }
 
-function next(posts, nextFonctions) {
+function next(nextFonctions) {
     let nextFonction = nextFonctions.shift();
     if (nextFonction) {
-        nextFonction(posts, nextFonctions);
+        nextFonction(nextFonctions);
     }
 }
 
@@ -58,74 +90,105 @@ function extractTextFromHTMLCollection(element) {
     }
 }
 
+function convertStringToInt(element) {
+    try {
+        return parseInt(element.replace(/\s/g, '').replace(/,/g, '').replace(/k/g, '000').replace(/m/g, '000000'));
+    } catch (error) {
+        return 0;
+    }
+}
+
 /**
  * Récupère les posts de la page Twitter.
- * @param posts Posts déjà récupérés.
  * @param nextFonctions Fonctions à exécuter après avoir récupéré les posts.
  */
-function getPostTwitter(posts, nextFonctions) {
+function getPostTwitter(nextFonctions) {
     let articleDOM = document.getElementsByTagName("article");
     for (let nbArticle = 0; nbArticle < articleDOM.length; nbArticle++) {
         try {
             let post = {};
-            let nameAccount = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[0].getElementsByTagName("a")[0].getElementsByTagName("span")[0].innerText;
-            let contenuTweet = extractTextFromHTMLCollection(articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1]?.children[0]?.children[0]?.children);
+            let accountName = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[0].getElementsByTagName("a")[0].getElementsByTagName("span")[0].innerText;
+            let content = extractTextFromHTMLCollection(articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1]?.children[0]?.children[0]?.children);
             let nbPartInteraction = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children.length;
-            let nbComment = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[0].getElementsByTagName("span")[0].innerText;
-            let nbRetweet = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[1].getElementsByTagName("span")[0].innerText;
-            let nbLike = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[2].getElementsByTagName("span")[0].innerText;
-            post.nameAccount = nameAccount;
-            post.contenuTweet = contenuTweet;
-            post.nbComment = nbComment;
-            post.nbRetweet = nbRetweet;
-            post.nbLike = nbLike;
-            posts.push(post);
+            let nbComments = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[0].getElementsByTagName("span")[0].innerText;
+            let nbRetweets = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[1].getElementsByTagName("span")[0].innerText;
+            let nbLikes = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[2].getElementsByTagName("span")[0].innerText;
+            post.accountName = accountName;
+            post.content = content;
+            //remove space in string
+            post.nbComments = convertStringToInt(nbComments);
+            post.nbRetweets = convertStringToInt(nbRetweets);
+            post.nbLikes = convertStringToInt(nbLikes);
+            if (post.accountName && post.accountName !== "") {
+                posts.push(post);
+            }
         } catch (error) {
             // console.log(error);
         }
     }
+
     //delete doublon posts
-    posts = posts.filter((post, index, self) => index === self.findIndex((t) => (t.nameAccount === post.nameAccount && t.contenuTweet === post.contenuTweet)));
-    next(posts, nextFonctions);
+    posts = posts.filter((post, index, self) => index === self.findIndex((t) => (t.accountName === post.accountName && t.content === post.content)));
+    next(nextFonctions);
 }
 
-function sendPostTwitter(posts, nextFonctions) {
-    console.log(posts);
-    console.log("Il reste " + nextFonctions.length + " fonctions à exécuter.");
+function sendPostTwitter(nextFonctions) {
     try {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify({
-            "username": "username",
-            "password": "password",
-            "posts": posts
-        });
+        let postToSend = posts.slice(nbPostsSend);
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
+        if (postToSend.length > 0) {
 
-        fetch("http://localhost:3000/api/scrapping/twitter/posts", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "tokenNontent": tokenNontent,
+                "posts": posts.slice(nbPostsSend)
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            console.log(posts.slice(nbPostsSend))
+
+            nbPostsSend = posts.length;
+
+            fetch("http://localhost:3001/api/scrapping/twitter/posts", requestOptions)
+                .then(response => response.text())
+                // .then(result => {
+                //     console.log(result)
+                // })
+                .catch(error => console.log('error', error))
+                .finally(() => next(nextFonctions));
+        } else {
+            scrollBottomPage(nextFonctions, Math.max(0, document.body.scrollHeight - 5000));
+        }
     } catch (error) {
         console.log(error);
+        next(nextFonctions);
     }
 
-    next(posts, nextFonctions);
+
 }
 
-function scrollBottomPage(posts, nextFonctions) {
-    window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-    })
-    setTimeout(() => next(posts, nextFonctions), 3000);
+/**
+ * Descend en bas de la page.
+ * @param nextFonctions Fonctions à exécuter après être descendu de la page.
+ * @param nbTopScroll Numéro du pixel à atteindre.
+ */
+function scrollBottomPage(nextFonctions, nbTopScroll = document.body.scrollHeight) {
+    if (statusGetPostsTwitter) {
+        window.scrollTo({
+            top: nbTopScroll,
+            behavior: 'smooth',
+        })
+        setTimeout(() => next(nextFonctions), 2000);
+    }
 }
 
-console.log("content.js");
+

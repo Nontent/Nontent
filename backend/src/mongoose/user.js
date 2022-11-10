@@ -42,6 +42,10 @@ const CollectionSchema = new Mongoose.Schema({
     redditRefreshToken: {
         type: String,
         default: null
+    },
+    redditUsername: {
+        type: String,
+        default: null
     }
 });
 
