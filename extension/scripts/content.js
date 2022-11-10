@@ -6,8 +6,10 @@ let statusGetPostsTwitter = false;
 let tokenNontent = "tokenNontent";
 
 chrome.runtime.onMessage.addListener(
-    function(request) {
-        if (request.action === "getPostsTwitter") {
+    function(request, sender, sendResponse) {
+        if (request.action === "getStatusPostsTwitter") {
+            sendResponse({statusGetPostsTwitter: statusGetPostsTwitter});
+        } else if (request.action === "getPostsTwitter") {
             console.log(request);
             if (request.statusGetPostsTwitter) {
                 statusGetPostsTwitter = true;
@@ -107,7 +109,7 @@ function getPostTwitter(nextFonctions) {
     for (let nbArticle = 0; nbArticle < articleDOM.length; nbArticle++) {
         try {
             let post = {};
-            let accountName = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[0].getElementsByTagName("a")[0].getElementsByTagName("span")[0].innerText;
+            let accountName = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[0].getElementsByTagName("a")[1].getElementsByTagName("span")[0].innerText;
             let content = extractTextFromHTMLCollection(articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1]?.children[0]?.children[0]?.children);
             let nbPartInteraction = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children.length;
             let nbComments = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[0].getElementsByTagName("span")[0].innerText;

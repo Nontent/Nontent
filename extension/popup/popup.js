@@ -1,6 +1,17 @@
-window.onload = function () {
+window.onload = async function () {
 
     let statusGetPostsTwitter = false;
+
+    await chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            action: "getStatusPostsTwitter"
+        }, function (response) {
+            statusGetPostsTwitter = response.statusGetPostsTwitter;
+            if (statusGetPostsTwitter) {
+                document.getElementById("buttonGetPosts").innerText = "Cliquer pour arrêter d'extraire les posts";
+            }
+        });
+    });
 
     chrome.storage.sync.get(['tokenNontent'], function (result) {
         if (result.tokenNontent) {
