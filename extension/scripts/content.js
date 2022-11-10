@@ -109,19 +109,22 @@ function getPostTwitter(nextFonctions) {
     for (let nbArticle = 0; nbArticle < articleDOM.length; nbArticle++) {
         try {
             let post = {};
-            let accountName = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[0].getElementsByTagName("a")[1].getElementsByTagName("span")[0].innerText;
-            let content = extractTextFromHTMLCollection(articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1]?.children[0]?.children[0]?.children);
+            let username = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[0].getElementsByTagName("a")[1].getElementsByTagName("span")[0].innerText;
+            let postLink = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[0].getElementsByTagName("a")[2].href;
+            let id = postLink.split("/").at(-1);
+            let text = extractTextFromHTMLCollection(articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1]?.children[0]?.children[0]?.children);
             let nbPartInteraction = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children.length;
             let nbComments = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[0].getElementsByTagName("span")[0].innerText;
             let nbRetweets = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[1].getElementsByTagName("span")[0].innerText;
             let nbLikes = articleDOM[nbArticle]?.children[0]?.children[0]?.children[0]?.children[1]?.children[1]?.children[1].children[nbPartInteraction - 1].children[0].children[2].getElementsByTagName("span")[0].innerText;
-            post.accountName = accountName;
-            post.content = content;
+            post.username = username;
+            post.id = id;
+            post.text = text;
             //remove space in string
             post.nbComments = convertStringToInt(nbComments);
             post.nbRetweets = convertStringToInt(nbRetweets);
             post.nbLikes = convertStringToInt(nbLikes);
-            if (post.accountName && post.accountName !== "") {
+            if (post.username && post.username !== "") {
                 posts.push(post);
             }
         } catch (error) {
@@ -130,7 +133,7 @@ function getPostTwitter(nextFonctions) {
     }
 
     //delete doublon posts
-    posts = posts.filter((post, index, self) => index === self.findIndex((t) => (t.accountName === post.accountName && t.content === post.content)));
+    posts = posts.filter((post, index, self) => index === self.findIndex((t) => (t.username === post.username && t.text === post.text)));
     next(nextFonctions);
 }
 
