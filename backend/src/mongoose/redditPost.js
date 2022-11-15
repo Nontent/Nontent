@@ -76,6 +76,16 @@ exports.getRedditPostsByUsername = async (username) => {
     throw new Error();
 }
 
+exports.getRedditPostsWithFilter = async (filter) => {
+    try {
+        await db.connect();
+        return await redditPosts.find(filter).exec();
+    } catch (error) {
+        console.log('ERROR IN getRedditPostsWithFilter FUNCTION => ', error);
+    }
+    throw new Error();
+}
+
 exports.checkIfExist = async (title, subreddit) => {
     try {
         await db.connect();

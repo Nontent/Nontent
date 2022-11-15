@@ -9,13 +9,13 @@ const UserService = require('../user/user.service')
 const fetch = (...args) =>
 	import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-const redditRouter = require('express').Router()
+const userRedditRouter = require('express').Router()
 
 require('dotenv').config();
 
 
 //// Return refresh_token, access_token and expiration date + update current user.
-redditRouter.post('/fetch/:userId', async (req, res) => {
+userRedditRouter.post('/fetch/:userId', async (req, res) => {
     try {
             // const user = await Auth.authenticationService(req);
             // if (!user) return res.status(403).json({
@@ -38,9 +38,9 @@ redditRouter.post('/fetch/:userId', async (req, res) => {
             upvoted = await response.json();
             upvotedCount = 0;
             for(var post of upvoted["data"]["children"]) {
-                upvotedCount ++;
                 checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
                 if(post.data.author != username && !checkIfExist) {
+                    upvotedCount ++;
                     redditPost.addRedditPost({
                         username: username,
                         subreddit: post.data.subreddit,
@@ -57,9 +57,9 @@ redditRouter.post('/fetch/:userId', async (req, res) => {
             downvoted = await response.json();
             downvotedCount = 0;
             for(var post of downvoted["data"]["children"]) {
-                downvotedCount ++;
                 checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
                 if(post.data.author != username && !checkIfExist) {
+                    downvotedCount ++;
                     redditPost.addRedditPost({
                         username: username,
                         subreddit: post.data.subreddit,
@@ -76,9 +76,9 @@ redditRouter.post('/fetch/:userId', async (req, res) => {
             submitted = await response.json();
             submittedCount = 0;
             for(var post of submitted["data"]["children"]) {
-                submittedCount ++;
                 checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
-                if(post.data.author != username && !checkIfExist) {
+                if(!checkIfExist) {
+                    submittedCount ++;
                     redditPost.addRedditPost({
                         username: username,
                         subreddit: post.data.subreddit,
@@ -102,41 +102,42 @@ redditRouter.post('/fetch/:userId', async (req, res) => {
     }
 })
 
-//// Refresh access_token route, updating user with a new access_token
-redditRouter.get('/refresh', async (req, res) => {
+userRedditRouter.get('/posts/:userId', async (req, res) => {
     try {
-        const user = await Auth.authenticationService(req);
-        if (!user) return res.status(403).json({
-            message: "Unauthorized",
-            status: 403
-        });
-        let refreshToken = user.redditRefreshToken;
-        let encodedHeader = Buffer.from(`${REDDIT_CLIENT_ID}:${REDDIT_CLIENT_SECRET}`).toString("base64");
-        let response = await fetch('https://www.reddit.com/api/v1/access_token', {
-            method: 'POST',
-            body: `grant_type=refresh_token&refresh_token=${refreshToken}&redirect_uri=http://localhost:3000`,
-            headers: {authorization: `Basic ${encodedHeader}`, 'Content-Type': 'application/x-www-form-urlencoded'}
-        })
-        let accessToken = await response.json();
-        res.header("Access-Control-Allow-Origin", "*");
-        const options = {
-            redditAccessToken: accessToken.access_token,
-            redditTokenExpiration: Date.now(),
+        const userId = req.params.userId;
+        const filter = req.query.filter;
+        const user = await User.getUserById(userId);
+        if (!user.redditUsername || !user.redditAccessToken) {
+            return res.json({
+                message: "Erreur à la récuperation de l'utilisateur",
+            });
         }
-        const updatedUser = await UserService.userUpdateService(user._id, options)
-        if (!updatedUser) {
-            res.status(401).json({
-                message: 'User not updated'
-            })
+        accessToken = user.redditAccessToken;
+        username = user.redditUsername;
+        switch (filter) {
+            case 'all':
+                posts = await redditPost.getRedditPostsByUsername(username);
+                break;
+            case 'upvoted':
+                posts = await redditPost.getRedditPostsWithFilter({ upvoted: true, isAuthor: false })
+                break;
+            case 'downvoted':
+                posts = await redditPost.getRedditPostsWithFilter({ downvoted: true })
+                break;
+            case 'posted':
+                posts = await redditPost.getRedditPostsWithFilter({ isAuthor: true })
+                break;
+            default: 
+                return res.send('Unrecognized filter');
         }
         return res.status(200).json({
-            "accessToken": accessToken,
+            "userRedditPosts": posts,
         });
-        } 
-    catch(e) {
+    }
+    catch(err) {
         console.log('ERROR reddit OAuth => ', err);
         return res.send(err);
     }
 })
 
-module.exports = redditRouter
+module.exports = userRedditRouter
