@@ -14,7 +14,8 @@ const userRedditRouter = require('express').Router()
 require('dotenv').config();
 
 
-//// Return refresh_token, access_token and expiration date + update current user.
+//// Fetch route for reddit API. This route get all posts from :userId, and add them to our database.
+//// Return : String, with information on added posts.
 userRedditRouter.post('/fetch/:userId', async (req, res) => {
     try {
             // const user = await Auth.authenticationService(req);
@@ -102,6 +103,8 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
     }
 })
 
+//// Get posts from :userId.
+//// Query parameter : filter. Accepted values : all, upvoted, downvoted, posted.
 userRedditRouter.get('/posts/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
