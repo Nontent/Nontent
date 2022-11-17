@@ -5,7 +5,8 @@ const REDDIT_CLIENT_SECRET = "ymZ7IBmNSn67SVb5ZDKhgZNXXUBfYA";
 const Auth = require('../../shared/auth/auth.service');
 const User = require('../../mongoose/user');
 const redditPost = require('../../mongoose/redditPost');
-const UserService = require('../user/user.service')
+const redditSub = require('../../mongoose/redditSub');
+const { response } = require('express');
 const fetch = (...args) =>
 	import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -14,29 +15,24 @@ const userRedditRouter = require('express').Router()
 require('dotenv').config();
 
 
-//// Fetch route for reddit API. This route get all posts from :userId, and add them to our database.
+//// Fetch route for reddit API. This route get all posts from :userId, his subreddits and add them to our database.
 //// Return : String, with information on added posts.
 userRedditRouter.post('/fetch/:userId', async (req, res) => {
     try {
-            // const user = await Auth.authenticationService(req);
-            // if (!user) return res.status(403).json({
-            //     message: "Unauthorized",
-            //     status: 403
-            // });
-            const userId = req.params.userId;
-            const user = await User.getUserById(userId);
-            if (!user.redditUsername || !user.redditAccessToken) {
+            var userId = req.params.userId;
+            var userData = await User.getUserById(userId);
+            if (!userData.redditUsername || !userData.redditAccessToken) {
                 return res.json({
                     message: "Erreur à la récuperation de l'utilisateur",
                 });
             }
-            accessToken = user.redditAccessToken;
-            username = user.redditUsername;
-            response = await fetch(`https://oauth.reddit.com/user/${username}/upvoted`, {
+            accessToken = userData.redditAccessToken;
+            username = userData.redditUsername;
+            responseData = await fetch(`https://oauth.reddit.com/user/${username}/upvoted`, {
                 method: 'GET',
                 headers: {authorization: `Bearer ${accessToken}`}
             })
-            upvoted = await response.json();
+            upvoted = await responseData.json();
             upvotedCount = 0;
             for(var post of upvoted["data"]["children"]) {
                 checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
@@ -47,15 +43,15 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
                         subreddit: post.data.subreddit,
                         title: post.data.title,
                         upvoted: true,
-                        totalUpvotes: post.data.ups
+                        totalUpvote: post.data.ups
                     });
                 }
             }
-            response = await fetch(`https://oauth.reddit.com/user/${username}/downvoted`, {
+            responseData = await fetch(`https://oauth.reddit.com/user/${username}/downvoted`, {
                 method: 'GET',
                 headers: {authorization: `Bearer ${accessToken}`}
             })
-            downvoted = await response.json();
+            downvoted = await responseData.json();
             downvotedCount = 0;
             for(var post of downvoted["data"]["children"]) {
                 checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
@@ -66,15 +62,15 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
                         subreddit: post.data.subreddit,
                         title: post.data.title,
                         downvoted: true,
-                        totalUpvotes: post.data.ups
+                        totalUpvote: post.data.ups
                     });
                 }
             }
-            response = await fetch(`https://oauth.reddit.com/user/${username}/submitted`, {
+            responseData = await fetch(`https://oauth.reddit.com/user/${username}/submitted`, {
                 method: 'GET',
                 headers: {authorization: `Bearer ${accessToken}`}
             })
-            submitted = await response.json();
+            submitted = await responseData.json();
             submittedCount = 0;
             for(var post of submitted["data"]["children"]) {
                 checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
@@ -86,37 +82,54 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
                         title: post.data.title,
                         isAuthor: true,
                         upvoted: true,
-                        totalUpvotes: post.data.ups
+                        totalUpvote: post.data.ups
                     });
                 }
             }
+            responseData = await fetch(`https://oauth.reddit.com/subreddits/mine/subscriber`, {
+                method: 'GET',
+                headers: {authorization: `Bearer ${accessToken}`}
+            })
+            subreddits = await responseData.json();
+            userSubs = [];
+            for(var post of subreddits["data"]["children"]) {
+                userSubs.push({ title: post.data.title, description: post.data.description });
+            }
+            query = {
+                username: username,
+                subreddit: userSubs
+            },
+
+            redditSub.updateIfExist(query);
 
             return res.send(`Added posts for user with id ${userId}
                             - Upvoted posts: ${upvotedCount}
                             - Downvoted posts: ${downvotedCount}
-                            - Submitted posts: ${submittedCount}`);
+                            - Submitted posts: ${submittedCount}
+                            - User's subreddits updated`);
 
-        } 
+    } 
     catch(err) {
-        console.log('ERROR reddit OAuth => ', err);
+        console.log('ERROR reddit FetchUserReddit => ', err);
         return res.send(err);
     }
 })
+
 
 //// Get posts from :userId.
 //// Query parameter : filter. Accepted values : all, upvoted, downvoted, posted.
 userRedditRouter.get('/posts/:userId', async (req, res) => {
     try {
-        const userId = req.params.userId;
-        const filter = req.query.filter;
-        const user = await User.getUserById(userId);
-        if (!user.redditUsername || !user.redditAccessToken) {
+        var userId = req.params.userId;
+        var filter = req.query.filter;
+        var userData = await User.getUserById(userId);
+        if (!userData.redditUsername || !userData.redditAccessToken) {
             return res.json({
                 message: "Erreur à la récuperation de l'utilisateur",
             });
         }
-        accessToken = user.redditAccessToken;
-        username = user.redditUsername;
+        accessToken = userData.redditAccessToken;
+        username = userData.redditUsername;
         switch (filter) {
             case 'all':
                 posts = await redditPost.getRedditPostsByUsername(username);
@@ -138,9 +151,33 @@ userRedditRouter.get('/posts/:userId', async (req, res) => {
         });
     }
     catch(err) {
-        console.log('ERROR reddit OAuth => ', err);
+        console.log('ERROR reddit getUserPosts => ', err);
         return res.send(err);
     }
 })
+
+//// Get subs from :userId
+userRedditRouter.get('/subs/:userId', async (req, res) => {
+    try {
+        var userId = req.params.userId;
+        var userData = await User.getUserById(userId);
+        if (!userData.redditUsername || !userData.redditAccessToken) {
+            return res.json({
+                message: "Erreur à la récuperation de l'utilisateur",
+            });
+        }
+        username = userData.redditUsername;
+        subs = await redditSub.getSubsByUsername(username);
+        return res.status(200).json({
+            "userRedditSubs": subs,
+        });
+    }
+    catch(err) {
+        console.log('ERROR reddit getUserSubs => ', err);
+        return res.send(err);
+    }
+})
+
+
 
 module.exports = userRedditRouter

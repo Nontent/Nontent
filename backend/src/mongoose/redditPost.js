@@ -28,7 +28,7 @@ const CollectionSchema = new Mongoose.Schema({
         type: Boolean,
         default: false
     },
-    totalUpvotes: {
+    totalUpvote: {
         type: Number,
         default: null
     }
