@@ -36,7 +36,7 @@ redditRouter.get('/', async (req, res) => {
         let userData = await userResponse.json();
         const options = {
             redditAccessToken: accessToken.access_token,
-            redditTokenExpiration: Date.now(),
+            redditTokenCreationDate: Date.now(),
             redditRefreshToken: accessToken.refresh_token,
             redditUsername: userData.name
         }
@@ -50,7 +50,7 @@ redditRouter.get('/', async (req, res) => {
             "tokenInfo": accessToken,
         });
         } 
-    catch(e) {
+    catch(err) {
         console.log('ERROR reddit OAuth => ', err);
         return res.send(err);
     }
@@ -87,7 +87,7 @@ redditRouter.get('/refresh', async (req, res) => {
             "accessToken": accessToken,
         });
         } 
-    catch(e) {
+    catch(err) {
         console.log('ERROR reddit OAuth => ', err);
         return res.send(err);
     }
