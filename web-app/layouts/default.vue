@@ -1,27 +1,23 @@
 <template>
-	<v-app dark>
-		<NavBar />
-		<v-main>
-			<v-container>
-				<Nuxt />
-			</v-container>
-		</v-main>
-	</v-app>
+  <div>
+    <NavBar />
+    <Nuxt />
+  </div>
 </template>
 
 <script>
-import NavBar from '../components/NavBar.vue'
+import NavBar from "../components/NavBar.vue";
 export default {
-	name: 'DefaultLayout',
-	components: { NavBar },
-	mounted() {
-		this.$store.subscribe((mutation, state) => {
-			localStorage.setItem('store', JSON.stringify(state))
-		})
-	},
-	beforeCreate() {
-		this.$store.commit('incrementCounter')
-		this.$store.commit('initialiseStore')
-	},
-}
+  name: "DefaultLayout",
+  components: { NavBar },
+  mounted() {
+    this.$store.subscribe((mutation, state) => {
+      localStorage.setItem("store", JSON.stringify(state));
+    });
+  },
+  beforeCreate() {
+    this.$store.commit("incrementCounter");
+    this.$store.commit("initialiseStore");
+  },
+};
 </script>
