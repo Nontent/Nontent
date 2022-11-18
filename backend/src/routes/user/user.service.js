@@ -20,8 +20,14 @@ exports.userCreationService = async (userBody) => {
     if (userBody.password) {
         userBody.password = md5(userBody.password)
     }
-    const userId = await User.addUser(userBody);
-    return { userId: userId }
+    var user = await User.getUserByEmail(userBody.email);
+    if(!user) {
+        const userId = await User.addUser(userBody);
+        return { userId: userId }
+    }
+    else {
+        throw new Error('Authentication error');
+    }
 }
 
 exports.userUpdateService = async (userId, userBody) => {
