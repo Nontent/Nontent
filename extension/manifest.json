@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Nontent Extension",
+  "version": "1.0.1",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/popup.png"
+  },
+  "description": "Récupère et envoie les posts de twitter à Nontent",
+  "content_scripts": [
+    {
+      "js": ["scripts/content.js"],
+      "matches": [
+        "https://twitter.com/home/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "images/popup.png",
+    "48": "images/popup.png",
+    "128": "images/popup.png"
+  },
+  "permissions": ["activeTab", "storage"]
+}

@@ -8,7 +8,7 @@
 			</v-card-title>
 			<v-card-text>
 				<v-avatar>
-					<img :src="profile.avatar" />
+					<img :src="profile.avatar" alt="profile_picture" />
 				</v-avatar>
 				<br />
 				<span class="text-h6 mt-2"
@@ -31,5 +31,3 @@ export default {
 	},
 }
 </script>
-<style>
-</style>
