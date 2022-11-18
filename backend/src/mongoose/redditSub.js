@@ -27,7 +27,7 @@ try {
 exports.addRedditSub = async (redditSub) => {
     try {
         await db.connect();
-        createdSub = await redditSubs.create(redditSub);
+        let createdSub = await redditSubs.create(redditSub);
         return createdSub._id;
     } catch (error) {
         console.log('ERROR IN addRedditSub FUNCTION => ', error);
@@ -62,8 +62,8 @@ exports.getSubsByUsername = async (username) => {
 exports.updateIfExist = async (query) => {
     try {
         await db.connect();
-        update = { expire: new Date() },
-        options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        let update = { expire: new Date() };
+        let options = { upsert: true, new: true, setDefaultsOnInsert: true };
         return await redditSubs.findOneAndUpdate({ "username" : query.username }, { $set : {"subreddit" : query.subreddit }}, options);
     } catch (error) {
         console.log('ERROR IN updateIfExist FUNCTION => ', error);

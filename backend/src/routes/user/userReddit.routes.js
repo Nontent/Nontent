@@ -23,16 +23,16 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
                     message: "Erreur à la récuperation de l'utilisateur",
                 });
             }
-            accessToken = userData.redditAccessToken;
-            username = userData.redditUsername;
-            responseData = await fetch(`https://oauth.reddit.com/user/${username}/upvoted`, {
+            var accessToken = userData.redditAccessToken;
+            var username = userData.redditUsername;
+            var responseData = await fetch(`https://oauth.reddit.com/user/${username}/upvoted`, {
                 method: 'GET',
                 headers: {authorization: `Bearer ${accessToken}`}
             })
-            upvoted = await responseData.json();
-            upvotedCount = 0;
-            for(var post of upvoted["data"]["children"]) {
-                checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
+            var upvoted = await responseData.json();
+            var upvotedCount = 0;
+            for(let post of upvoted["data"]["children"]) {
+                let checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
                 if(post.data.author != username && !checkIfExist) {
                     upvotedCount ++;
                     redditPost.addRedditPost({
@@ -48,10 +48,10 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
                 method: 'GET',
                 headers: {authorization: `Bearer ${accessToken}`}
             })
-            downvoted = await responseData.json();
-            downvotedCount = 0;
-            for(var post of downvoted["data"]["children"]) {
-                checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
+            var downvoted = await responseData.json();
+            var downvotedCount = 0;
+            for(let post of downvoted["data"]["children"]) {
+                let checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
                 if(post.data.author != username && !checkIfExist) {
                     downvotedCount ++;
                     redditPost.addRedditPost({
@@ -67,10 +67,10 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
                 method: 'GET',
                 headers: {authorization: `Bearer ${accessToken}`}
             })
-            submitted = await responseData.json();
-            submittedCount = 0;
-            for(var post of submitted["data"]["children"]) {
-                checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
+            var submitted = await responseData.json();
+            var submittedCount = 0;
+            for(let post of submitted["data"]["children"]) {
+                let checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
                 if(!checkIfExist) {
                     submittedCount ++;
                     redditPost.addRedditPost({
@@ -87,13 +87,13 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
                 method: 'GET',
                 headers: {authorization: `Bearer ${accessToken}`}
             })
-            subreddits = await responseData.json();
-            userSubs = [];
-            for(var post of subreddits["data"]["children"]) {
+            var subreddits = await responseData.json();
+            var userSubs = [];
+            for(let post of subreddits["data"]["children"]) {
                 userSubs.push({ title: post.data.title, description: post.data.description });
             }
 
-            query = {
+            let query = {
                 username: username,
                 subreddit: userSubs
             };
