@@ -35,7 +35,7 @@ const CollectionSchema = new Mongoose.Schema({
         type: String,
         default: null
     },
-    redditTokenExpiration: {
+    redditTokenDate: {
         type: String,
         default: null
     },
@@ -102,6 +102,10 @@ exports.addUser = async (user) => {
 exports.updateUser = async (userId, update) => {
     try {
         await db.connect();
+        test = await Users.findByIdAndUpdate(userId, update, {
+            new: true
+        });
+        console.log("username:" + test.redditUsername + "suite:" + test.redditAccessToken); 
         return await Users.findByIdAndUpdate(userId, update, {
             new: true
         });

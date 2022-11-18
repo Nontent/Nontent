@@ -3,22 +3,10 @@ const UserService = require ('./user.service');
 
 const userRouter = require('express').Router();
 
-userRouter.post('/register', async (req, res) => {
+userRouter.post('/', async (req, res) => {
     try {
         const userRequest = UserService.isUserCreationRequestCorrect(req.body);
         const response = await UserService.userCreationService(userRequest);
-        return res.send(response);
-    } catch (error) {
-        console.log('ERROR => ', error.message);
-        res.status(401).json({ error: 'Authentication failed' });
-    }
-
-});
-
-userRouter.post('/login', async (req, res) => {
-    try {
-        const userRequest = UserService.isUserCreationRequestCorrect(req.body);
-        const response = await UserService.userAuthService(userRequest);
         return res.send(response);
     } catch (error) {
         console.log('ERROR => ', error.message);

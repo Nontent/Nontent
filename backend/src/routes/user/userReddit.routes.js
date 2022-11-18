@@ -1,7 +1,4 @@
 
-////TODO(@BLANC Nicolas): Move secretskeys in .env file 
-const REDDIT_CLIENT_ID = "TN6bnT8p1cfnwH7hkZTZuw";
-const REDDIT_CLIENT_SECRET = "ymZ7IBmNSn67SVb5ZDKhgZNXXUBfYA";
 const Auth = require('../../shared/auth/auth.service');
 const User = require('../../mongoose/user');
 const redditPost = require('../../mongoose/redditPost');
@@ -95,11 +92,11 @@ userRedditRouter.post('/fetch/:userId', async (req, res) => {
             for(var post of subreddits["data"]["children"]) {
                 userSubs.push({ title: post.data.title, description: post.data.description });
             }
+
             query = {
                 username: username,
                 subreddit: userSubs
-            },
-
+            };
             redditSub.updateIfExist(query);
 
             return res.send(`Added posts for user with id ${userId}
