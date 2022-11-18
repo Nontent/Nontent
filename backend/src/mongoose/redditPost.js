@@ -89,11 +89,8 @@ exports.getRedditPostsWithFilter = async (filter) => {
 exports.checkIfExist = async (title, subreddit) => {
     try {
         await db.connect();
-        let postCount = await Mongoose.model('redditPosts').countDocuments({title: title, subreddit: subreddit});
-        if(postCount == 0)
-            return false;
-        else
-            return true
+        let postCount = Mongoose.model('redditPosts').countDocuments({title: title, subreddit: subreddit});
+        return postCount
     } catch (error) {
         console.log('ERROR IN checkIfExist, redditPost FUNCTION => ', error);
     }

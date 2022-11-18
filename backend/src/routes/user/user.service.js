@@ -30,19 +30,6 @@ exports.userCreationService = async (userBody) => {
     }
 }
 
-exports.userAuthService = async (userBody) => {
-    if (userBody.password) {
-        userBody.password = md5(userBody.password)
-    }
-    var user = await User.getUserByEmail(userBody.email);
-    if(user) {
-        return { userId: user._id}
-    }
-    else {
-        throw new Error('Authentication error');
-    }
-}
-
 exports.userUpdateService = async (userId, userBody) => {
     console.log('props', userId, userBody)
     if (!userId || !userBody) {
