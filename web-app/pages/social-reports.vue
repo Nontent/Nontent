@@ -1,7 +1,9 @@
 <template>
-	<div>Social Reports</div>
+	<TwitterBasicViewer />
 </template>
 <script>
-export default {};
+export default {
+	name: "SocialReports",
+};
 </script>
 <style></style>

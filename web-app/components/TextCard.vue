@@ -1,5 +1,5 @@
 <template>
-	<div class="container mx-auto border-black border-4 p-4">
+	<div class="main-box">
 		<div class="text-xl font-bold">{{ title }}</div>
 		<span class="text-lg font-light italic">{{ subtitle }}</span>
 		<p class="break-words text-sm">

@@ -12,6 +12,6 @@
     "nuxt": "3.0.0"
   },
   "dependencies": {
-    "@heroicons/vue": "^2.0.13"
+    "nuxt-icon": "^0.1.7"
   }
 }

@@ -6,4 +6,8 @@
 	.btn {
 		@apply flex justify-center border-b-2 border-r-2 border-black;
 	}
+
+	.main-box {
+		@apply container mx-auto border-black border-4 p-4 my-2;
+	}
 }

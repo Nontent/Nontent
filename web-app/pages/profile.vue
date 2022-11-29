@@ -2,6 +2,8 @@
 	<div>Profile</div>
 </template>
 <script>
-export default {};
+export default {
+	name: "Profile",
+};
 </script>
 <style></style>
