@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.btn {
+		@apply flex justify-center border-b-2 border-r-2 border-black;
+	}
+}
