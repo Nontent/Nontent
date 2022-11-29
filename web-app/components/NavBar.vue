@@ -1,5 +1,6 @@
 <template>
-	<div class="flex h-16 w-auto p-4 border-4 mx-2 my-2 border-black">
+	<div class="container flex h-16 mx-auto p-4 border-4 my-2 border-black">
+		<!-- <div class="flex h-16 w-auto mx-2 p-4 border-4 my-2 border-black"> -->
 		<span class="flex-none justify-center font-bold"> nontent. </span>
 		<span class="grow"></span>
 		<div class="grow-0 space-x-4">
