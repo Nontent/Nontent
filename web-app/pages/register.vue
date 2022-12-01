@@ -13,7 +13,7 @@
 					placeholder="EMAIL"
 				/>
 			</div>
-			<div class="input-form-box">
+			<div class="input-form-box mb-11">
 				<label for="email"></label
 				><input
 					id="email"
@@ -22,14 +22,23 @@
 					placeholder="PASSWORD"
 				/>
 			</div>
+			<div class="input-form-box">
+				<label for="email"></label
+				><input
+					id="email"
+					type="text"
+					class="outline-none w-full"
+					placeholder="CONFIRM PASSWORD"
+				/>
+			</div>
 			<div class="flex justify-center">
 				<div class="group mt-9">
 					<button
 						type="button"
-						@click="login"
+						@click="register"
 						class="btn bg-amber-500 group-hover:bg-amber-600"
 					>
-						Login
+						Register
 					</button>
 					<div class="drop-shadow-box"></div>
 				</div>
@@ -38,10 +47,10 @@
 				<div class="group mt-9">
 					<button
 						type="button"
-						@click="toRegister"
+						@click="toLogin"
 						class="btn bg-cyan-800 group-hover:bg-cyan-900"
 					>
-						Register
+						Login
 					</button>
 					<div class="drop-shadow-box"></div>
 				</div>
@@ -52,12 +61,12 @@
 
 <script>
 export default {
-	name: "Login",
+	name: "Register",
 	methods: {
-		toRegister() {
-			this.$router.push("/register");
+		toLogin() {
+			this.$router.push("/login");
 		},
-		login() {
+		register() {
 			this.$router.push("/");
 		},
 	},

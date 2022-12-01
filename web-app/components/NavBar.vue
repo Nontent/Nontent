@@ -1,5 +1,8 @@
 <template>
-	<div v-if="$route.name != 'login'" class="flex h-16 main-box">
+	<div
+		v-if="$route.name != 'login' && $route.name != 'register'"
+		class="flex h-16 container mx-auto border-black border-4 p-4 my-2 relative z-0 bg-white"
+	>
 		<!-- <div class="flex h-16 w-auto mx-2 p-4 border-4 my-2 border-black"> -->
 		<span class="flex-none justify-center font-bold">
 			<a href="/">nontent.</a>
@@ -20,7 +23,7 @@
 			<div class="group">
 				<nuxt-link
 					to="/settings"
-					class="bg-amber-400 transition delay-100 ease-in-out h-10 w-10 btn group-hover:bg-amber-500"
+					class="bg-amber-400 transition delay-100 ease-in-out h-10 w-10 btn-nav-bar group-hover:bg-amber-500"
 				>
 					<Icon
 						name="mingcute:settings-1-fill"
@@ -28,12 +31,12 @@
 						class="h-8 w-8 self-center"
 					/>
 				</nuxt-link>
-				<div class="drop-shaow-box-navbar"></div>
+				<div class="drop-shadow-box-navbar"></div>
 			</div>
 			<div class="group">
 				<nuxt-link
 					to="/login"
-					class="bg-gray-700 transition ease-in-out h-10 w-10 btn delay-100 group-hover:bg-gray-800"
+					class="bg-gray-700 transition ease-in-out h-10 w-10 btn-nav-bar delay-100 group-hover:bg-gray-800"
 				>
 					<Icon
 						name="mingcute:exit-line"
@@ -41,7 +44,7 @@
 						class="h-8 w-8 self-center"
 					/>
 				</nuxt-link>
-				<div class="drop-shaow-box-navbar"></div>
+				<div class="drop-shadow-box-navbar"></div>
 			</div>
 		</div>
 	</div>
@@ -60,10 +63,6 @@ export default {
 				{
 					name: "social reports",
 					link: "/social-reports",
-				},
-				{
-					name: "profile",
-					link: "/profile",
 				},
 			],
 			listButtons: [

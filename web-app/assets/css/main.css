@@ -8,10 +8,10 @@
 	}
 
 	.main-box {
-		@apply container mx-auto border-black border-4 p-4 my-2;
+		@apply container mx-auto border-black border-4 p-4 my-2 bg-white;
 	}
 
-	.drop-shaow-box-navbar {
+	.drop-shadow-box-navbar {
 		@apply absolute transition ease-in-out delay-100 h-10 w-10 bg-black translate-x-1 -translate-y-9 -z-10 group-hover:-translate-y-10 group-hover:translate-x-0;
 	}
 
