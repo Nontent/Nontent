@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer components {
-	.btn {
+	.btn-nav-bar {
 		@apply flex justify-center border-2 border-black;
 	}
 
@@ -11,12 +11,20 @@
 		@apply container mx-auto border-black border-4 p-4 my-2;
 	}
 
-	.login-box {
-		@apply container mx-auto border-black border-4 p-4 my-2 w-1/2;
+	.drop-shaow-box-navbar {
+		@apply absolute transition ease-in-out delay-100 h-10 w-10 bg-black translate-x-1 -translate-y-9 -z-10 group-hover:-translate-y-10 group-hover:translate-x-0;
 	}
 
-	.drop-shaow-box-navbar {
-		@apply absolute transition ease-in-out delay-100 h-10 w-10 bg-black translate-x-1 -translate-y-9 -z-10 group-hover:-translate-y-10 group-hover:translate-x-0
+	.input-form-box {
+		@apply container mx-auto self-center border-b-4 border-l-4 border-black pl-2 pb-1 bg-white;
+	}
+
+	.drop-shadow-box {
+		@apply relative translate-x-2 translate-y-4 -z-10 h-8 w-28 bg-black transition delay-100 ease-in-out group-hover:translate-y-2 group-hover:translate-x-0;
+	}
+
+	.btn {
+		@apply absolute h-10 w-28 border-2 border-black text-white transition delay-100 ease-in-out hover:drop-shadow
 	}
 
 }
