@@ -1,5 +1,5 @@
 <template>
-	<div class="flex h-16 main-box">
+	<div v-if="$route.name != 'login'" class="flex h-16 main-box">
 		<!-- <div class="flex h-16 w-auto mx-2 p-4 border-4 my-2 border-black"> -->
 		<span class="flex-none justify-center font-bold">
 			<a href="/">nontent.</a>
