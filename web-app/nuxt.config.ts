@@ -2,4 +2,10 @@
 export default defineNuxtConfig({
     modules: ['@nuxtjs/tailwindcss', 'nuxt-icon'],
 	css: ['~/assets/css/main.css'],
+	router: {
+		options: {
+			linkActiveClass: 'active',
+			linkExactActiveClass: 'exact-active',
+		},
+	},
 })
