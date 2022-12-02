@@ -127,10 +127,13 @@ exports.getUserByState = async (state) => {
     }
     throw new Error();
 }
-/*export async function functionName(email: string): Promise<User> {
-     try {
 
-     } catch (error) {
-         console.log('ERROR IN functionName FUNCTION => ', error);
-     }
-}*/
+exports.deleteUser = async (userId) => {
+    try {
+        await db.connect();
+        return await Users.findByIdAndRemove(userId);
+    }
+    catch (error) {
+        console.log('ERROR IN deleteUser FUNCTION => ', error);
+    }
+}
