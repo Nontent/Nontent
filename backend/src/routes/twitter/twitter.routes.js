@@ -10,41 +10,23 @@ require('dotenv').config();
 
 const twitterRouter = require('express').Router()
 
-twitterRouter.get('/me', async (req, res) => {
-    try {
-        const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
-        if (!user) return res.status(403).json({
-            message: "Unauthorized",
-            status: 403
-        })
-        if (!user.twitterAccessToken) {
-            return res.status(405).json({
-                message: "No access token provided"
-            })
-        } else {
-            const client = new TwitterApi(user.twitterAccessToken);
-            const meUser = await client.v2.me();
-            console.log(meUser)
-            data = meUser
-            return res.status(200).json({
-                data
-            })
-        }
-    } catch (e) {
-        console.error(e)
-        return res.json({
-            message: 'error: ' + e
-        })
-    }
-})
-
 
 twitterRouter.get('/user', async (req, res) => {
+    /**
+     *Get a single user by ID.
+     *
+     *Method: .user()
+     *
+     *Endpoint: users/:id
+     *
+     *Right level: Read-only
+     *
+     *@param {string} userId
+     *@param {UsersV2Params} options?
+     *@returns {UserV2Result}
+     */
     try {
-        console.log(req)
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -55,17 +37,15 @@ twitterRouter.get('/user', async (req, res) => {
             })
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
-            const meUser = await client.v2.user(user.twitterId);
-            console.log(meUser)
-            data = meUser
+            const meUser = await client.v2.user(user.twitterId, {"user.fields":["public_metrics", "created_at", "description", "entities", "id", "location"]});
+            data = meUser.data
             return res.status(200).json({
                 data
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
@@ -87,7 +67,6 @@ twitterRouter.get('/user/timeline', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -101,10 +80,8 @@ twitterRouter.get('/user/timeline', async (req, res) => {
             })
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
-            console.log(user.twitterId)
             const tweets = await client.v2.userTimeline(user.twitterId);
             let data = []
-            console.log(tweets)
             for await (const tweet of tweets) {
                 data.push(tweet)
                 const availableMeta = tweets.meta;
@@ -119,7 +96,7 @@ twitterRouter.get('/user/timeline', async (req, res) => {
         }
     } catch (e) {
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
@@ -140,7 +117,6 @@ twitterRouter.get('/user/home', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -153,14 +129,13 @@ twitterRouter.get('/user/home', async (req, res) => {
             const client = new TwitterApi(user.twitterAccessToken);
             const timeLine = await client.v2.homeTimeline({ exclude: 'replies' });
             data = timeLine.data.data
-            console.log(data)
             return res.status(200).json({
                 data
             })
         }
     } catch (e) {
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
@@ -182,7 +157,6 @@ twitterRouter.get('/user/mention', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -193,7 +167,6 @@ twitterRouter.get('/user/mention', async (req, res) => {
             })
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
-            console.log(user.twitterId)
             const timeLine = await client.v2.userMentionTimeline(user.twitterId);
             data = timeLine.data.data
             return res.status(200).json({
@@ -202,7 +175,7 @@ twitterRouter.get('/user/mention', async (req, res) => {
         }
     } catch (e) {
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
@@ -224,7 +197,6 @@ twitterRouter.get('/tweet', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -253,9 +225,8 @@ twitterRouter.get('/tweet', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
@@ -276,7 +247,6 @@ twitterRouter.get('/tweet/like', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -297,9 +267,8 @@ twitterRouter.get('/tweet/like', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
@@ -321,7 +290,6 @@ twitterRouter.get('/tweet/retweet', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -342,9 +310,8 @@ twitterRouter.get('/tweet/retweet', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
@@ -365,7 +332,6 @@ twitterRouter.get('/user/like', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
-        console.log("USER =>", user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -387,9 +353,8 @@ twitterRouter.get('/user/like', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
-            message: 'error: ' + e
+            message: e
         })
     }
 })
