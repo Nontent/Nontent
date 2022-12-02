@@ -11,18 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< Updated upstream
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-=======
-<<<<<<< HEAD
     "axios": "^1.2.0",
-    "dotenv": "^16.0.2",
-=======
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
->>>>>>> 8c00d0c514072ad412e88f3ca96eef2763e7890b
->>>>>>> Stashed changes
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
