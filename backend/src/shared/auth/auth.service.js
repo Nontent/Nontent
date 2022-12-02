@@ -22,7 +22,9 @@ exports.authenticationService = async (request) => {
     if (!userToken.userId) throw new Error();
     const userFromBDD = await User.getUserById(userToken.userId)
         
-    if( !userFromBDD) throw new Error("Unauthorized")
+    if(!userFromBDD) 
+        throw new Error("Unauthorized");
+    else
    // TODO: Implementation de la vérification du userId
-    return  userFromBDD;
+        return  userFromBDD;
 }

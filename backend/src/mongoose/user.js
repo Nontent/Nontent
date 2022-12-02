@@ -127,3 +127,13 @@ exports.getUserByState = async (state) => {
     }
     throw new Error();
 }
+
+exports.deleteUser = async (userId) => {
+    try {
+        await db.connect();
+        return await Users.findByIdAndRemove(userId);
+    }
+    catch (error) {
+        console.log('ERROR IN deleteUser FUNCTION => ', error);
+    }
+}

@@ -35,12 +35,19 @@ exports.userUpdateService = async (userId, userBody) => {
     if (!userId || !userBody) {
         throw new Error('Props invalid');
     }
-    return User.updateUser(userId, userBody)
+    return User.updateUser(userId, userBody);
+}
+
+exports.userDeleteService = async (userId) => {
+    if(!userId) {
+        throw new Error();
+    }
+    return User.deleteUser(userId);
 }
 
 exports.getUserByCodeTwitter = async(code)=>{
     if(!code){
         throw new Error('Please provide code');
     }
-    return User.getUserByCode(code)
+    return User.getUserByCode(code);
 }
