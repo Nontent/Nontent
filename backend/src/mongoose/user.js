@@ -31,6 +31,23 @@ const CollectionSchema = new Mongoose.Schema({
         type: String,
         default: null
     },
+
+    twitterAccessToken: {
+        type: String,
+        default: null
+    },
+    twitterRefreshToken: {
+        type: String,
+        default: null
+    },
+    twitterId: {
+        type: Number,
+        default: null
+    },
+    twitterUsername: {
+        type: String,
+        default: null
+    },
     redditAccessToken: {
         type: String,
         default: null
