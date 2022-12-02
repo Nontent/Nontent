@@ -23,7 +23,7 @@
 				/>
 			</div>
 			<div class="flex justify-center">
-				<div class="group mt-9">
+				<div class="group mt-11">
 					<button
 						type="button"
 						@click="login"
@@ -34,8 +34,11 @@
 					<div class="drop-shadow-box"></div>
 				</div>
 			</div>
+			<div class="flex justify-center mt-4 font-bold">
+					<p>OR</p>
+				</div>
 			<div class="flex justify-center">
-				<div class="group mt-9">
+				<div class="group mt-4">
 					<button
 						type="button"
 						@click="toRegister"

@@ -1,6 +1,6 @@
 <template>
-	<div class="main-box grid grid-cols-2 grid-rows-2 justify-items-center">
-		<div class="col-span-2">
+	<div class="main-box grid grid-cols-2 grid-rows-2 justify-self-start relative z-0 mt-11">
+		<div>
 			<Icon
 				name="mingcute:twitter-line"
 				class="h-10 w-10"
@@ -9,9 +9,21 @@
 			-
 			{{ userName }}
 		</div>
-		<div>{{ followers }} followers(s)</div>
-		<div>{{ subs }} subsription(s)</div>
-	</div>
+			<div class="grid justify-items-end group">
+					<button
+						type="button"
+						@click="home"
+						class="btn bg-gray-700 group-hover:bg-gray-800"
+						>
+						Pint to home
+						</button>
+					<div class="drop-shadow-box"></div>
+			</div>
+				<div class="grow"></div>
+				<div class="grow"></div>
+					<div>{{ followers }} followers(s)</div>
+					<div>{{ subs }} subsription(s)</div>
+</div>
 </template>
 <script>
 export default {
