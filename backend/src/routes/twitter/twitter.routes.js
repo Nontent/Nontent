@@ -44,7 +44,6 @@ twitterRouter.get('/user', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
             message: e
         })
@@ -81,10 +80,8 @@ twitterRouter.get('/user/timeline', async (req, res) => {
             })
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
-            console.log(user.twitterId)
             const tweets = await client.v2.userTimeline(user.twitterId);
             let data = []
-            console.log(tweets)
             for await (const tweet of tweets) {
                 data.push(tweet)
                 const availableMeta = tweets.meta;
@@ -132,7 +129,6 @@ twitterRouter.get('/user/home', async (req, res) => {
             const client = new TwitterApi(user.twitterAccessToken);
             const timeLine = await client.v2.homeTimeline({ exclude: 'replies' });
             data = timeLine.data.data
-            console.log(data)
             return res.status(200).json({
                 data
             })
@@ -171,7 +167,6 @@ twitterRouter.get('/user/mention', async (req, res) => {
             })
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
-            console.log(user.twitterId)
             const timeLine = await client.v2.userMentionTimeline(user.twitterId);
             data = timeLine.data.data
             return res.status(200).json({
@@ -230,7 +225,6 @@ twitterRouter.get('/tweet', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
             message: e
         })
@@ -273,7 +267,6 @@ twitterRouter.get('/tweet/like', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
             message: e
         })
@@ -317,7 +310,6 @@ twitterRouter.get('/tweet/retweet', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
             message: e
         })
@@ -361,7 +353,6 @@ twitterRouter.get('/user/like', async (req, res) => {
             })
         }
     } catch (e) {
-        console.error(e)
         return res.json({
             message: e
         })
