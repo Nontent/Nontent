@@ -31,9 +31,7 @@ const CollectionSchema = new Mongoose.Schema({
         type: String,
         default: null
     },
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
+
     twitterAccessToken: {
         type: String,
         default: null
@@ -47,8 +45,9 @@ const CollectionSchema = new Mongoose.Schema({
         default: null
     },
     twitterUsername: {
-=======
->>>>>>> Stashed changes
+        type: String,
+        default: null
+    },
     redditAccessToken: {
         type: String,
         default: null
@@ -62,10 +61,6 @@ const CollectionSchema = new Mongoose.Schema({
         default: null
     },
     redditUsername: {
-<<<<<<< Updated upstream
-=======
->>>>>>> 8c00d0c514072ad412e88f3ca96eef2763e7890b
->>>>>>> Stashed changes
         type: String,
         default: null
     }
@@ -150,16 +145,6 @@ exports.getUserByState = async (state) => {
     throw new Error();
 }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-     } catch (error) {
-         console.log('ERROR IN functionName FUNCTION => ', error);
-     }
-}*/
-
-=======
->>>>>>> Stashed changes
 exports.deleteUser = async (userId) => {
     try {
         await db.connect();
@@ -168,9 +153,4 @@ exports.deleteUser = async (userId) => {
     catch (error) {
         console.log('ERROR IN deleteUser FUNCTION => ', error);
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> 8c00d0c514072ad412e88f3ca96eef2763e7890b
->>>>>>> Stashed changes
