@@ -16,11 +16,11 @@
 	}
 
 	.input-form-box {
-		@apply container mx-auto self-center border-b-4 border-l-4 border-black pl-2 pb-1 bg-white;
+		@apply transition ease-in-out delay-75 container mx-auto self-center pl-2 pb-1 bg-white border-b-slate-500 border-b-2;
 	}
 
 	.drop-shadow-box {
-		@apply relative translate-x-2 translate-y-4 -z-10 h-8 w-28 bg-black transition delay-100 ease-in-out group-hover:translate-y-2 group-hover:translate-x-0;
+		@apply relative translate-x-1 translate-y-1 -z-10 h-10 w-28 bg-black transition delay-100 ease-in-out group-hover:translate-y-0 group-hover:translate-x-0;
 	}
 
 	.btn {
