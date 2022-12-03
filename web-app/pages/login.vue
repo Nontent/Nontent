@@ -35,8 +35,8 @@
 				</div>
 			</div>
 			<div class="flex justify-center mt-4 font-bold">
-					<p>OR</p>
-				</div>
+				<p>OR</p>
+			</div>
 			<div class="flex justify-center">
 				<div class="group mt-4">
 					<button
@@ -54,13 +54,19 @@
 </template>
 
 <script>
+import { useMainStore } from "../store/main";
 export default {
 	name: "Login",
+	setup() {
+		const store = useMainStore();
+		return { store };
+	},
 	methods: {
 		toRegister() {
 			this.$router.push("/register");
 		},
 		login() {
+			this.store.connected = true;
 			this.$router.push("/");
 		},
 	},

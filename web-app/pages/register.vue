@@ -60,13 +60,20 @@
 </template>
 
 <script>
+import { useMainStore } from "../store/main";
+
 export default {
 	name: "Register",
+	setup() {
+		const store = useMainStore();
+		return { store };
+	},
 	methods: {
 		toLogin() {
 			this.$router.push("/login");
 		},
 		register() {
+			this.store.connected = true;
 			this.$router.push("/");
 		},
 	},

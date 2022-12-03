@@ -21,17 +21,6 @@ export const useMainStore = defineStore('main', {
 	  },
 
 	  actions: {
-			setConnected: (state, connected) => {
-				  state.connected = connected;
-			},
-
-			setAccounts: (state, accounts) => {
-				  state.accounts = accounts;
-			},
-
-			setToken: (state, token) => {
-				  state.token = token;
-			},
 
 			reset() {
 				  this.counter = 0;

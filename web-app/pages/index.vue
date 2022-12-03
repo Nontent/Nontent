@@ -1,3 +1,6 @@
+<script setup>
+definePageMeta({ middleware: ["auth"] });
+</script>
 <template>
 	<div>
 		<TextCard :title="title" :content="content" />

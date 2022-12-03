@@ -35,7 +35,7 @@
 			</div>
 			<div class="group">
 				<nuxt-link
-					to="/login"
+					@click="logout"
 					class="bg-gray-700 transition ease-in-out h-10 w-10 btn-nav-bar delay-100 group-hover:bg-gray-800"
 				>
 					<Icon
@@ -51,8 +51,14 @@
 </template>
 
 <script>
+import { useMainStore } from "../store/main";
+
 export default {
 	name: "NavBar",
+	setup() {
+		const store = useMainStore();
+		return { store };
+	},
 	data() {
 		return {
 			links: [
@@ -76,6 +82,12 @@ export default {
 				},
 			],
 		};
+	},
+	methods: {
+		logout() {
+			this.store.connected = false;
+			this.$router.push("/login");
+		},
 	},
 };
 </script>
