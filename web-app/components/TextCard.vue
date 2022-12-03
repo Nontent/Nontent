@@ -1,7 +1,9 @@
 <template>
 	<div class="main-box">
 		<div class="text-xl font-bold">{{ title }}</div>
-		<span class="text-lg font-light italic">{{ subtitle }}</span>
+		<span v-if="subtitle" class="text-lg font-light italic">{{
+			subtitle
+		}}</span>
 		<p class="break-words text-sm">
 			{{ content }}
 		</p>

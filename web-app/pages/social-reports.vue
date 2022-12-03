@@ -7,8 +7,8 @@
 		/>
 		<RedditBasicViewer
 			:userName="fakeUser.name"
-			:followers="fakeUser.followers"
-			:subs="fakeUser.subs"
+			:postedPost="fakeUser.posts"
+			:likedPost="fakeUser.likedPost"
 			:subReddits="fakeUser.subReddits"
 		/>
 	</div>
@@ -29,6 +29,8 @@ export default {
 					"r/nontent",
 					"r/nontent",
 				],
+				likedPost: 1400,
+				posts: 1008,
 			},
 		};
 	},
