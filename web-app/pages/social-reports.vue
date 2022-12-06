@@ -1,42 +1,25 @@
 <script setup>
+import { useMainStore } from "../store/main";
 definePageMeta({ middleware: ["auth"] });
+const store = useMainStore();
 </script>
 <template>
 	<div>
-		<TwitterBasicViewer
-			:userName="fakeUser.name"
-			:followers="fakeUser.followers"
-			:subs="fakeUser.subs"
-		/>
-		<RedditBasicViewer
-			:userName="fakeUser.name"
-			:postedPost="fakeUser.posts"
-			:likedPost="fakeUser.likedPost"
-			:subReddits="fakeUser.subReddits"
-		/>
+		<div v-for="account in store.accounts" :key="account.provider">
+			<TwitterBasicViewer
+				v-if="account.provider === 'Twitter'"
+				:account="account"
+			/>
+			<RedditBasicViewer
+				v-if="account.provider === 'Reddit'"
+				:account="account"
+			/>
+		</div>
 	</div>
 </template>
 <script>
 export default {
 	name: "SocialReports",
-	data() {
-		return {
-			fakeUser: {
-				name: "@fakeNontentUser",
-				followers: 110,
-				subs: 1200,
-				subReddits: [
-					"r/nontent",
-					"r/nontent",
-					"r/nontent",
-					"r/nontent",
-					"r/nontent",
-				],
-				likedPost: 1400,
-				posts: 1008,
-			},
-		};
-	},
 };
 </script>
 <style></style>

@@ -8,50 +8,66 @@
 					color="#FF4500"
 				/>
 				-
-				{{ userName }}
+				{{ account.userId }}
 			</div>
 			<div class="grow"></div>
 			<div class="grid justify-items-end group">
 				<button
+					v-if="store.pinnedAccount.provider !== 'Reddit'"
+					id="pinToHomeBtnReddit"
 					type="button"
-					@click="home"
+					@click="pinToHome(account)"
 					class="btn bg-gray-700 group-hover:bg-gray-800"
 				>
-					Pint to home
+					Pin to home
+				</button>
+				<button
+					v-else
+					id="pinToHomeBtnReddit"
+					type="button"
+					@click="unpinFromHome()"
+					class="btn bg-gray-700 group-hover:bg-gray-800"
+				>
+					Unpin
 				</button>
 				<div class="drop-shadow-box"></div>
 			</div>
 		</div>
 		<div class="grid grid-cols-3 place-items-center">
-			<div>{{ subReddits.length }} sub-reddit(s) followed</div>
+			<div>{{ account.subReddits }} sub-reddit(s) followed</div>
 			<!--  nombre de sub-reddits suivis -->
-			<div>{{ postedPost }} Posted post(s)</div>
+			<div>{{ account.posts }} Posted post(s)</div>
 			<!-- nombre de posts posté -->
-			<div>{{ likedPost }} Liked post(s)</div>
+			<div>{{ account.upvotes }} Liked post(s)</div>
 			<!--  nombre de posts likés -->
 		</div>
 	</div>
 </template>
 
 <script>
+import { useMainStore } from "../store/main";
 export default {
 	name: "RedditBasicViewer",
+	setup() {
+		const store = useMainStore();
+
+		function pinToHome(account) {
+			store.pinnedAccount = account;
+		}
+		function unpinFromHome() {
+			store.pinnedAccount = {};
+		}
+
+		return {
+			store,
+			pinToHome,
+			unpinFromHome,
+		};
+	},
 	props: {
-		userName: {
-			type: String,
-			default: "userName",
-		},
-		postedPost: {
-			type: Number,
-			default: 0,
-		},
-		likedPost: {
-			type: Number,
-			default: 0,
-		},
-		subReddits: {
-			type: Array,
-			default: [],
+		account: {
+			type: Object,
+			required: true,
 		},
 	},
 };

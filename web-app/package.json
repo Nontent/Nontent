@@ -14,6 +14,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
     "@vueuse/core": "^9.6.0",
+    "axios": "^1.2.1",
     "nuxt-icon": "^0.1.7",
     "pinia": "^2.0.27"
   }

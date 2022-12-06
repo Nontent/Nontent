@@ -1,12 +1,14 @@
-import { useLocalStorage } from "@vueuse/core";
+import * as core from "@vueuse/core";
 import { defineStore } from "pinia";
 
 export const useMainStore = defineStore('main', {
 	  state: () => ({
 			counter: 0,
-			connected: useLocalStorage('connected', false),
-			accounts: useLocalStorage('accounts', []),
-			token: useLocalStorage('token', ''),
+			connected: core.useLocalStorage('connected', false),
+			accounts: core.useLocalStorage('accounts', []),
+			token: core.useLocalStorage('token', ''),
+			userId: core.useLocalStorage('userId', ''),
+			pinnedAccount: core.useLocalStorage('pinnedAccount', {}),
 	  }),
 
 	  getters: {
@@ -17,6 +19,8 @@ export const useMainStore = defineStore('main', {
 			getToken: (state) => state.token,
 
 			getCounter: (state) => state.counter,
+			
+			getUserId: (state) => state.userId,
 
 	  },
 
@@ -30,5 +34,24 @@ export const useMainStore = defineStore('main', {
 				  this.counter++;
 			},
 
+			addAccount(account) {
+				  this.accounts.push(account);
+			},
+
+			removeAccount(account) {
+				if (account === this.pinnedAccount) {
+					this.pinnedAccount = {};
+				}
+				this.accounts.splice(this.accounts.indexOf(account), 1);
+
+			},
+
+			logout() {
+				  this.connected = false;
+				  this.accounts = [];
+				  this.token = '';
+				  this.userId = '';
+				  this.pinnedAccount = {};
+			}
 		},
 });

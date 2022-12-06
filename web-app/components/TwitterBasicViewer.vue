@@ -8,40 +8,60 @@
 					color="#1DA1F2"
 				/>
 				-
-				{{ userName }}
+				{{ account.userId }}
 			</div>
 			<div class="grid justify-items-end group">
 				<button
+					v-if="store.pinnedAccount.provider !== 'Twitter'"
+					id="pinToHomeBtnTwitter"
 					type="button"
-					@click="home"
+					@click="pinToHome(account)"
 					class="btn bg-gray-700 group-hover:bg-gray-800"
 				>
-					Pint to home
+					Pin to home
+				</button>
+				<button
+					v-else
+					id="pinToHomeBtnTwitter"
+					type="button"
+					@click="unpinFromHome()"
+					class="btn bg-gray-700 group-hover:bg-gray-800"
+				>
+					Unpin
 				</button>
 				<div class="drop-shadow-box"></div>
 			</div>
 		</div>
 		<div class="grid grid-cols-2 place-items-center">
-			<div>{{ followers }} followers(s)</div>
-			<div>{{ subs }} subsription(s)</div>
+			<div>{{ account.followers }} followers(s)</div>
+			<div>{{ account.subs }} subsription(s)</div>
 		</div>
 	</div>
 </template>
 <script>
+import { useMainStore } from "../store/main";
 export default {
 	name: "TwitterBasicViewer",
+	setup() {
+		const store = useMainStore();
+
+		function pinToHome(account) {
+			store.pinnedAccount = account;
+		}
+		function unpinFromHome() {
+			store.pinnedAccount = {};
+		}
+
+		return {
+			store,
+			pinToHome,
+			unpinFromHome,
+		};
+	},
 	props: {
-		userName: {
-			type: String,
-			default: "userName",
-		},
-		followers: {
-			type: Number,
-			default: 0,
-		},
-		subs: {
-			type: Number,
-			default: 0,
+		account: {
+			type: Object,
+			required: true,
 		},
 	},
 };

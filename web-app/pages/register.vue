@@ -5,27 +5,24 @@
 				nontent.
 			</h1>
 			<div class="input-form-box mb-11">
-				<label for="email"></label
-				><input
-					id="email"
+				<input
+					id="register_email"
 					type="text"
 					class="outline-none w-full"
 					placeholder="EMAIL"
 				/>
 			</div>
 			<div class="input-form-box mb-11">
-				<label for="email"></label
-				><input
-					id="email"
+				<input
+					id="register_password"
 					type="text"
 					class="outline-none w-full"
 					placeholder="PASSWORD"
 				/>
 			</div>
 			<div class="input-form-box">
-				<label for="email"></label
-				><input
-					id="email"
+				<input
+					id="register_password_repeat"
 					type="text"
 					class="outline-none w-full"
 					placeholder="CONFIRM PASSWORD"
@@ -34,6 +31,7 @@
 			<div class="flex justify-center">
 				<div class="group mt-9">
 					<button
+						id="register_button"
 						type="button"
 						@click="register"
 						class="btn bg-amber-500 group-hover:bg-amber-600"
@@ -46,6 +44,7 @@
 			<div class="flex justify-center">
 				<div class="group mt-9">
 					<button
+						id="login_button"
 						type="button"
 						@click="toLogin"
 						class="btn bg-cyan-800 group-hover:bg-cyan-900"
@@ -61,7 +60,7 @@
 
 <script>
 import { useMainStore } from "../store/main";
-
+import Providers from "../services/providers";
 export default {
 	name: "Register",
 	setup() {
@@ -72,9 +71,21 @@ export default {
 		toLogin() {
 			this.$router.push("/login");
 		},
-		register() {
-			this.store.connected = true;
-			this.$router.push("/");
+		async register() {
+			const email = document.getElementById("register_email").value;
+			const password = document.getElementById("register_password").value;
+			const user = {
+				email: email,
+				password: password,
+			};
+			try {
+				const response = await Providers.register(user);
+				if (response.status === 200) {
+					this.$router.push("/login");
+				}
+			} catch (error) {
+				console.error(error);
+			}
 		},
 	},
 };

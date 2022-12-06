@@ -1,75 +1,70 @@
-<script setup>
-definePageMeta({ middleware: ["auth"] });
-</script>
 <template>
 	<div>
 		<div class="main-box relative z-0">
 			<div class="text-xl mb-4 font-semibold">Your profile</div>
 			<div class="input-form-box mb-8">
 				<input
-					id="email"
+					id="email_settings"
 					type="text"
-					class="outline-none w-full"
+					class="outline-none w-full disabled:opacity-40"
 					placeholder="EMAIL"
+					disabled
 				/>
 			</div>
 			<div class="input-form-box mb-8">
 				<input
-					id="email"
+					id="password_settings"
 					type="text"
-					class="outline-none w-full"
+					class="outline-none w-full disabled:opacity-40"
 					placeholder="PASSWORD"
+					disabled
 				/>
 			</div>
 			<div class="flex justify-center">
 				<div class="group">
 					<button
+						disabled
+						id="update_button"
 						type="button"
 						@click="register"
-						class="btn bg-amber-500 group-hover:bg-amber-600"
+						class="btn bg-amber-500 group-hover:bg-amber-600 disabled:opacity-40"
 					>
 						Save
 					</button>
-					<div class="drop-shadow-box"></div>
+					<button disabled class="drop-shadow-box"></button>
 				</div>
 			</div>
 			<div class="text-xl mb-4 font-semibold mt-4">
 				Your connected accounts
 			</div>
 			<div
-				v-for="account in connectedAccounts"
+				v-for="account in store.accounts"
 				:key="account"
 				class="grid grid-cols-3 gap-4 my-2 mx-4 place-items-center"
 			>
 				<div>
 					<Icon
-						:name="account.icon"
+						:name="
+							'mingcute:' +
+							account.provider.toLowerCase() +
+							'-line'
+						"
 						class="w-8 h-8"
-						:color="account.color"
+						color="#FFB100"
 					/>
-					<span class="text-md mx-2">{{ account.name }}</span>
+					<span class="text-md mx-2">{{ account.userId }}</span>
 				</div>
 				<div v-if="account.connected" class="text-green-800 font-bold">
 					connected
 				</div>
-				<div v-else class="text-red-800 font-bold">disconnected</div>
-				<div v-if="account.connected" class="group">
+				<div class="group">
 					<button
+						:id="'disconnect_button' + account.provider"
 						type="button"
-						@click="register"
+						@click="disconnect(account)"
 						class="btn bg-amber-500 group-hover:bg-amber-600"
 					>
 						Disconnect
-					</button>
-					<div class="drop-shadow-box"></div>
-				</div>
-				<div v-else class="group">
-					<button
-						type="button"
-						@click="register"
-						class="btn bg-amber-500 group-hover:bg-amber-600"
-					>
-						Connect
 					</button>
 					<div class="drop-shadow-box"></div>
 				</div>
@@ -78,31 +73,24 @@ definePageMeta({ middleware: ["auth"] });
 	</div>
 </template>
 <script>
+import { useMainStore } from "../store/main";
+
+definePageMeta({
+	middleware: "auth",
+});
+
 export default {
 	name: "Settings",
-	data() {
-		return {
-			connectedAccounts: [
-				{
-					name: "@YoutubeAccount",
-					icon: "mingcute:youtube-line",
-					color: "red",
-					connected: false,
-				},
-				{
-					name: "@RedditAccount",
-					icon: "mingcute:reddit-line",
-					color: "#FF4500",
-					connected: true,
-				},
-				{
-					name: "@TwitterAccount",
-					icon: "mingcute:twitter-line",
-					color: "#1DA1F2",
-					connected: true,
-				},
-			],
-		};
+	middleware: "auth",
+	setup() {
+		const store = useMainStore();
+
+		function disconnect(account) {
+			store.increment();
+			store.removeAccount(account);
+		}
+
+		return { store, disconnect };
 	},
 };
 </script>

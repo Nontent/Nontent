@@ -20,7 +20,7 @@
 	}
 
 	.drop-shadow-box {
-		@apply relative translate-x-1 translate-y-1 -z-10 h-10 w-28 bg-black transition delay-100 ease-in-out group-hover:translate-y-0 group-hover:translate-x-0;
+		@apply relative translate-x-1 translate-y-1 -z-10 h-10 w-28 bg-black transition delay-100 ease-in-out group-hover:translate-y-0 group-hover:translate-x-0  disabled:translate-x-0 disabled:-translate-y-0;
 	}
 
 	.btn {

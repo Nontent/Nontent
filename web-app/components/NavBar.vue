@@ -57,7 +57,13 @@ export default {
 	name: "NavBar",
 	setup() {
 		const store = useMainStore();
-		return { store };
+
+		function logout() {
+			store.logout();
+			window.location.reload();
+		}
+
+		return { store, logout };
 	},
 	data() {
 		return {
@@ -82,12 +88,6 @@ export default {
 				},
 			],
 		};
-	},
-	methods: {
-		logout() {
-			this.store.connected = false;
-			this.$router.push("/login");
-		},
 	},
 };
 </script>
