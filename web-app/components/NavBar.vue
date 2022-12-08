@@ -1,88 +1,103 @@
 <template>
-	<div>
-		<v-toolbar dense>
-			<v-btn id="home-link" color="primary" text nuxt to="/">
-				Nontent Web App</v-btn
-			>
-
-			<v-spacer></v-spacer>
-
-			<div class="text-center">
-				<v-menu
-					open-on-hover
-					bottom
-					offset-y
-					close-delay="500"
-					open-delay="50"
-					rounded
-					transition="slide-y-transition"
+	<div
+		v-if="$route.name != 'login' && $route.name != 'register'"
+		class="flex h-16 container mx-auto border-black border-4 p-4 my-2 relative z-0 bg-white"
+	>
+		<!-- <div class="flex h-16 w-auto mx-2 p-4 border-4 my-2 border-black"> -->
+		<span class="flex-none justify-center font-bold">
+			<a href="/">nontent.</a>
+		</span>
+		<span class="grow"></span>
+		<div class="grow-0 space-x-4">
+			<div class="inline" v-for="link in links" :key="link.name">
+				<nuxt-link
+					:to="link.link"
+					class="transition-colors ease-in-out delay-75 hover:text-amber-400 nuxt-link-active"
 				>
-					<template v-slot:activator="{ on, attrs }">
-						<v-btn color="primary" icon v-bind="attrs" v-on="on">
-							<v-icon>mdi-menu</v-icon>
-						</v-btn>
-					</template>
-
-					<v-list>
-						<v-list-item
-							v-for="(item, index) in this.$store.state
-								.isConnected
-								? connectedMenuItems
-								: disconnectedMenuItems"
-							:key="index"
-						>
-							<v-list-item-title>
-								<v-btn
-									color="primary"
-									text
-									nuxt
-									block
-									@click="item.action ? item.action() : null"
-									:to="item.link"
-								>
-									<span class="mr-3">{{ item.title }}</span>
-									<v-spacer></v-spacer>
-									<v-icon color="primary">{{
-										item.icon
-									}}</v-icon>
-								</v-btn>
-							</v-list-item-title>
-						</v-list-item>
-					</v-list>
-				</v-menu>
+					{{ link.name }}
+				</nuxt-link>
 			</div>
-		</v-toolbar>
+		</div>
+		<span class="grow"></span>
+		<div class="self-center flex space-x-4">
+			<div class="group">
+				<nuxt-link
+					to="/settings"
+					class="bg-amber-400 transition delay-100 ease-in-out h-10 w-10 btn-nav-bar group-hover:bg-amber-500"
+				>
+					<Icon
+						name="mingcute:settings-1-fill"
+						color="#ffffff"
+						class="h-8 w-8 self-center"
+					/>
+				</nuxt-link>
+				<div class="drop-shadow-box-navbar"></div>
+			</div>
+			<div class="group">
+				<nuxt-link
+					@click="logout"
+					class="bg-gray-700 transition ease-in-out h-10 w-10 btn-nav-bar delay-100 group-hover:bg-gray-800"
+				>
+					<Icon
+						name="mingcute:exit-line"
+						color="#ffffff"
+						class="h-8 w-8 self-center"
+					/>
+				</nuxt-link>
+				<div class="drop-shadow-box-navbar"></div>
+			</div>
+		</div>
 	</div>
 </template>
+
 <script>
+import { useMainStore } from "../store/main";
+
 export default {
-	name: 'navBar',
+	name: "NavBar",
+	setup() {
+		const store = useMainStore();
+
+		function logout() {
+			store.logout();
+			window.location.reload();
+		}
+
+		return { store, logout };
+	},
 	data() {
 		return {
-			disconnectedMenuItems: [
+			links: [
 				{
-					title: 'Log-in/Register',
-					link: '/connection',
-					icon: 'mdi-account-key',
+					name: "home",
+					link: "/",
+				},
+				{
+					name: "social reports",
+					link: "/social-reports",
 				},
 			],
-			connectedMenuItems: [
+			listButtons: [
 				{
-					title: 'Profile',
-					link: '/profile',
-					icon: 'mdi-account',
+					name: "settings",
+					link: "/settings",
 				},
 				{
-					title: 'Log-out',
-					link: '/connection',
-					icon: 'mdi-logout',
-					action: () => {
-						this.$store.commit('incrementCounter')
-						this.$store.commit('toggleConnection', false)
-					},
+					name: "sign out",
+					link: "/sign-out",
 				},
 			],
-		}
+		};
 	},
-}
+};
 </script>
+
+<style>
+.active {
+	color: #fbbf24;
+}
+
+.exact-active {
+	color: #fbbf24;
+}
+</style>
