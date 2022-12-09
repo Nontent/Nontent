@@ -1,7 +1,4 @@
 
-////TODO(@BLANC Nicolas): Move secretskeys in .env file 
-const REDDIT_CLIENT_ID = "TN6bnT8p1cfnwH7hkZTZuw";
-const REDDIT_CLIENT_SECRET = "ymZ7IBmNSn67SVb5ZDKhgZNXXUBfYA";
 const Auth = require('../../shared/auth/auth.service');
 const User = require('../../mongoose/user');
 const redditPost = require('../../mongoose/redditPost');
@@ -19,99 +16,94 @@ require('dotenv').config();
 //// Return : String, with information on added posts.
 userRedditRouter.post('/fetch/:userId', async (req, res) => {
     try {
-            var userId = req.params.userId;
-            var userData = await User.getUserById(userId);
-            if (!userData.redditUsername || !userData.redditAccessToken) {
-                return res.json({
-                    message: "Erreur à la récuperation de l'utilisateur",
-                });
-            }
-            accessToken = userData.redditAccessToken;
-            username = userData.redditUsername;
-            responseData = await fetch(`https://oauth.reddit.com/user/${username}/upvoted`, {
-                method: 'GET',
-                headers: {authorization: `Bearer ${accessToken}`}
-            })
-            upvoted = await responseData.json();
-            upvotedCount = 0;
-            for(var post of upvoted["data"]["children"]) {
-                checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
-                if(post.data.author != username && !checkIfExist) {
-                    upvotedCount ++;
-                    redditPost.addRedditPost({
-                        username: username,
-                        subreddit: post.data.subreddit,
-                        title: post.data.title,
-                        upvoted: true,
-                        totalUpvote: post.data.ups
-                    });
-                }
-            }
-            responseData = await fetch(`https://oauth.reddit.com/user/${username}/downvoted`, {
-                method: 'GET',
-                headers: {authorization: `Bearer ${accessToken}`}
-            })
-            downvoted = await responseData.json();
-            downvotedCount = 0;
-            for(var post of downvoted["data"]["children"]) {
-                checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
-                if(post.data.author != username && !checkIfExist) {
-                    downvotedCount ++;
-                    redditPost.addRedditPost({
-                        username: username,
-                        subreddit: post.data.subreddit,
-                        title: post.data.title,
-                        downvoted: true,
-                        totalUpvote: post.data.ups
-                    });
-                }
-            }
-            responseData = await fetch(`https://oauth.reddit.com/user/${username}/submitted`, {
-                method: 'GET',
-                headers: {authorization: `Bearer ${accessToken}`}
-            })
-            submitted = await responseData.json();
-            submittedCount = 0;
-            for(var post of submitted["data"]["children"]) {
-                checkIfExist = await redditPost.checkIfExist(post.data.title, post.data.subreddit);
-                if(!checkIfExist) {
-                    submittedCount ++;
-                    redditPost.addRedditPost({
-                        username: username,
-                        subreddit: post.data.subreddit,
-                        title: post.data.title,
-                        isAuthor: true,
-                        upvoted: true,
-                        totalUpvote: post.data.ups
-                    });
-                }
-            }
-            responseData = await fetch(`https://oauth.reddit.com/subreddits/mine/subscriber`, {
-                method: 'GET',
-                headers: {authorization: `Bearer ${accessToken}`}
-            })
-            subreddits = await responseData.json();
-            userSubs = [];
-            for(var post of subreddits["data"]["children"]) {
-                userSubs.push({ title: post.data.title, description: post.data.description });
-            }
-            query = {
-                username: username,
-                subreddit: userSubs
-            },
-
-            redditSub.updateIfExist(query);
-
-            return res.send(`Added posts for user with id ${userId}
-                            - Upvoted posts: ${upvotedCount}
-                            - Downvoted posts: ${downvotedCount}
-                            - Submitted posts: ${submittedCount}
-                            - User's subreddits updated`);
-
-    } 
-    catch(err) {
-        console.log('ERROR reddit FetchUserReddit => ', err);
-        return res.send(err);
+        var userId = req.params.userId;
+        var userData = await User.getUserById(userId);
+        if (!userData.redditUsername || !userData.redditAccessToken) {
+          return res.json({
+            message: "Erreur à la récuperation de l'utilisateur",
+          });
+        }
+      
+        // Move the declaration of these variables outside of the loops
+        // to avoid creating new variables on each iteration
+        let accessToken = userData.redditAccessToken;
+        var username = userData.redditUsername;
+        let upvotedCount = 0;
+        let downvotedCount = 0;
+        let submittedCount = 0;
+      
+        // Perform all requests in parallel using Promise.all()
+        let [upvoted, downvoted, submitted, subreddits] = await Promise.all([
+          fetch(`https://oauth.reddit.com/user/${username}/upvoted`, {
+            method: 'GET',
+            headers: { authorization: `Bearer ${accessToken}` }
+          }),
+          fetch(`https://oauth.reddit.com/user/${username}/downvoted`, {
+            method: 'GET',
+            headers: { authorization: `Bearer ${accessToken}` }
+          }),
+          fetch(`https://oauth.reddit.com/user/${username}/submitted`, {
+            method: 'GET',
+            headers: { authorization: `Bearer ${accessToken}` }
+          }),
+          fetch(`https://oauth.reddit.com/subreddits/mine/subscriber`, {
+            method: 'GET',
+            headers: { authorization: `Bearer ${accessToken}` }
+          }),
+        ]);
+      
+        // Use array.map() and array.filter() instead of for loops
+        // to simplify the code and make it easier to read
+        let upvotedData = await upvoted.json();
+        upvotedCount = upvotedData["data"]["children"]
+          .filter(post => post.data.author != username)
+          .map(post => redditPost.addRedditPost({
+            username: username,
+            subreddit: post.data.subreddit,
+            title: post.data.title,
+            upvoted: true,
+            totalUpvote: post.data.ups
+          })).length;
+        
+        let downvotedData = await downvoted.json();
+        downvotedCount = downvotedData["data"]["children"]
+          .filter(post => post.data.author != username)
+          .map(post => redditPost.addRedditPost({
+            username: username,
+            subreddit: post.data.subreddit,
+            title: post.data.title,
+            downvoted: true,
+            totalUpvote: post.data.ups
+          })).length;
+      
+        let submittedData = await submitted.json();
+        submittedCount = submittedData["data"]["children"]
+          .map(post => redditPost.addRedditPost({
+            username: username,
+            subreddit: post.data.subreddit,
+            title: post.data.title,
+            isAuthor: true,
+            upvoted: true,
+            totalUpvote: post.data.ups
+          })).length;
+      
+        let subredditData = await subreddits.json();
+        let userSubs = subredditData["data"]["children"]
+        .map(post => ({ title: post.data.title, description: post.data.description }));
+      
+        // Use destructuring assignment to simplify the query object
+        var { username, subreddit } = { username, subreddit: userSubs };
+        redditSub.updateIfExist({ username, subreddit });
+      
+        return res.send(`Added posts for user with id ${userId}
+                        - Upvoted posts: ${upvotedCount}
+                        - Downvoted posts: ${downvotedCount}
+                        - Submitted posts: ${submittedCount}
+                        - User's subreddits updated`);
+      } catch (err) {
+        return res.json({
+          message: "Erreur à la récuperation des données utilisateur",
+        });
     }
 })
 
