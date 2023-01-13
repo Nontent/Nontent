@@ -66,7 +66,7 @@
 					>
 						Disconnect
 					</button>
-					<div class="drop-shadow-box"></div>
+					<div class="invisible md:visible drop-shadow-box"></div>
 				</div>
 			</div>
 		</div>

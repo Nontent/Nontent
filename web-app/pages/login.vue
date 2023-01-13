@@ -30,7 +30,7 @@
 					>
 						Login
 					</button>
-					<div class="drop-shadow-box"></div>
+					<div class="invisible md:visible drop-shadow-box"></div>
 				</div>
 			</div>
 			<div class="flex justify-center mt-4 font-bold">
@@ -46,7 +46,7 @@
 					>
 						Register
 					</button>
-					<div class="drop-shadow-box"></div>
+					<div class="invisible md:visible drop-shadow-box"></div>
 				</div>
 			</div>
 		</div>

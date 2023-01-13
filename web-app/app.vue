@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<NuxtLayout>
-			<NavBar />
+			<MobileMenu class="visible md:invisible" />
+			<NavBar class="invisible md:visible" />
 			<NuxtPage />
 		</NuxtLayout>
 	</div>
