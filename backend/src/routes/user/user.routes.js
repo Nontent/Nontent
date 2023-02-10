@@ -9,8 +9,8 @@ userRouter.post('/', async (req, res) => {
         const response = await UserService.userCreationService(userRequest);
         return res.send(response);
     } catch (error) {
-        console.log('ERROR => ', error, error.message);
-        return res.send(error);
+        console.log('ERROR => ', error.message);
+        res.status(401).json({ error: 'Authentication failed' });
     }
 
 });
@@ -24,7 +24,7 @@ userRouter.get('/:userId', async (req, res) => {
         return res.send(response);
     } catch (error) {
         console.log('ERROR => ', error);
-        return res.send(error);
+        res.status(404).json({ error: "This ressource doesn't exist" });
     }
 });
 
@@ -37,7 +37,18 @@ userRouter.put('/update/:userId', async (req, res) => {
         return res.send(response);
     } catch (error) {
         console.log('ERROR => ', error);
-        return res.send(error);
+        res.status(404).json({ error: "This ressource doesn't exist" });
+    }
+})
+
+userRouter.delete('/delete/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const response = await UserService.userDeleteService(userId);
+        return res.send(response);
+    } catch (error) {
+        console.log('ERROR => ', error);
+        res.status(404).json({ error: "This ressource doesn't exist" });
     }
 })
 

@@ -11,13 +11,18 @@ exports.isSigninRequestValid = (signinRequest) => {
 }
 
 exports.verifyConnectionAuthorization = async (request) => {
-    const userFromDB = await UserMongoose.getUserByEmail(request.email.toLowerCase());
-    console.log('USER FROM DB: ', userFromDB)
-    // TODO: Error to implement.
-    if (!userFromDB) throw new Error();
-    if (userFromDB.password !== md5(request.password)) throw new Error();
-
-    return generateSigninResponse(userFromDB);
+    try{
+        const userFromDB = await UserMongoose.getUserByEmail(request.email.toLowerCase());
+        console.log('USER FROM DB: ', userFromDB)
+        // TODO: Error to implement.
+        if (!userFromDB) throw new Error();
+        if (userFromDB.password !== md5(request.password)) throw new Error();
+    
+        return generateSigninResponse(userFromDB);
+    }catch(error){
+        console.log('ERROR in verifyConnectionAuthorization => ', error);
+    }
+    throw new Error();
 }
 
 function generateSigninResponse(user) {
@@ -29,6 +34,6 @@ function generateSigninResponse(user) {
             socialNetworks: user.socialNetworks ?? []
         }),
         userId: user._id,
-        redditTokenExpiration: user.redditTokenExpiration
+        redditTokenDate: user.redditTokenDate
     }
 }

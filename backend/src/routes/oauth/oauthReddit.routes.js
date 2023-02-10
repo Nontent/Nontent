@@ -36,11 +36,11 @@ redditRouter.get('/', async (req, res) => {
         let userData = await userResponse.json();
         const options = {
             redditAccessToken: accessToken.access_token,
-            redditTokenExpiration: Date.now(),
+            redditTokenDate: Date.now(),
             redditRefreshToken: accessToken.refresh_token,
             redditUsername: userData.name
-        }
-        const updatedUser = await UserService.userUpdateService(user._id, options)
+        };
+        const updatedUser = await UserService.userUpdateService(user._id, options);
         if (!updatedUser) {
             res.status(401).json({
                 message: 'User not updated'
@@ -50,7 +50,7 @@ redditRouter.get('/', async (req, res) => {
             "tokenInfo": accessToken,
         });
         } 
-    catch(e) {
+    catch(err) {
         console.log('ERROR reddit OAuth => ', err);
         return res.send(err);
     }
@@ -75,8 +75,8 @@ redditRouter.get('/refresh', async (req, res) => {
         res.header("Access-Control-Allow-Origin", "*");
         const options = {
             redditAccessToken: accessToken.access_token,
-            redditTokenExpiration: Date.now(),
-        }
+            redditTokenDate: Date.now(),
+        };
         const updatedUser = await UserService.userUpdateService(user._id, options)
         if (!updatedUser) {
             res.status(401).json({
@@ -87,7 +87,7 @@ redditRouter.get('/refresh', async (req, res) => {
             "accessToken": accessToken,
         });
         } 
-    catch(e) {
+    catch(err) {
         console.log('ERROR reddit OAuth => ', err);
         return res.send(err);
     }

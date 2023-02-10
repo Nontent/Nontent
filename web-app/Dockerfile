@@ -10,6 +10,6 @@ RUN npm install
 
 COPY . /web-app
 
-CMD ["npm", "start"]
+CMD ["node", ".output/server/index.mjs"]
 
 EXPOSE 3000

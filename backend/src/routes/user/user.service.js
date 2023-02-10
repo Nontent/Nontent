@@ -20,12 +20,14 @@ exports.userCreationService = async (userBody) => {
     if (userBody.password) {
         userBody.password = md5(userBody.password)
     }
-    // const userToCreate = {
-    //     email: userBody.email,
-    //     password: md5(userBody.password)
-    // }
-    const userId = await User.addUser(userBody);
-    return { userId: userId }
+    var user = await User.getUserByEmail(userBody.email);
+    if(!user) {
+        const userId = await User.addUser(userBody);
+        return { userId: userId }
+    }
+    else {
+        throw new Error('Authentication error');
+    }
 }
 
 exports.userUpdateService = async (userId, userBody) => {
@@ -33,12 +35,19 @@ exports.userUpdateService = async (userId, userBody) => {
     if (!userId || !userBody) {
         throw new Error('Props invalid');
     }
-    return await User.updateUser(userId, userBody)
+    return User.updateUser(userId, userBody);
+}
+
+exports.userDeleteService = async (userId) => {
+    if(!userId) {
+        throw new Error();
+    }
+    return User.deleteUser(userId);
 }
 
 exports.getUserByCodeTwitter = async(code)=>{
     if(!code){
         throw new Error('Please provide code');
     }
-    return await User.getUserByCode(code)
+    return User.getUserByCode(code);
 }

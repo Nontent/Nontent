@@ -6,13 +6,17 @@ const collectionName = "twitterPosts";
 const CollectionSchema = new Mongoose.Schema({
     tokenNontent: {
         type: String,
-        required: true
+        default: ''
     },
-    accountName: {
+    username: {
         type: String,
         required: true
     },
-    content: {
+    id: {
+        type: String,
+        default: ''
+    },
+    text: {
         type: String,
         default: ''
     },

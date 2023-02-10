@@ -31,11 +31,28 @@ const CollectionSchema = new Mongoose.Schema({
         type: String,
         default: null
     },
+
+    twitterAccessToken: {
+        type: String,
+        default: null
+    },
+    twitterRefreshToken: {
+        type: String,
+        default: null
+    },
+    twitterId: {
+        type: Number,
+        default: null
+    },
+    twitterUsername: {
+        type: String,
+        default: null
+    },
     redditAccessToken: {
         type: String,
         default: null
     },
-    redditTokenExpiration: {
+    redditTokenDate: {
         type: String,
         default: null
     },
@@ -102,6 +119,10 @@ exports.addUser = async (user) => {
 exports.updateUser = async (userId, update) => {
     try {
         await db.connect();
+        test = await Users.findByIdAndUpdate(userId, update, {
+            new: true
+        });
+        console.log("username:" + test.redditUsername + "suite:" + test.redditAccessToken); 
         return await Users.findByIdAndUpdate(userId, update, {
             new: true
         });
@@ -123,10 +144,13 @@ exports.getUserByState = async (state) => {
     }
     throw new Error();
 }
-/*export async function functionName(email: string): Promise<User> {
-     try {
 
-     } catch (error) {
-         console.log('ERROR IN functionName FUNCTION => ', error);
-     }
-}*/
+exports.deleteUser = async (userId) => {
+    try {
+        await db.connect();
+        return await Users.findByIdAndRemove(userId);
+    }
+    catch (error) {
+        console.log('ERROR IN deleteUser FUNCTION => ', error);
+    }
+}

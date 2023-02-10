@@ -6,39 +6,18 @@ const {
     TwitterApi
 } = require('twitter-api-v2')
 
-// Variables to store in db
-let tempCodeVerifier = null
-let tempSessionState = null
-
-const twitterRouter = require('express').Router()
+const twitterAuthRouter = require('express').Router()
 
 require('dotenv').config();
 
-twitterRouter.get('/', async (req, res) => {
+
+refreshToken = async (client, user) => {
     try {
-        const user = await Auth.authenticationService(req);
-        if (!user) return res.status(403).json({
-            message: "Unauthorized",
-            status: 403
-        })
-        // Create a partial client for auth links
-        const client = new TwitterApi({
-            clientId: process.env.CLIENT_ID,
-            clientSecret: process.env.CLIENT_SECRET
-        });
-        const repClient = client.generateOAuth2AuthLink('http://localhost:3000/api/auth/twitter/callback', {
-            scope: ['tweet.read', 'users.read', 'offline.access']
-        });
-        const {
-            url,
-            codeVerifier,
-            state
-        } = repClient
-        tempCodeVerifier = codeVerifier
-        tempSessionState = state
+        refreshToken = user.twitterRefreshToken
+        const { client: refreshedClient, accessToken, refreshToken: newRefreshToken } = await client.refreshOAuth2Token(refreshToken);
         const options = {
-            twitterCodeVerifier: codeVerifier,
-            twitterSessionState: state,
+            twitterAccessToken: accessToken,
+            twitterRefreshToken: newRefreshToken,
         }
         const updatedUser = await UserService.userUpdateService(user._id, options)
         if (!updatedUser) {
@@ -46,20 +25,68 @@ twitterRouter.get('/', async (req, res) => {
                 message: 'User not updated'
             })
         }
-        console.log('updatedUser: ' + updatedUser)
-        return res.status(200).json({
-            url,
-            state,
-            codeVerifier
+        return refreshedClient
+    } catch (error) {
+        console.log('', error);
+    }
+    throw new Error();
+}
+
+twitterAuthRouter.get('/', async (req, res) => {
+    try {
+        const user = await Auth.authenticationService(req);
+        console.log("USER =>", user)
+        if (!user) return res.status(403).json({
+            message: "Unauthorized",
+            status: 403
+        })
+        const client = new TwitterApi({
+            clientId: process.env.CLIENT_ID,
+            clientSecret: process.env.CLIENT_SECRET
         });
+        if(!user.twitterAccessToken){
+            // Create a partial client for auth links
+            const repClient = client.generateOAuth2AuthLink('http://localhost:3001/api/auth/twitter/callback', {
+                scope: ['tweet.read', 'users.read', 'offline.access', 'like.read', 'follows.read']
+            });
+            console.log("REP CLIENT =>",repClient)
+            const {
+                url,
+                codeVerifier,
+                state
+            } = repClient
+            const options = {
+                twitterCodeVerifier: codeVerifier,
+                twitterSessionState: state,
+                socialNetworks: "Twitter"
+            }
+            const updatedUser = await UserService.userUpdateService(user._id, options)
+            if (!updatedUser) {
+                res.status(401).json({
+                    message: 'User not updated'
+                })
+            }
+            console.log('updatedUser: ' + updatedUser)
+            return res.status(200).json({
+                url,
+                state,
+                codeVerifier
+            });
+        } else {
+            refreshedClient = await refreshToken(client, user)
+            return res.status(200).json({
+                refreshedClient
+            });
+        }
     } catch (err) {
         console.log('ERROR twitter OAuth => ', err);
         return res.send(err);
     }
 })
 
-twitterRouter.get('/callback', async (req, res) => {
+twitterAuthRouter.get('/callback', async (req, res) => {
     try {
+        console.log("REQ.QUERY =>", req.query)
         const {
             state,
             code
@@ -73,7 +100,10 @@ twitterRouter.get('/callback', async (req, res) => {
         if (!user.twitterSessionState || !state || !user.twitterCodeVerifier || !code) {
             return res.status(400).send('You denied the app or your session expired!');
         }
-        // // Obtain access token
+        if (state !== user.twitterSessionState) {
+            return res.status(400).send('Stored tokens didnt match!');
+        }
+        // obtain access token
         const client = new TwitterApi({
             clientId: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET
@@ -81,17 +111,32 @@ twitterRouter.get('/callback', async (req, res) => {
         const {
             client: loggedClient,
             accessToken,
-            refreshToken
+            refreshToken,
+            expiresIn
         } = await client.loginWithOAuth2({
             code,
             codeVerifier: user.twitterCodeVerifier,
-            redirectUri: 'http://localhost:3000/api/auth/twitter/callback'
+            redirectUri: 'http://localhost:3001/api/auth/twitter/callback'
         });
+        const userInfo = await loggedClient.v2.me();
+        const options = {
+            twitterAccessToken: accessToken,
+            twitterRefreshToken: refreshToken,
+            twitterId: userInfo.data.id,
+            twitterUsername: userInfo.data.username
+        }
+        const updatedUser = await UserService.userUpdateService(user._id, options)
+        if (!updatedUser) {
+            res.status(401).json({
+                message: 'User not updated'
+            })
+        }
         return res.status(200).json({
             message: "User connected.",
             clien: loggedClient,
             access_token: accessToken,
-            refresh_token: refreshToken
+            refresh_token: refreshToken,
+            expiresIn: expiresIn
         })
     } catch (err) {
         console.log('ERROR twitter OAuth callback => ', err);
@@ -99,4 +144,4 @@ twitterRouter.get('/callback', async (req, res) => {
     }
 })
 
-module.exports = twitterRouter
+module.exports = twitterAuthRouter

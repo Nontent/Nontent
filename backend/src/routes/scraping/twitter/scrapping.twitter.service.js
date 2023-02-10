@@ -10,20 +10,22 @@ exports.postPosts = async (body) => {
         }
         for (let i = 0; i < posts.length; i++) {
             let post = posts[i];
-            let accountName = post.accountName;
-            let content = post.content;
+            let username = post.username;
+            let id = post.id;
+            let text = post.text;
             let nbComments = post.nbComments;
             let nbLikes = post.nbLikes;
             let nbRetweets = post.nbRetweets;
             let postToSave = {
-                accountName: accountName,
-                content: content,
+                username: username,
+                id: id,
+                text: text,
                 nbComments: nbComments,
                 nbLikes: nbLikes,
                 nbRetweets: nbRetweets,
                 tokenNontent: tokenNontent,
             }
-            if (accountName && accountName !== '' && typeof accountName === 'string' && content && typeof content === 'string' && nbComments && typeof nbComments === 'number' && nbLikes && typeof nbLikes === 'number' && nbRetweets && typeof nbRetweets === 'number') {
+            if (username && username !== '' && typeof username === 'string' && id && typeof id === 'string' && text && typeof text === 'string' && nbComments && typeof nbComments === 'number' && nbLikes && typeof nbLikes === 'number' && nbRetweets && typeof nbRetweets === 'number') {
                 try {
                     await TwitterPosts.addTwitterPosts(postToSave);
                 } catch (error) {
