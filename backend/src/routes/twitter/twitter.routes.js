@@ -55,14 +55,13 @@ twitterRouter.get('/tweet/user/:id', async (req, res) => {
                 message: "No access token provided"
             })
         } else {
-            const userTweet = twitterService.getTweetByUserId(req.body)
-            console.log(userTweet)
-            data = userTweet
+            const userTweet = await twitterService.getTweetByUserId(req.params.id)
             return res.status(200).json({
-                data
+                data: userTweet
             })
         }
     } catch (e) {
+        console.log(e)
         return res.json({
             message: e
         })
