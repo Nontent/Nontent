@@ -54,8 +54,13 @@ twitterRouter.get('/tweet/user/:id', async (req, res) => {
             return res.status(405).json({
                 message: "No access token provided"
             })
-        } else {
-            const userTweet = await twitterService.getTweetByUserId(req.params.id)
+        } else {    
+            let userTweet = []
+            if (req.query.from) {
+                userTweet = await twitterService.getTweetByUserId(req.params.id, req.query.from)
+            } else {
+                userTweet = await twitterService.getTweetByUserId(req.params.id)
+            }
             return res.status(200).json({
                 data: userTweet
             })
@@ -394,7 +399,7 @@ twitterRouter.get('/user/like', async (req, res) => {
             message: "Unauthorized",
             status: 403
         })
-        let max_results = 10
+        let max_results = 100
         if (req.query.max_results) {
             max_results = req.query.max_results
         }

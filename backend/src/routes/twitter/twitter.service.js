@@ -41,9 +41,8 @@ exports.addTweet = async (array, client, userId, type) => {
     }
 }
 
-exports.getTweetByUserId = async (id) => {
-    const tweets = await UserTweet.getUserTweetsByUserId(id);
-    console.log(tweets)
+exports.getTweetByUserId = async (id, from=null) => {
+    const tweets = await UserTweet.getUserTweetsByUserId(id, from);
     if (tweets) {
         return tweets;
     }

@@ -42,12 +42,19 @@ exports.getUserTweetById = async (tweetId) => {
     }
 }
 
-exports.getUserTweetsByUserId = async (userId) => {
+exports.getUserTweetsByUserId = async (userId, from) => {
     try {
         await db.connect();
-        return await userTweets.find({
-            userId: userId
-        }).exec();
+        if (!from) {
+            return await userTweets.find({
+                userId: userId
+            }).exec();
+        } else {
+            return await userTweets.find({
+                userId: userId,
+                from: from
+            }).exec();
+        }
     } catch (error) {
         throw new Error(error);
     }
