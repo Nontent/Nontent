@@ -12,9 +12,6 @@ const userTweetSchema = new Mongoose.Schema({
         type: Mongoose.Schema.Types.ObjectId,
         ref: 'twitterPosts'
     },
-    // user: {
-    //     type: Users,
-    // },
     from: String
 });
 
@@ -24,12 +21,11 @@ try {
     console.log(error);
 }
 
-const getUserTweet = async (tweetId, from, userId) => {
+const getUserTweet = async (tweetId, userId) => {
     try {
         await db.connect();
         return await userTweets.findOne({
             tweetId: tweetId,
-            from: from,
             userId: userId
         }).exec();
     } catch (error) {
@@ -57,12 +53,12 @@ exports.getUserTweetsByUserId = async (userId) => {
     }
 }
 
-exports.addUserTweet = async (tweet) => {
+exports.addUserTweet = async (userTweet) => {
     try {
         await db.connect();
-        const post = await getUserTweet(tweet.tweet_id, tweet.from, tweet.user_id)
+        const post = await getUserTweet(userTweet.tweetId, userTweet.userId)
         if (!post) {
-            const createdUserPost = await userTweets.create(tweetId);
+            const createdUserPost = await userTweets.create(userTweet);
             return createdUserPost._id;
         } else {
             return post._id;

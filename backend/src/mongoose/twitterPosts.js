@@ -63,7 +63,7 @@ const getTwitterPostsByTweetId = async (tweetId) => {
     try {
         await db.connect();
         return await TwitterPosts.findOne({
-            tweet_id: tweetId
+            tweetId: tweetId
         }).exec();
     } catch (error) {
         throw new Error(error);

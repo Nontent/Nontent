@@ -43,6 +43,33 @@ twitterRouter.post('/fetch', async (req, res) => {
     }
 })
 
+twitterRouter.get('/tweet/user/:id', async (req, res) => {
+    try {
+        const user = await Auth.authenticationService(req);
+        if (!user) return res.status(403).json({
+            message: "Unauthorized",
+            status: 403
+        })
+        if (!user.twitterAccessToken) {
+            return res.status(405).json({
+                message: "No access token provided"
+            })
+        } else {
+            const userTweet = twitterService.getTweetByUserId(req.body)
+            console.log(userTweet)
+            data = userTweet
+            return res.status(200).json({
+                data
+            })
+        }
+    } catch (e) {
+        return res.json({
+            message: e
+        })
+    }
+})
+
+
 twitterRouter.get('/user', async (req, res) => {
     /**
      *Get a single user by ID.
