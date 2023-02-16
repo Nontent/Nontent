@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const twitterRouter = require('express').Router()
 
-twitterRouter.post('/fetch', async (req, res) => {
+twitterRouter.post('/scrap', async (req, res) => {
     try {
         const user = await Auth.authenticationService(req);
         if (!user) return res.status(403).json({
