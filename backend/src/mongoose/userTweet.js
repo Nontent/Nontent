@@ -48,12 +48,12 @@ exports.getUserTweetsByUserId = async (userId, from) => {
         if (!from) {
             return await userTweets.find({
                 userId: userId
-            }).populate("tweetId").populate("userId").exec();
+            }).populate(["tweetId", "userId"]).exec();
         } else {
             return await userTweets.find({
                 userId: userId,
                 from: from
-            }).populate("tweetId").populate("userId").exec();
+            }).populate(["tweetId", "userId"]).exec();
         }
     } catch (error) {
         throw new Error(error);
