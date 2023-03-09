@@ -6,6 +6,7 @@ const store = useMainStore();
 <template>
 	<div>
 		<TextCard :title="title" :content="content" />
+		<TwitterConnection />
 		<div class="main-box">
 			<span class="text-lg">Your pinned profile</span>
 			<div

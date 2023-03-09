@@ -2,7 +2,7 @@
 	<div>
 		<NuxtLayout>
 			<MobileMenu class="visible md:hidden" />
-			<NavBar class="hidden md:visible" />
+			<NavBar class="hidden md:flex" />
 			<NuxtPage />
 		</NuxtLayout>
 	</div>
