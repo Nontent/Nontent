@@ -1,3 +1,4 @@
+from ai.config import description, tags_metadata
 from pydantic import BaseModel, Field
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
@@ -15,7 +16,12 @@ with open("data/tweet_analyzer_model.pkl", "rb") as f:
 with open("data/tweet_analyzer_vectorizer.pkl", "rb") as f:
     vectorizer = pickle.load(f)
 
-app = FastAPI()
+app = FastAPI(
+    title="NontentAI",
+    description=description,
+    version="0.0.1",
+    openapi_tags=tags_metadata
+)
 
 
 class InputData(BaseModel):
@@ -30,7 +36,7 @@ class PredictionResult(BaseModel):
     proba: dict[str, float]
 
 
-@app.post("/predict")
+@app.post("/predict", tags=["predict"])
 def predict(input_data: InputData) -> PredictionResult:
     preprocessed_tweet = preprocess(input_data.tweet)
     tweet_vec = vectorizer.transform([preprocessed_tweet])
