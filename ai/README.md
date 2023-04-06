@@ -5,25 +5,31 @@
 
 ## Usage
 
-### 1. Create dataset
-First you need to create the dataset with the following command:
+### 1. Go to ai directory
+```bash 
+cd /path/to/ai
+```
+
+### 2. Install packages
+```bash 
+poetry install
+```
+
+### 3. Create dataset
 ```shell
 poetry run make
 ```
 
-### 2. Run notebook
+### 4. Run notebook
 The notebook is used to test and create the model.
 ```bash 
-cd /path/to/ai
-poetry install
 jupyter-lab
 ```
 > Running on [http://localhost:8888/lab](http://localhost:8888/lab)
 
-### 3. Start api
+### 5. Start api
 The api allows to use the pre-trained model.
 ```bash
-cd /path/to/ai
 poetry run start
 ```
 > The doc is available on [http://localhost:8000/docs](http://localhost:8000/docs)
