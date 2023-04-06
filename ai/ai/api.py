@@ -20,7 +20,7 @@ app = FastAPI(
     title=api_name,
     description=description,
     version=api_version,
-    openapi_tags=tags_metadata
+    openapi_tags=tags_metadata,
 )
 
 

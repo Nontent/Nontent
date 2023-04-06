@@ -14,6 +14,7 @@ from ai.data import (
     science_tweet,
 )
 
+
 def main() -> None:
     with open("../data/tweets.csv", "w", newline="", encoding="utf-8") as f:
         fieldnames = ["tweet", "label"]
