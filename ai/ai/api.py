@@ -57,7 +57,7 @@ def predict(input_data: InputData) -> PredictionResult:
     )
 
 
-@app.post("/predicts")
+@app.post("/predicts", tags=["predicts"])
 def predicts(input_data_list: InputDataList) -> PredictionResultList:
     data = []
     for tweet in input_data_list.tweets:
