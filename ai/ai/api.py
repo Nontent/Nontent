@@ -30,10 +30,18 @@ class InputData(BaseModel):
     )
 
 
+class InputDataList(BaseModel):
+    tweets: list[InputData]
+
+
 class PredictionResult(BaseModel):
     tweet: str
     prediction: str
     proba: dict[str, float]
+
+
+class PredictionResultList(BaseModel):
+    data: list[PredictionResult]
 
 
 @app.post("/predict", tags=["predict"])
@@ -47,6 +55,24 @@ def predict(input_data: InputData) -> PredictionResult:
         prediction=label,
         proba=proba_dict,
     )
+
+
+@app.post("/predicts")
+def predicts(input_data_list: InputDataList) -> PredictionResultList:
+    data = []
+    for tweet in input_data_list.tweets:
+        preprocessed_tweet = preprocess(tweet.tweet)
+        tweet_vec = vectorizer.transform([preprocessed_tweet])
+        proba_dict = get_proba(tweet_vec)
+        label = model.predict(tweet_vec)[0]
+        data.append(
+            PredictionResult(
+                tweet=preprocessed_tweet,
+                prediction=label,
+                proba=proba_dict,
+            )
+        )
+    return PredictionResultList(data=data)
 
 
 def get_proba(tweet_vec) -> dict[str, float]:
