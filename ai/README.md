@@ -11,6 +11,8 @@ cd /path/to/ai
 poetry install
 jupyter-lab
 ```
+> Running on [http://localhost:8888/lab](http://localhost:8888/lab)
+
 ### api
 ```bash
 cd /path/to/ai
