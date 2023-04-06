@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ai"
-version = "0.1.0"
-description = ""
+version = "0.0.1"
+description = "NontentAI allows you to do tweet classification"
 authors = ["GuiEpi <guillaume.coussot@epitech.eu>"]
 readme = "README.md"
 

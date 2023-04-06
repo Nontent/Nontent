@@ -1,4 +1,4 @@
-from ai.config import description, tags_metadata
+from ai.config import description, tags_metadata, api_version, api_name
 from pydantic import BaseModel, Field
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
@@ -17,9 +17,9 @@ with open("data/tweet_analyzer_vectorizer.pkl", "rb") as f:
     vectorizer = pickle.load(f)
 
 app = FastAPI(
-    title="NontentAI",
+    title=api_name,
     description=description,
-    version="0.0.1",
+    version=api_version,
     openapi_tags=tags_metadata
 )
 

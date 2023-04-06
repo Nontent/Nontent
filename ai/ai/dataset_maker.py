@@ -15,9 +15,9 @@ from ai.data import (
 )
 
 def main() -> None:
-    with open("../data/tweets.csv", "w", newline="", encoding="utf-8") as csvfile:
+    with open("../data/tweets.csv", "w", newline="", encoding="utf-8") as f:
         fieldnames = ["tweet", "label"]
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for tweet in war_tweet:
             writer.writerow({"tweet": tweet, "label": "WAR"})
