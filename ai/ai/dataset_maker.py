@@ -16,7 +16,6 @@ from ai.data import (
 import csv
 
 
-
 def main() -> None:
     with Progress(
         SpinnerColumn(),
