@@ -34,18 +34,23 @@ class PredictionResult(BaseModel):
 def predict(input_data: InputData) -> PredictionResult:
     preprocessed_tweet = preprocess(input_data.tweet)
     tweet_vec = vectorizer.transform([preprocessed_tweet])
-    proba = model.predict_proba(tweet_vec)[0]
-    sorted_indices = proba.argsort()[::-1]
-    classes = model.classes_
-    proba_dict = {}
-    for i in sorted_indices:
-        proba_dict[classes[i]] = round(proba[i] * 100, 2)
+    proba_dict = get_proba(tweet_vec)
     label = model.predict(tweet_vec)[0]
     return PredictionResult(
         tweet=preprocessed_tweet,
         prediction=label,
         proba=proba_dict,
     )
+
+
+def get_proba(tweet_vec) -> dict[str, float]:
+    proba_dict = {}
+    proba = model.predict_proba(tweet_vec)[0]
+    sorted_indices = proba.argsort()[::-1]
+    classes = model.classes_
+    for i in sorted_indices:
+        proba_dict[classes[i]] = round(proba[i] * 100, 2)
+    return proba_dict
 
 
 def preprocess(text, stem=False):
