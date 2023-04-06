@@ -23,13 +23,8 @@ poetry run start
 ## Data
 All data are to be added in the file `data.py` once the data are added do not **forget to generate the new dataset** with the following command:
 ```shell
-poetry run python dataset_maker.py
+poetry run make
 ```
-> Windows
-```shell
-poetry run python3 dataset_maker.py
-```
-> Linux
  
 ### Add data
 All data is generated via [ChatGPT-3](https://chat.openai.com/chat)
