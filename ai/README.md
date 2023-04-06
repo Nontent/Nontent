@@ -14,6 +14,7 @@ jupyter-lab
 > Running on [http://localhost:8888/lab](http://localhost:8888/lab)
 
 ### api
+The api allows to use the pre-trained model.
 ```bash
 cd /path/to/ai
 poetry run start
