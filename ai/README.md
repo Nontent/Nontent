@@ -18,7 +18,7 @@ jupyter-lab
 cd /path/to/ai
 poetry run start
 ```
-> The doc is available on [http://0.0.0.0:8000/docs](http://0.0.0.0:8000/docs)
+> The doc is available on [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ## Data
 All data are to be added in the file `data.py` once the data are added do not **forget to generate the new dataset** with the following command:
