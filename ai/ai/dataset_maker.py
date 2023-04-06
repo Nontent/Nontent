@@ -24,9 +24,9 @@ def main() -> None:
         transient=True,
     ) as progress:
         progress.add_task(description="Making dataset...", total=None)
-        if not os.path.exists("../data"):
-            os.makedirs("../data")
-        with open("../data/tweets.csv", "w", newline="", encoding="utf-8") as f:
+        if not os.path.exists("data"):
+            os.makedirs("data")
+        with open("data/tweets.csv", "w", newline="", encoding="utf-8") as f:
             fieldnames = ["tweet", "label"]
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
