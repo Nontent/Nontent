@@ -5,6 +5,9 @@ description = ""
 authors = ["GuiEpi <guillaume.coussot@epitech.eu>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+start = "ai.api:start"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 ipykernel = "^6.21.3"
@@ -14,6 +17,7 @@ nltk = "^3.8.1"
 scikit-learn = "^1.2.2"
 matplotlib = "^3.7.1"
 seaborn = "^0.12.2"
+fastapi = {extras = ["all"], version = "^0.95.0"}
 
 
 [build-system]

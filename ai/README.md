@@ -4,11 +4,19 @@
 [Poetry](https://python-poetry.org/docs/#installation), [JupyterLab](https://jupyter.org/install#jupyterlab) and [poetry-kernel](https://pypi.org/project/poetry-kernel/)
 
 ## Usage
+### notebook
+The notebook is used to create the model.
 ```bash 
 cd /path/to/ai
 poetry install
 jupyter-lab
 ```
+### api
+```bash
+cd /path/to/ai
+poetry run start
+```
+> The doc is available on [http://0.0.0.0:8000/docs](http://0.0.0.0:8000/docs)
 
 ## Data
 All data are to be added in the file `data.py` once the data are added do not **forget to generate the new dataset** with the following command:
@@ -36,7 +44,7 @@ tweets = [
 ...
 ]
 """
-You can use hashtags, mentions and emojis. 
+Don't use hashtags but use mentions and emojis. 
 ```
 #### for more
 ```
