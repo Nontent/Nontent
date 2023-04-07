@@ -1,14 +1,77 @@
-const express = require('express');
-const twitterService = require('./twitter.service')
 const Auth = require('../../shared/auth/auth.service');
+const twitterService = require('./twitter.service');
 const {
     TwitterApi,
-    TwitterV2IncludesHelper
 } = require('twitter-api-v2')
 
 require('dotenv').config();
 
 const twitterRouter = require('express').Router()
+
+twitterRouter.post('/scrap', async (req, res) => {
+    try {
+        const user = await Auth.authenticationService(req);
+        if (!user) return res.status(403).json({
+            message: "Unauthorized",
+            status: 403
+        })
+        if (!user.twitterAccessToken) {
+            return res.status(405).json({
+                message: "No access token provided"
+            })
+        } else {
+            const client = new TwitterApi(user.twitterAccessToken);
+            const userLikedTweets = await client.v2.userLikedTweets(user.twitterId);
+            const homeTimeline = await client.v2.homeTimeline({ exclude: 'replies' });
+            const userTimeline = await client.v2.userTimeline(user.twitterId);
+
+            const userLikedTweetsData = userLikedTweets.data.data
+            const homeTimelineData = homeTimeline.data.data
+            const userTimelineData = userTimeline.data.data
+
+            await twitterService.addTweet(userLikedTweetsData, client, user.id, "user_like");
+            await twitterService.addTweet(homeTimelineData, client, user.id, "user_home");
+            await twitterService.addTweet(userTimelineData, client, user.id, "user_timeline");
+
+            return res.status(200).json({
+                message: "success"
+            })
+        }
+    } catch (e) {
+        console.log(e)
+       return res.send(e)
+    }
+})
+
+twitterRouter.get('/tweet/user/:id', async (req, res) => {
+    try {
+        const user = await Auth.authenticationService(req);
+        if (!user) return res.status(403).json({
+            message: "Unauthorized",
+            status: 403
+        })
+        if (!user.twitterAccessToken) {
+            return res.status(405).json({
+                message: "No access token provided"
+            })
+        } else {    
+            let userTweet = []
+            if (req.query.from) {
+                userTweet = await twitterService.getTweetByUserId(req.params.id, req.query.from)
+            } else {
+                userTweet = await twitterService.getTweetByUserId(req.params.id)
+            }
+            return res.status(200).json({
+                data: userTweet
+            })
+        }
+    } catch (e) {
+        console.log(e)
+        return res.json({
+            message: e
+        })
+    }
+})
 
 
 twitterRouter.get('/user', async (req, res) => {
@@ -211,12 +274,12 @@ twitterRouter.get('/tweet', async (req, res) => {
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
             const tweet = await client.v2.singleTweet(req.query.id, {
-                expansions: [
-                    'entities.mentions.username',
-                    'in_reply_to_user_id',
-                    'referenced_tweets.id',
-                    'author_id'
-                ],
+                // expansions: [
+                //     'entities.mentions.username',
+                //     'in_reply_to_user_id',
+                //     'referenced_tweets.id',
+                //     'author_id'
+                // ],
                 "tweet.fields": ["author_id", "source", "context_annotations", "public_metrics", "in_reply_to_user_id", "referenced_tweets"]
             });
             data = tweet.data
@@ -336,7 +399,7 @@ twitterRouter.get('/user/like', async (req, res) => {
             message: "Unauthorized",
             status: 403
         })
-        let max_results = 10
+        let max_results = 100
         if (req.query.max_results) {
             max_results = req.query.max_results
         }

@@ -10,28 +10,6 @@ const twitterAuthRouter = require('express').Router()
 
 require('dotenv').config();
 
-
-refreshToken = async (client, user) => {
-    try {
-        refreshToken = user.twitterRefreshToken
-        const { client: refreshedClient, accessToken, refreshToken: newRefreshToken } = await client.refreshOAuth2Token(refreshToken);
-        const options = {
-            twitterAccessToken: accessToken,
-            twitterRefreshToken: newRefreshToken,
-        }
-        const updatedUser = await UserService.userUpdateService(user._id, options)
-        if (!updatedUser) {
-            res.status(401).json({
-                message: 'User not updated'
-            })
-        }
-        return refreshedClient
-    } catch (error) {
-        console.log('', error);
-    }
-    throw new Error();
-}
-
 twitterAuthRouter.get('/', async (req, res) => {
     try {
         const user = await Auth.authenticationService(req);
@@ -49,7 +27,6 @@ twitterAuthRouter.get('/', async (req, res) => {
             const repClient = client.generateOAuth2AuthLink('http://localhost:3001/api/auth/twitter/callback', {
                 scope: ['tweet.read', 'users.read', 'offline.access', 'like.read', 'follows.read']
             });
-            console.log("REP CLIENT =>",repClient)
             const {
                 url,
                 codeVerifier,
@@ -66,17 +43,32 @@ twitterAuthRouter.get('/', async (req, res) => {
                     message: 'User not updated'
                 })
             }
-            console.log('updatedUser: ' + updatedUser)
             return res.status(200).json({
                 url,
                 state,
                 codeVerifier
             });
         } else {
-            refreshedClient = await refreshToken(client, user)
-            return res.status(200).json({
-                refreshedClient
-            });
+            try {
+                refreshToken = user.twitterRefreshToken
+                const { client: refreshedClient, accessToken, refreshToken: newRefreshToken } = await client.refreshOAuth2Token(refreshToken);
+                const options = {
+                    twitterAccessToken: accessToken,
+                    twitterRefreshToken: newRefreshToken,
+                }
+                const updatedUser = await UserService.userUpdateService(user._id, options)
+                if (!updatedUser) {
+                    res.status(401).json({
+                        message: 'User not updated'
+                    })
+                }
+                return res.status(200).json({
+                    refreshedClient
+                });
+            } catch (error) {
+                console.log('Error refresh token', error);2
+                return res.send(error);
+            }
         }
     } catch (err) {
         console.log('ERROR twitter OAuth => ', err);

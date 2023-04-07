@@ -10,9 +10,13 @@ const CollectionSchema = new Mongoose.Schema({
     },
     username: {
         type: String,
-        required: true
+        default: ''
     },
-    id: {
+    authorId: {
+        type: String,
+        default: ''
+    },
+    tweetId: {
         type: String,
         default: ''
     },
@@ -32,6 +36,10 @@ const CollectionSchema = new Mongoose.Schema({
         type: Number,
         default: 0
     },
+    contextAnnotations: {
+        type: Array,
+        default: []
+    }
 });
 
 let TwitterPosts;
@@ -51,11 +59,27 @@ exports.getTwitterPosts = async (filter) => {
     throw new Error();
 }
 
+const getTwitterPostsByTweetId = async (tweetId) => {
+    try {
+        await db.connect();
+        return await TwitterPosts.findOne({
+            tweetId: tweetId
+        }).exec();
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 exports.addTwitterPosts = async (twitterPost) => {
     try {
         await db.connect();
-        const createdTwitterPosts = await TwitterPosts.create(twitterPost);
-        return createdTwitterPosts._id;
+        const post = await getTwitterPostsByTweetId(twitterPost.tweetId)
+        if (!post) {
+            const createdTwitterPosts = await TwitterPosts.create(twitterPost);
+            return createdTwitterPosts._id;
+        } else {
+            return post._id;
+        }
     } catch (error) {
         console.log('ERROR IN addTwitterPosts FUNCTION => ', error);
     }
