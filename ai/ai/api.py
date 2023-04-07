@@ -85,7 +85,7 @@ def get_proba(tweet_vec) -> dict[str, float]:
     return proba_dict
 
 
-def preprocess(text, stem=False):
+def preprocess(text: str, stem: bool=False) -> str:
     text = re.sub(
         r"@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+", " ", str(text).lower()
     ).strip()
