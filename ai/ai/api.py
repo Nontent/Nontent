@@ -33,6 +33,26 @@ class InputData(BaseModel):
 class InputDataList(BaseModel):
     tweets: list[InputData]
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "tweets": [
+                    {
+                        "tweet": "I'm not sure if I'm more excited for the game or the snacks I'm gonna eat while playing it...🤔🍿🎮 #gaming #snacktime"
+                    },
+                    {
+                        "tweet": "I finally got around to watching #Parasite and it was worth all the hype! 🙌 A masterpiece of a film! #BestPicture"
+                    },
+                    {
+                        "tweet": "Can't believe how good #TheMandalorian is. Baby Yoda is the cutest thing ever!"
+                    },
+                    {
+                        "tweet": "Megan Rapinoe leads the US Women's National Team to a gold medal in soccer at the Olympics"
+                    },
+                ]
+            }
+        }
+
 
 class PredictionResult(BaseModel):
     tweet: str
