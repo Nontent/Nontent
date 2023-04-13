@@ -1,7 +1,7 @@
 <template>
 	<div class="grid justify-items-end group">
 		<button
-			class="btn bg-blue-500 hover:bg-blue-600 w-auto h-auto px-1 z-50"
+			class="btn bg-blue-500 hover:bg-blue-600 w-auto h-auto px-1 md:z-40"
 			@click="loginTwitter"
 		>
 			Login with
@@ -12,7 +12,7 @@
 			/>
 		</button>
 		<div
-			class="invisible md:visible drop-shadow-box translate-x-1 translate-y-2 w-32 z-10"
+			class="invisible md:visible drop-shadow-box translate-x-1 translate-y-2 w-32 md:z-10"
 		></div>
 	</div>
 </template>
@@ -28,6 +28,8 @@ export default {
 	methods: {
 		async loginTwitter() {
 			const response = (await Api.connectTwitter()).data;
+			console.log(response);
+			window.location.href = response.url;
 			console.log(response);
 		},
 	},

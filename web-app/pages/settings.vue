@@ -7,7 +7,7 @@
 					id="email_settings"
 					type="text"
 					class="outline-none w-full disabled:opacity-40"
-					placeholder="EMAIL"
+					:value="store.user.email"
 					disabled
 				/>
 			</div>

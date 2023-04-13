@@ -15,7 +15,7 @@ const store = useMainStore();
 				"
 				class="flex justify-center h-5/6 my-3"
 			>
-				<div class="text-lg font-medium italic self-center">
+				<div class="text-md font-light italic self-center">
 					That's so sad, this is a bit empty here. :( <br />
 					Please pin a profile to see it here.
 				</div>
