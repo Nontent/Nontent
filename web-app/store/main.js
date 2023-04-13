@@ -7,7 +7,7 @@ export const useMainStore = defineStore('main', {
 			connected: core.useLocalStorage('connected', false),
 			accounts: core.useLocalStorage('accounts', []),
 			token: core.useLocalStorage('token', ''),
-			userId: core.useLocalStorage('userId', ''),
+			user: core.useLocalStorage('user', {'email': '', 'id': ''}),
 			pinnedAccount: core.useLocalStorage('pinnedAccount', {}),
 	  }),
 
@@ -20,7 +20,9 @@ export const useMainStore = defineStore('main', {
 
 			getCounter: (state) => state.counter,
 			
-			getUserId: (state) => state.userId,
+			getUser: (state) => state.user,
+
+			getEmail: (state) => state.email,
 
 	  },
 
@@ -38,6 +40,14 @@ export const useMainStore = defineStore('main', {
 				  this.accounts.push(account);
 			},
 
+			setUserId(id) {
+				  this.user.id = id;
+			},
+
+			setUserEmail(email) {
+				  this.user.email = email;
+			},
+
 			removeAccount(account) {
 				if (account === this.pinnedAccount) {
 					this.pinnedAccount = {};
@@ -50,7 +60,7 @@ export const useMainStore = defineStore('main', {
 				  this.connected = false;
 				  this.accounts = [];
 				  this.token = '';
-				  this.userId = '';
+				  this.email = '';
 				  this.pinnedAccount = {};
 			}
 		},

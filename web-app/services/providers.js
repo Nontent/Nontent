@@ -1,13 +1,17 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3001/api/';
+const BASE_URL = 'http://localhost:3001/api';
+
+const mainConfig = {
+    headers: { Authorization: `${localStorage.getItem('token')}` }
+};
 
 class HTTP {
   constructor() {
   }
 
   static get(url, params) {
-	return axios.get(BASE_URL + url, { params });
+	return axios.get(BASE_URL + url, params);
   }
 
   static post(url, data) {
@@ -29,24 +33,24 @@ export default class Providers {
 
 	// login
 	static async login(data) {
-		return HTTP.post('signin', data);
+		return HTTP.post('/signin', data);
 	}
 
 	// register
 	static async register(data) {
-		return HTTP.post('user', data);
+		return HTTP.post('/user', data);
 	}
 
   	// reddit
   
 	// connect reddit
 	static async connectReddit() {
-	  return HTTP.get('auth/reddit');
+	  return HTTP.get('/auth/reddit');
 	}
 
 	//refresh token reddit
 	static async refreshTokenReddit() {
-		return HTTP.get('auth/reddit/refresh');
+		return HTTP.get('/auth/reddit/refresh');
 	}
 
 	// get suer posts
@@ -63,11 +67,11 @@ export default class Providers {
 
 	// connnect twitter
 	static async connectTwitter() {
-		return HTTP.get('auth/twitter');
+		return HTTP.get('/auth/twitter', mainConfig);
 	}
 
 	// get user
 	static async getUserTwitter() {
-		return HTTP.get('twitter/user');
+		return HTTP.get('/twitter/user');
 	}
 }

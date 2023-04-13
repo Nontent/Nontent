@@ -30,7 +30,7 @@
 					>
 						Login
 					</button>
-					<div class="drop-shadow-box"></div>
+					<div class="invisible md:visible drop-shadow-box"></div>
 				</div>
 			</div>
 			<div class="flex justify-center mt-4 font-bold">
@@ -46,7 +46,7 @@
 					>
 						Register
 					</button>
-					<div class="drop-shadow-box"></div>
+					<div class="invisible md:visible drop-shadow-box"></div>
 				</div>
 			</div>
 		</div>
@@ -76,27 +76,29 @@ export default {
 					this.store.increment();
 					this.store.token = response.data.token;
 					this.store.increment();
-					this.store.userId = response.data.userId;
+					this.store.setUserId(response.data.userId);
+					this.store.increment();
+					this.store.setUserEmail(response.data.email);
 					this.store.increment();
 					this.store.connected = true;
 					this.$router.push("/");
-					this.store.increment();
-					this.store.addAccount({
-						userId: "@" + response.data.userId,
-						provider: "Twitter",
-						profileId: response.data.userId,
-						followers: "157",
-						subs: "1249",
-					});
-					this.store.increment();
-					this.store.addAccount({
-						userId: "@" + response.data.userId,
-						provider: "Reddit",
-						profileId: response.data.userId,
-						subReddits: "45",
-						posts: "1249",
-						upvotes: "15472",
-					});
+					// this.store.increment();
+					// this.store.addAccount({
+					// 	userId: "@" + response.data.userId,
+					// 	provider: "Twitter",
+					// 	profileId: response.data.userId,
+					// 	followers: "157",
+					// 	subs: "1249",
+					// });
+					// this.store.increment();
+					// this.store.addAccount({
+					// 	userId: "@" + response.data.userId,
+					// 	provider: "Reddit",
+					// 	profileId: response.data.userId,
+					// 	subReddits: "45",
+					// 	posts: "1249",
+					// 	upvotes: "15472",
+					// });
 				}
 			} catch (error) {
 				console.error(error);

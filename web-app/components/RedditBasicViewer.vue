@@ -30,7 +30,7 @@
 				>
 					Unpin
 				</button>
-				<div class="drop-shadow-box"></div>
+				<div class="invisible md:visible drop-shadow-box"></div>
 			</div>
 		</div>
 		<div class="grid grid-cols-3 place-items-center">

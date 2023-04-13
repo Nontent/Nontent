@@ -8,7 +8,7 @@
 	}
 
 	.main-box {
-		@apply container mx-auto border-black border-4 p-4 my-2 bg-white;
+		@apply container mx-auto  border-black border-4 p-4 my-2 bg-white h-auto;
 	}
 
 	.drop-shadow-box-navbar {

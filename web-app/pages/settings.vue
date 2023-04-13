@@ -7,7 +7,7 @@
 					id="email_settings"
 					type="text"
 					class="outline-none w-full disabled:opacity-40"
-					placeholder="EMAIL"
+					:value="store.user.email"
 					disabled
 				/>
 			</div>
@@ -40,7 +40,7 @@
 			<div
 				v-for="account in store.accounts"
 				:key="account"
-				class="grid grid-cols-3 gap-4 my-2 mx-4 place-items-center"
+				class="md:grid grid-cols-3 gap-4 my-2 mx-4 place-items-center hidden"
 			>
 				<div>
 					<Icon
@@ -54,8 +54,35 @@
 					/>
 					<span class="text-md mx-2">{{ account.userId }}</span>
 				</div>
-				<div v-if="account.connected" class="text-green-800 font-bold">
-					connected
+
+				<div class="group">
+					<button
+						:id="'disconnect_button' + account.provider"
+						type="button"
+						@click="disconnect(account)"
+						class="btn bg-amber-500 group-hover:bg-amber-600"
+					>
+						Disconnect
+					</button>
+					<div class="invisible md:visible drop-shadow-box"></div>
+				</div>
+			</div>
+			<div
+				v-for="account in store.accounts"
+				:key="account"
+				class="grid grid-cols-2 my-2 place-items-center md:hidden"
+			>
+				<div>
+					<Icon
+						:name="
+							'mingcute:' +
+							account.provider.toLowerCase() +
+							'-line'
+						"
+						class="w-8 h-8"
+						color="#FFB100"
+					/>
+					<span class="text-md mx-2">{{ account.userId }}</span>
 				</div>
 				<div class="group">
 					<button
@@ -66,7 +93,7 @@
 					>
 						Disconnect
 					</button>
-					<div class="drop-shadow-box"></div>
+					<div class="invisible md:visible drop-shadow-box"></div>
 				</div>
 			</div>
 		</div>
