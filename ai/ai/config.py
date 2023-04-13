@@ -1,9 +1,9 @@
-api_name = "NonentAI"
+api_name = "NontentAI"
 
 api_version = "0.0.1"
 
 description = """
-NonentAI is used to predict the domain of a given tweet. It classifies tweets into 12 categories: `WAR`, `GAMING`, `TECH`, `SCIENCE`, `MUSIC`, `POLICY`, `CINEMA`, `SPORT`, `MEDICAL`, `LITERATURE`, `FOOD`, and `MARKETING`.
+NontentAI is used to predict the domain of a given tweet. It classifies tweets into 12 categories: `WAR`, `GAMING`, `TECH`, `SCIENCE`, `MUSIC`, `POLICY`, `CINEMA`, `SPORT`, `MEDICAL`, `LITERATURE`, `FOOD`, and `MARKETING`.
 
 ## API Details
 
