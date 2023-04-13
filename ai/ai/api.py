@@ -41,6 +41,8 @@ class PredictionResult(BaseModel):
 
 
 class PredictionResultList(BaseModel):
+    global_prediction: str
+    global_proba: dict[str, int]
     data: list[PredictionResult]
 
 
@@ -72,7 +74,16 @@ def predicts(input_data_list: InputDataList) -> PredictionResultList:
                 proba=proba_dict,
             )
         )
-    return PredictionResultList(data=data)
+    prediction_counts = {}
+    for result in data:
+        if result.prediction not in prediction_counts:
+            prediction_counts[result.prediction] = 1
+        else:
+            prediction_counts[result.prediction] += 1
+    global_prediction = max(prediction_counts, key=prediction_counts.get)
+    return PredictionResultList(
+        data=data, global_prediction=global_prediction, global_proba=prediction_counts
+    )
 
 
 def get_proba(tweet_vec) -> dict[str, float]:
@@ -85,7 +96,7 @@ def get_proba(tweet_vec) -> dict[str, float]:
     return proba_dict
 
 
-def preprocess(text: str, stem: bool=False) -> str:
+def preprocess(text: str, stem: bool = False) -> str:
     text = re.sub(
         r"@\S+|https?:\S+|http?:\S|[^A-Za-z0-9]+", " ", str(text).lower()
     ).strip()
@@ -100,4 +111,4 @@ def preprocess(text: str, stem: bool=False) -> str:
 
 
 def start():
-    uvicorn.run("ai.api:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("ai.api:app", host="localhost", port=8000, reload=True)
