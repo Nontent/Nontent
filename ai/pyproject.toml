@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "ai"
+version = "0.0.1"
+description = "NontentAI allows you to do tweet classification"
+authors = ["GuiEpi <guillaume.coussot@epitech.eu>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+start = "ai.api:start"
+make = "ai.dataset_maker:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+ipykernel = "^6.21.3"
+pandas = "^1.5.3"
+numpy = "^1.24.2"
+nltk = "^3.8.1"
+scikit-learn = "^1.2.2"
+matplotlib = "^3.7.1"
+seaborn = "^0.12.2"
+fastapi = {extras = ["all"], version = "^0.95.0"}
+rich = "^13.3.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
