@@ -30,7 +30,6 @@ export default {
 			const response = (await Api.connectTwitter()).data;
 			console.log(response);
 			window.location.href = response.url;
-			console.log(response);
 		},
 	},
 };

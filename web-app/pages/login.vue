@@ -78,27 +78,23 @@ export default {
 					this.store.increment();
 					this.store.setUserId(response.data.userId);
 					this.store.increment();
-					this.store.setUserEmail(response.data.email);
-					this.store.increment();
 					this.store.connected = true;
+					const userResponse = await Providers.getUser(
+						response.data.userId,
+						response.data.token
+					);
+					this.store.increment();
+					this.store.setEmail(userResponse.data.email);
+					this.store.increment();
+					if (userResponse.data.socialNetworks.length > 0) {
+						userResponse.data.socialNetworks.forEach((account) => {
+							this.store.addAccount({
+								provider: account.provider,
+								platformUsername: userResponse.data.username,
+							});
+						});
+					}
 					this.$router.push("/");
-					// this.store.increment();
-					// this.store.addAccount({
-					// 	userId: "@" + response.data.userId,
-					// 	provider: "Twitter",
-					// 	profileId: response.data.userId,
-					// 	followers: "157",
-					// 	subs: "1249",
-					// });
-					// this.store.increment();
-					// this.store.addAccount({
-					// 	userId: "@" + response.data.userId,
-					// 	provider: "Reddit",
-					// 	profileId: response.data.userId,
-					// 	subReddits: "45",
-					// 	posts: "1249",
-					// 	upvotes: "15472",
-					// });
 				}
 			} catch (error) {
 				console.error(error);
