@@ -53,28 +53,6 @@ export default class Providers {
 		return HTTP.put('/user/update/' + userId, data, mainConfig);
 	}
 
-  	// reddit
-  
-	// connect reddit
-	static async connectReddit() {
-	  return HTTP.get('/auth/reddit');
-	}
-
-	//refresh token reddit
-	static async refreshTokenReddit() {
-		return HTTP.get('/auth/reddit/refresh');
-	}
-
-	// get suer posts
-	static async getUserRedditPosts() {
-		return HTTP.get('/user/reddit/posts/' + userId, { 'filter': 'all' });
-	}
-
-	// get user subs
-	static async getUserRedditSubs() {
-		return HTTP.get('/user/reddit/subs/' + userId);
-	}
-
 	// twitter
 
 	// connnect twitter

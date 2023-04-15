@@ -2,6 +2,7 @@
 import { useMainStore } from "../store/main";
 definePageMeta({ middleware: ["auth"] });
 const store = useMainStore();
+console.log(store);
 </script>
 <template>
 	<div>
@@ -25,11 +26,6 @@ const store = useMainStore();
 				:account="store.pinnedAccount"
 				class="border-0"
 			/>
-			<RedditBasicViewer
-				v-if="store.pinnedAccount.provider === 'Reddit'"
-				:account="store.pinnedAccount"
-				class="border-0"
-			/>
 			<div class="flex justify-center mt-2">
 				<div
 					class="mr-4"
@@ -40,16 +36,6 @@ const store = useMainStore();
 					"
 				>
 					<TwitterConnection />
-				</div>
-				<div
-					class="ml-4"
-					v-if="
-						!store.accounts.some(
-							(account) => account.provider == 'Reddit'
-						)
-					"
-				>
-					<RedditConnection />
 				</div>
 			</div>
 		</div>

@@ -10,10 +10,6 @@ const store = useMainStore();
 				v-if="account.provider === 'Twitter'"
 				:account="account"
 			/>
-			<RedditBasicViewer
-				v-if="account.provider === 'Reddit'"
-				:account="account"
-			/>
 		</div>
 	</div>
 </template>
