@@ -21,7 +21,7 @@ class HTTP {
   }
 
   static put(url, data) {
-	return axios.put(BASE_URL + url, data);
+	return axios.put(BASE_URL + url, data, mainConfig);
   }
 
   static delete(url) {
@@ -50,7 +50,7 @@ export default class Providers {
 
 	// update user
 	static async updateUser(userId, data) {
-		return HTTP.put('/user/update/' + userId, data, mainConfig);
+		return axios.put(BASE_URL + '/user/update/' + userId, data, mainConfig);
 	}
 
 	// twitter
