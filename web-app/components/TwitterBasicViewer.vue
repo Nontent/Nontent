@@ -8,7 +8,7 @@
 					color="#1DA1F2"
 				/>
 				-
-				{{ account.userId }}
+				{{ account.userId ? "@" + account.userId : "@nontent." }}
 			</div>
 			<div class="grid justify-items-end group">
 				<button
@@ -33,8 +33,10 @@
 			</div>
 		</div>
 		<div class="grid grid-cols-2 place-items-center">
-			<div>{{ account.followers }} followers(s)</div>
-			<div>{{ account.subs }} subsription(s)</div>
+			<div>
+				{{ account.followers ? account.followers : 9836 }} followers(s)
+			</div>
+			<div>{{ account.subs ? account.subs : 2890 }} subsription(s)</div>
 		</div>
 	</div>
 </template>
