@@ -179,6 +179,7 @@ export default {
 				}
 			} catch (error) {
 				this.loginError = true;
+				console.log(error);
 			}
 		},
 	},

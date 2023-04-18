@@ -1,27 +1,24 @@
 import axios from 'axios';
 import { useMainStore } from '../store/main';
 
-const BASE_URL = 'http://localhost:3001/api';
+// const BASE_URL = 'http://localhost:3001/api';
+const BASE_URL = 'http://localhost:1234/api';
 const store = useMainStore();
-
-const mainConfig = {
-    headers: { Authorization: `${store.token}` }
-};
 
 class HTTP {
   constructor() {
   }
 
-  static get(url, params) {
-	return axios.get(BASE_URL + url, params);
+  static get(url, token) {
+	return axios.get(BASE_URL + url, token ? { headers: { Authorization: token } } : null);
   }
 
-  static post(url, data) {
-	return axios.post(BASE_URL + url, data);
+  static post(url, data, token) {
+	return axios.post(BASE_URL + url, data, token ? { headers: { Authorization: token } } : null );
   }
 
-  static put(url, data) {
-	return axios.put(BASE_URL + url, data, mainConfig);
+  static put(url, data, token) {
+	return axios.put(BASE_URL + url, data, { headers: { Authorization: token } });
   }
 
   static delete(url) {
@@ -45,24 +42,24 @@ export default class Providers {
 
 	// get user
 	static async getUser(userId, token) {
-		return HTTP.get('/user/' + userId, { headers: { Authorization: `${token}` } });
+		return HTTP.get('/user/' + userId, token);
 	}
 
 	// update user
-	static async updateUser(userId, data) {
-		return axios.put(BASE_URL + '/user/update/' + userId, data, mainConfig);
+	static async updateUser(userId, data, token) {
+		return HTTP.put('/user/update/' + userId, data, token);
 	}
 
 	// twitter
 
 	// connnect twitter
-	static async connectTwitter() {
-		return HTTP.get('/auth/twitter', mainConfig);
+	static async connectTwitter(token) {
+		return HTTP.get('/auth/twitter', token);
 	}
 
 	// get token twitter
-	static async getTokenTwitter() {
-		return HTTP.get('/auth/twitter/callback', mainConfig);
+	static async getTokenTwitter(data, token) {
+		return HTTP.post('/auth/twitter/callback', data, token);
 	}
 
 	// get user

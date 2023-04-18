@@ -1,32 +1,44 @@
 <template>
-	<div class="flex justify-center">test</div>
+	<div class="flex justify-center">You're now connected to Twitter!</div>
 </template>
 <script>
 import { useMainStore } from "../store/main";
 import Providers from "../services/providers";
 export default {
 	name: "TwitterCallback",
-	setup() {
+	async setup() {
 		const store = useMainStore();
 		const userId = useCookie("nontentUserId");
 		const token = useCookie("nontentToken");
 		const urlParams = new URLSearchParams(window.location.search);
 		const code = urlParams.get("code");
 		const state = urlParams.get("state");
-		const updateUserResponse = Providers.updateUser(
+		const updateUserResponse = await Providers.updateUser(
 			userId.value,
 			{
-				twitterCodeVerifier: code,
 				twitterSessionState: state,
 			},
-			{ headers: { Authorization: `${token.value}` } }
+			store.token
 		);
 		if (updateUserResponse.status === 200) {
-			const getTokenResponse = Providers.getTokenTwitter();
-			console.log(updateUserResponse);
-			console.log(getTokenResponse);
+			await Providers.getTokenTwitter(
+				{
+					code: code,
+					state: state,
+				},
+				store.token
+			);
 		}
-		return { store };
+		const user = await Providers.getUser(userId.value, store.token);
+		if (user.status === 200) {
+			if (user.data.socialNetworks.length > 0) {
+				store.addAccount({
+					provider: "Twitter",
+					userId: user.data.twitterUsername,
+				});
+			}
+		}
+		window.location.href = "http://www.localhost:1390";
 	},
 };
 </script>

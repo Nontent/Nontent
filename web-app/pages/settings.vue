@@ -115,15 +115,19 @@ export default {
 
 		async function disconnect(account) {
 			console.log(store.token);
-			const response = await Providers.updateUser(store.user.id, {
-				socialNetworks: [],
-				twitterCodeVerifier: null,
-				twitterSessionState: null,
-				twitterAccessToken: null,
-				twitterRefreshToken: null,
-				twitterId: null,
-				twitterUsername: null,
-			});
+			const response = await Providers.updateUser(
+				store.user.id,
+				{
+					socialNetworks: [],
+					twitterCodeVerifier: null,
+					twitterSessionState: null,
+					twitterAccessToken: null,
+					twitterRefreshToken: null,
+					twitterId: null,
+					twitterUsername: null,
+				},
+				store.token
+			);
 			if (response.status == 200) {
 				store.increment();
 				store.removeAccount(account);
