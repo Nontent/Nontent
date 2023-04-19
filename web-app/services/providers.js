@@ -1,9 +1,11 @@
 import axios from 'axios';
+import { useMainStore } from '../store/main';
 
 const BASE_URL = 'http://localhost:3001/api';
+const store = useMainStore();
 
 const mainConfig = {
-    headers: { Authorization: `${localStorage.getItem('token')}` }
+    headers: { Authorization: `${store.token}` }
 };
 
 class HTTP {
@@ -41,6 +43,16 @@ export default class Providers {
 		return HTTP.post('/user', data);
 	}
 
+	// get user
+	static async getUser(userId, token) {
+		return HTTP.get('/user/' + userId, { headers: { Authorization: `${token}` } });
+	}
+
+	// update user
+	static async updateUser(userId, data) {
+		return HTTP.put('/user/update/' + userId, data, mainConfig);
+	}
+
   	// reddit
   
 	// connect reddit
@@ -68,6 +80,11 @@ export default class Providers {
 	// connnect twitter
 	static async connectTwitter() {
 		return HTTP.get('/auth/twitter', mainConfig);
+	}
+
+	// get token twitter
+	static async getTokenTwitter() {
+		return HTTP.get('/auth/twitter/callback', mainConfig);
 	}
 
 	// get user

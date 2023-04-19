@@ -24,7 +24,7 @@ twitterAuthRouter.get('/', async (req, res) => {
         });
         if(!user.twitterAccessToken){
             // Create a partial client for auth links
-            const repClient = client.generateOAuth2AuthLink('http://localhost:3001/api/auth/twitter/callback', {
+            const repClient = client.generateOAuth2AuthLink('http://www.localhost:1390/twitterCallback', {
                 scope: ['tweet.read', 'users.read', 'offline.access', 'like.read', 'follows.read']
             });
             const {
