@@ -3,9 +3,9 @@ import { useMainStore } from "../store/main";
 definePageMeta({ middleware: ["auth"] });
 const store = useMainStore();
 const token = useCookie("nontentToken");
-token.value = token.value || store.token;
+token.value = store.token;
 const userId = useCookie("nontentUserId");
-userId.value = userId.value || store.user.id;
+userId.value = store.user.id;
 </script>
 <template>
 	<div>

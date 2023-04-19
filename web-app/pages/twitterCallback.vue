@@ -18,7 +18,7 @@ export default {
 			{
 				twitterSessionState: state,
 			},
-			store.token
+			token.value
 		);
 		if (updateUserResponse.status === 200) {
 			await Providers.getTokenTwitter(
