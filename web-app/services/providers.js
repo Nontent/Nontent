@@ -3,6 +3,7 @@ import { useMainStore } from '../store/main';
 
 // const BASE_URL = 'http://localhost:3001/api';
 const BASE_URL = 'http://localhost:1234/api';
+const BASE_URL_API_PREDICTION = 'http://localhost:8000';
 const store = useMainStore();
 
 class HTTP {
@@ -70,6 +71,11 @@ export default class Providers {
 	// get tweets (home	timeline)
 	static async getHomeTweets(token) {
 		return HTTP.get('/twitter/user/home', token);
+	}
+
+	// get predictions
+	static async getPredictions(data) {
+		return axios.post(BASE_URL_API_PREDICTION + '/predicts', data);
 	}
 
 }
