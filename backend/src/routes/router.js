@@ -8,6 +8,5 @@ rootRouter.use('/api/user/reddit', require('./user/userReddit.routes'));
 rootRouter.use('/api/auth/twitter', require('./oauth/oauth.routes'));
 rootRouter.use('/api/auth/reddit', require('./oauth/oauthReddit.routes'));
 rootRouter.use('/api/scrapping/reddit', require('./scraping/reddit/scrapping.reddit.routes'));
-rootRouter.use('/api/scrapping/twitter', require('./scraping/twitter/scrapping.twitter.routes'));
 
 module.exports = rootRouter;
