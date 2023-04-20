@@ -101,7 +101,6 @@
 </template>
 <script>
 import { useMainStore } from "../store/main";
-import Providers from "../services/providers";
 
 definePageMeta({
 	middleware: "auth",
@@ -113,28 +112,9 @@ export default {
 	setup() {
 		const store = useMainStore();
 
-		async function disconnect(account) {
-			console.log(store.token);
-			const response = await Providers.updateUser(
-				store.user.id,
-				{
-					socialNetworks: [],
-					twitterCodeVerifier: null,
-					twitterSessionState: null,
-					twitterAccessToken: null,
-					twitterRefreshToken: null,
-					twitterId: null,
-					twitterUsername: null,
-				},
-				store.token
-			);
-			if (response.status == 200) {
-				store.increment();
-				store.removeAccount(account);
-				return;
-			} else {
-				console.log(response);
-			}
+		function disconnect(account) {
+			store.increment();
+			store.removeAccount(account);
 		}
 
 		return { store, disconnect };

@@ -18,19 +18,19 @@
 </template>
 <script>
 import { useMainStore } from "../store/main";
-import Providers from "../services/providers";
+import Api from "../services/providers";
 export default {
 	name: "TwitterConnection",
-	setup() {
-		const store = useMainStore();
-		return { store };
-	},
+	// setup() {
+	// 	const store = useMainStore();
+
+	// }
 	methods: {
 		async loginTwitter() {
-			const response = (await Providers.connectTwitter(this.store.token))
-				.data;
+			const response = (await Api.connectTwitter()).data;
 			console.log(response);
 			window.location.href = response.url;
+			console.log(response);
 		},
 	},
 };

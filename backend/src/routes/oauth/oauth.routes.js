@@ -24,7 +24,7 @@ twitterAuthRouter.get('/', async (req, res) => {
         });
         if(!user.twitterAccessToken){
             // Create a partial client for auth links
-            const repClient = client.generateOAuth2AuthLink('http://www.localhost:1390/twitterCallback', {
+            const repClient = client.generateOAuth2AuthLink('http://localhost:3001/api/auth/twitter/callback', {
                 scope: ['tweet.read', 'users.read', 'offline.access', 'like.read', 'follows.read']
             });
             const {
@@ -76,13 +76,14 @@ twitterAuthRouter.get('/', async (req, res) => {
     }
 })
 
-twitterAuthRouter.post('/callback', async (req, res) => {
+twitterAuthRouter.get('/callback', async (req, res) => {
     try {
-        console.log("REQ.QUERY =>", req.body)
-        const code = req.body.code
-		const state = req.body.state
+        console.log("REQ.QUERY =>", req.query)
+        const {
+            state,
+            code
+        } = req.query
         const user = await User.getUserByState(state)
-
         if (!user) {
             res.status(404).json({
                 message: 'User not found'
@@ -99,7 +100,6 @@ twitterAuthRouter.post('/callback', async (req, res) => {
             clientId: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET
         });
-		console.log("CLIENT =>", client)
         const {
             client: loggedClient,
             accessToken,
@@ -108,7 +108,7 @@ twitterAuthRouter.post('/callback', async (req, res) => {
         } = await client.loginWithOAuth2({
             code,
             codeVerifier: user.twitterCodeVerifier,
-            redirectUri: 'http://www.localhost:1390/twitterCallback'
+            redirectUri: 'http://localhost:3001/api/auth/twitter/callback'
         });
         const userInfo = await loggedClient.v2.me();
         const options = {
@@ -125,7 +125,7 @@ twitterAuthRouter.post('/callback', async (req, res) => {
         }
         return res.status(200).json({
             message: "User connected.",
-            client: loggedClient,
+            clien: loggedClient,
             access_token: accessToken,
             refresh_token: refreshToken,
             expiresIn: expiresIn

@@ -20,9 +20,6 @@ matplotlib = "^3.7.1"
 seaborn = "^0.12.2"
 fastapi = {extras = ["all"], version = "^0.95.0"}
 rich = "^13.3.3"
-gensim = "^4.3.1"
-transformers = "^4.28.1"
-torch = "^2.0.0"
 
 
 [build-system]

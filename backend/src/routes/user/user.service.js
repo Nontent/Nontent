@@ -31,9 +31,6 @@ exports.userCreationService = async (userBody) => {
 }
 
 exports.userUpdateService = async (userId, userBody) => {
-    if (userBody.password) {
-        userBody.password = md5(userBody.password)
-    }
     console.log('props', userId, userBody)
     if (!userId || !userBody) {
         throw new Error('Props invalid');
