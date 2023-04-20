@@ -66,7 +66,7 @@ twitterAuthRouter.get('/', async (req, res) => {
                     refreshedClient
                 });
             } catch (error) {
-                console.log('Error refresh token', error);
+                console.log('Error refresh token', error);2
                 return res.send(error);
             }
         }
