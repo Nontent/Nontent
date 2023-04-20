@@ -49,7 +49,7 @@ export default {
 	name: "home",
 	data() {
 		return {
-			mainContainerTitle: "Welcome to your nontent!",
+			mainContainerTitle: "Welcome to nontent!",
 			mainContainerContent:
 				" On this page you will be able to see your overall information about the different social profile you have connected.",
 		};
@@ -57,4 +57,31 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+html { 
+	overflow-y: scroll;
+	min-height: 100%;
+}
+::-webkit-scrollbar {
+  width: 8px; /* 1px wider than Lion. */
+  /* This is more usable for users trying to click it. */
+}
+/* hover effect for both scrollbar area, and scrollbar 'thumb' */
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.09);
+}
+
+/* The scrollbar 'thumb' ...that marque oval shape in a scrollbar */
+::-webkit-scrollbar-thumb:vertical {
+  /* This is the EXACT color of Mac OS scrollbars. 
+     Yes, I pulled out digital color meter */
+  background: rgba(0,0,0,0.5);
+  -webkit-border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:vertical:active {
+  background: rgba(0,0,0,0.61); /* Some darker color when you click it */
+  -webkit-border-radius: 100px;
+}
+
+
+</style>
