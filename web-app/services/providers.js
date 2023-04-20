@@ -69,8 +69,13 @@ export default class Providers {
 	}
 
 	// get tweets (home	timeline)
+	static async getTweetScrap(token) {
+		return HTTP.post('/twitter/scrap',{}, token);
+	}
+
+	// get tweets (home	timeline)
 	static async getHomeTweets(token) {
-		return HTTP.get('/twitter/user/home', token);
+		return HTTP.get('/user/tweet/all', token);
 	}
 
 	// AI services

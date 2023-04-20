@@ -21,10 +21,11 @@ twitterRouter.post('/scrap', async (req, res) => {
             })
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
-            const userLikedTweets = await client.v2.userLikedTweets(user.twitterId);
+            console.log('USER: ', client)
+            const userLikedTweets = await client.v2.userLikedTweets(toString(user.twitterId));
             const homeTimeline = await client.v2.homeTimeline({ exclude: 'replies' });
-            const userTimeline = await client.v2.userTimeline(user.twitterId);
-
+            const userTimeline = await client.v2.userTimeline(toString(user.twitterId));
+            console.log('TIMELINE: ', userTimeline._realData)
             const userLikedTweetsData = userLikedTweets.data.data
             const homeTimelineData = homeTimeline.data.data
             const userTimelineData = userTimeline.data.data
@@ -144,7 +145,9 @@ twitterRouter.get('/user/timeline', async (req, res) => {
             })
         } else {
             const client = new TwitterApi(user.twitterAccessToken);
-            const tweets = await client.v2.userTimeline(user.twitterId);
+            console.log('CLIENT: ', client)
+            const tweets = await client.v2.userTimeline(toString(user.twitterId));
+            console.log('TWEETS: ', tweets)
             let data = []
             for await (const tweet of tweets) {
                 data.push(tweet)
@@ -181,6 +184,7 @@ twitterRouter.get('/user/home', async (req, res) => {
      */
     try {
         const user = await Auth.authenticationService(req);
+        console.log('USER: ', user)
         if (!user) return res.status(403).json({
             message: "Unauthorized",
             status: 403
@@ -190,9 +194,13 @@ twitterRouter.get('/user/home', async (req, res) => {
                 message: "No access token provided"
             })
         } else {
+            console.log('CHECK1')
             const client = new TwitterApi(user.twitterAccessToken);
+            console.log('CLIENT: ', client)
             const timeLine = await client.v2.homeTimeline({ exclude: 'replies' });
+            console.log('TIMELINE: ', timeLine)
             data = timeLine.data.data
+            console.log('DATA: ', data)
             return res.status(200).json({
                 data
             })

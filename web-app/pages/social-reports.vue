@@ -17,7 +17,10 @@ const store = useMainStore();
 		</div>
 		<div class="main-box">
 			<span class="text-lg my-5">
-				Your tweets' average sentiment: {{ averageSentiment }}</span
+				Sentiment score: {{ (Math.round(averageSentiment * 100) / 100).toFixed(2) }}</span
+			>
+			<span class="text-lg my-5">
+				This number represents the general positivity (or negativity) of your Twitter feed.</span
 			>
 		</div>
 		<div class="main-box" v-for="(cluster, index) in clusters" :key="index">
@@ -59,6 +62,7 @@ export default {
 	methods: {
 		async initData() {
 			const store = useMainStore();
+			await Providers.getTweetScrap(store.token);
 			let topicLabels = [];
 			let topicData = [];
 			let averageSentiment = 0.5;

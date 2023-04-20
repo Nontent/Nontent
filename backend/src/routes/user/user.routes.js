@@ -61,6 +61,7 @@ userRouter.get('/tweet/all', async (req, res) => {
         })
         const userId = user.id;
         const response = await UserService.getUserTweets(userId);
+        console.log('RES: ', response)
         res.status(200).json({data: response});
     } catch (error) {
         console.log('ERROR => ', error);

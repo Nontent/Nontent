@@ -1,8 +1,9 @@
-from ai.config import description, tags_metadata, api_version, api_name
+from config import description, tags_metadata, api_version, api_name
 from pydantic import BaseModel, Field
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import pickle
 import re
@@ -42,6 +43,14 @@ app = FastAPI(
     openapi_tags=tags_metadata,
 )
 
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class InputData(BaseModel):
     tweet: str = Field(

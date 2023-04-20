@@ -46,7 +46,7 @@ export default {
 		} catch (error) {
 			console.log(error);
 		}
-		window.location.href = "http://www.localhost:1390";
+		// window.location.href = "http://www.localhost:1390";
 	},
 };
 </script>
