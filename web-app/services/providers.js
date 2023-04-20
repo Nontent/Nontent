@@ -64,8 +64,8 @@ export default class Providers {
 	}
 
 	// get user
-	static async getUserTwitter() {
-		return HTTP.get('/twitter/user');
+	static async getUserTwitter(token) {
+		return HTTP.get('/twitter/user', token);
 	}
 
 	// get tweets (home	timeline)

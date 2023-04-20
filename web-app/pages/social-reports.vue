@@ -76,9 +76,11 @@ export default {
 					const topics = {
 						global_prediction: "CINEMA",
 						global_proba: {
-							GAMING: 4,
+							GAMING: 7,
 							CINEMA: 8,
 							SPORT: 4,
+							TECH: 6,
+							OTHER: 10,
 						},
 						data: [],
 					};
@@ -97,7 +99,7 @@ export default {
 				labels: [],
 				datasets: [
 					{
-						label: "Your tweets main topics",
+						label: "Your tweets main topics score",
 						backgroundColor: "rgba(255,99,132,0.2)",
 						borderColor: "rgba(255,99,132,1)",
 						pointBackgroundColor: "rgba(255,99,132,1)",

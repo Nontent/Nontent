@@ -29,14 +29,22 @@ export default {
 				store.token
 			);
 		}
-		const user = await Providers.getUser(userId.value, store.token);
-		if (user.status === 200) {
-			if (user.data.socialNetworks.length > 0) {
-				store.addAccount({
-					provider: "Twitter",
-					userId: user.data.twitterUsername,
-				});
+		try {
+			const user = await Providers.getUser(userId.value, store.token);
+			const twitterAccount = await Providers.getUserTwitter(store.token);
+			if (user.status === 200 && twitterAccount.status === 200) {
+				if (user.data.socialNetworks.length > 0) {
+					store.addAccount({
+						provider: "Twitter",
+						userId: user.data.twitterUsername,
+						followers: twitterAccount.data.followers_count,
+						following: twitterAccount.data.following_count,
+						tweetCount: twitterAccount.data.tweet_count,
+					});
+				}
 			}
+		} catch (error) {
+			console.log(error);
 		}
 		window.location.href = "http://www.localhost:1390";
 	},
