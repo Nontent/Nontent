@@ -3,7 +3,7 @@ import { useMainStore } from '../store/main';
 
 // const BASE_URL = 'http://localhost:3001/api';
 const BASE_URL = 'http://localhost:1234/api';
-const BASE_URL_API_PREDICTION = 'http://localhost:8000';
+const BASE_URL_API_AI = 'http://localhost:8000';
 const store = useMainStore();
 
 class HTTP {
@@ -73,9 +73,20 @@ export default class Providers {
 		return HTTP.get('/twitter/user/home', token);
 	}
 
+	// AI services
 	// get predictions
 	static async getPredictions(data) {
-		return axios.post(BASE_URL_API_PREDICTION + '/predicts', data);
+		return axios.post(BASE_URL_API_AI + '/predicts', data);
+	}
+
+	// get kmeans
+	static async getKmeans(data) {
+		return axios.post(BASE_URL_API_AI + '/kmeans', data);
+	}
+
+	// get sentiment
+	static async getSentiment(data) {
+		return axios.post(BASE_URL_API_AI + '/sentiment', data);
 	}
 
 }

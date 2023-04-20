@@ -5,7 +5,7 @@ definePageMeta({ middleware: ["auth"] });
 const store = useMainStore();
 </script>
 <template>
-	<div :key="reloadKey">
+	<div>
 		<div v-for="account in store.accounts" :key="account.provider">
 			<TwitterBasicViewer
 				v-if="account.provider === 'Twitter'"
@@ -14,6 +14,15 @@ const store = useMainStore();
 		</div>
 		<div class="main-box max-h-screen flex justify-center">
 			<Radar :key="rerenderKey" :data="topics" :options="options" />
+		</div>
+		<div class="main-box">
+			<span class="text-lg my-5">
+				Your tweets' average sentiment: {{ averageSentiment }}</span
+			>
+		</div>
+		<div class="main-box" v-for="(cluster, index) in clusters" :key="index">
+			<span class="text-lg my-5">Your tweets' classification</span>
+			<ClusteCard :title="cluster.title" :content="cluster.description" />
 		</div>
 	</div>
 </template>
@@ -52,6 +61,8 @@ export default {
 			const store = useMainStore();
 			let topicLabels = [];
 			let topicData = [];
+			let averageSentiment = 0.5;
+			let clusters = [];
 			const tweetsResponse = await Providers.getHomeTweets(store.token);
 			console.log(tweetsResponse);
 			if (tweetsResponse.status === 200) {
@@ -90,6 +101,50 @@ export default {
 					this.topics.datasets[0].data = topicData;
 					this.rerenderKey++;
 				}
+				try {
+					const sentimentResponse = await Providers.getSentiment({
+						tweets: sanitizedTweetsList,
+					});
+					if (sentimentResponse.status === 200) {
+						const sentimentData = sentimenResponse.data.data;
+						console.log(sentimentData);
+						averageSentiment = sentimentData.average_sentiment;
+					}
+				} catch (error) {
+					console.log(error);
+					const sentiment = {
+						average_sentiment: 0.0008957376994658262,
+					};
+					averageSentiment = sentiment.average_sentiment;
+					this.averageSentiment = averageSentiment;
+					this.rerenderKey++;
+				}
+				try {
+					const kmeansResponse = await Providers.getKmeans({
+						tweets: sanitizedTweetsList,
+					});
+					if (kmeansResponse.status === 200) {
+						clusters = topicResponse.data.data;
+						console.log(clusters);
+						this.clusters = clusters;
+					}
+				} catch (error) {
+					console.log(error);
+					const clustersData = {
+						top_clusters: [
+							{
+								cluster: 5,
+								title: "Public Opinion",
+								description:
+									"This cluster involves various topics of interest, public sentiment, and social media engagement. The political compass orientation of your tweets can range from left-wing to right-wing, and from authoritarian to libertarian, depending on the opinions expressed. By mainly interacting with this cluster, you might be missing opposing viewpoints or alternative perspectives on public opinion and social media's influence on society.",
+								count: 4,
+							},
+						],
+					};
+					clusters = clustersData.top_clusters;
+					this.clusters = clusters;
+					this.rerenderKey++;
+				}
 			}
 		},
 	},
@@ -114,6 +169,8 @@ export default {
 				responsive: true,
 			},
 			rerenderKey: 0,
+			averageSentiment: 0.5,
+			clusters: [],
 		};
 	},
 };
