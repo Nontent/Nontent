@@ -36,7 +36,7 @@
 			<div>
 				<b
 					>{{
-						account.followers ? account.followers : 9836
+						account.followers ? account.followers : 13
 					}}
 					followers(s)</b
 				>
@@ -44,13 +44,13 @@
 			<div>
 				<b
 					>{{
-						account.following ? account.following : 2890
+						account.following ? account.following : 172
 					}}
 					subsription(s)</b
 				>
 			</div>
 			<div>
-				<b>{{ account.tweets ? account.tweets : 6541 }} tweet(s)</b>
+				<b>{{ account.tweets ? account.tweets : 12 }} tweet(s)</b>
 			</div>
 		</div>
 	</div>

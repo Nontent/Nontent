@@ -81,16 +81,21 @@ export default class Providers {
 	// AI services
 	// get predictions
 	static async getPredictions(data) {
+		console.log('DATA SENT: ', data)
+
 		return axios.post(BASE_URL_API_AI + '/predicts', data);
 	}
 
 	// get kmeans
 	static async getKmeans(data) {
+		console.log('DATA SENT: ', data)
 		return axios.post(BASE_URL_API_AI + '/kmeans', data);
 	}
 
 	// get sentiment
 	static async getSentiment(data) {
+		console.log('DATA SENT: ', data)
+
 		return axios.post(BASE_URL_API_AI + '/sentiment', data);
 	}
 

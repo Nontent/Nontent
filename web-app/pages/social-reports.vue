@@ -62,7 +62,6 @@ export default {
 	methods: {
 		async initData() {
 			const store = useMainStore();
-			await Providers.getTweetScrap(store.token);
 			let topicLabels = [];
 			let topicData = [];
 			let averageSentiment = 0.5;
@@ -73,7 +72,7 @@ export default {
 				const tweets = tweetsResponse.data.data;
 				const sanitizedTweetsList = tweets.map((tweet) => {
 					return {
-						text: tweet.text,
+						tweet: tweet,
 					};
 				});
 				try {
@@ -81,21 +80,31 @@ export default {
 						tweets: sanitizedTweetsList,
 					});
 					if (topicResponse.status === 200) {
-						const topics = topicResponse.data.data;
-						console.log(topics);
+						const topics = topicResponse.data;
+						console.log('TOPIC RES PROBA: ', topics.global_proba);
+						console.log('TOPIC RES DATA: ', topicResponse.data);
 						topicLabels = Object.keys(topics.global_proba);
 						topicData = Object.values(topics.global_proba);
+						this.topics.labels = topicLabels;
+						this.topics.datasets[0].data = topicData;
+						this.rerenderKey++;
 					}
 				} catch (error) {
 					console.log(error);
 					const topics = {
 						global_prediction: "CINEMA",
 						global_proba: {
-							GAMING: 7,
-							CINEMA: 8,
-							SPORT: 4,
-							TECH: 6,
-							OTHER: 10,
+							"FOOD": 83,
+							"SPORT": 56,
+							"TECH": 9,
+							"MUSIC": 8,
+							"POLICY": 4,
+							"CINEMA": 23,
+							"MARKETING": 2,
+							"WAR": 3,
+							"GAMING": 1,
+							"MEDICAL": 1,
+							"LITERATURE": 1
 						},
 						data: [],
 					};
@@ -110,9 +119,9 @@ export default {
 						tweets: sanitizedTweetsList,
 					});
 					if (sentimentResponse.status === 200) {
-						const sentimentData = sentimenResponse.data.data;
-						console.log(sentimentData);
-						averageSentiment = sentimentData.average_sentiment;
+						console.log('Sentiment res: ', sentimentResponse.data.average_sentiment);
+
+					 	this.averageSentiment = sentimentResponse.data.average_sentiment;
 					}
 				} catch (error) {
 					console.log(error);
@@ -127,9 +136,9 @@ export default {
 					const kmeansResponse = await Providers.getKmeans({
 						tweets: sanitizedTweetsList,
 					});
+					console.log('KEMNAS RES: ', kmeansResponse.data.top_clusters)
 					if (kmeansResponse.status === 200) {
-						clusters = topicResponse.data.data;
-						console.log(clusters);
+						clusters = kmeansResponse.data.top_clusters;
 						this.clusters = clusters;
 					}
 				} catch (error) {

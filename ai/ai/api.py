@@ -136,6 +136,7 @@ def predicts(input_data_list: InputDataList) -> PredictionResultList:
         else:
             prediction_counts[result.prediction] += 1
     global_prediction = max(prediction_counts, key=prediction_counts.get)
+    print(global_prediction)
     return PredictionResultList(
         data=data, global_prediction=global_prediction, global_proba=prediction_counts
     )
@@ -145,7 +146,6 @@ def kmeans(input_data_list: InputDataList) -> TopClustersResponse:
     data = []
     for input_data in input_data_list.tweets:
         cleaned_text = get_full_clean_text(preprocess_kmeans(input_data.tweet))
-        print(cleaned_text)
         embedding = get_bert_embedding(cleaned_text)
         data.append(embedding)
 
@@ -166,7 +166,7 @@ def kmeans(input_data_list: InputDataList) -> TopClustersResponse:
             for cluster, frequency in top_clusters
         ]
     )
-
+    print(top_clusters_response)
     return top_clusters_response
 
 @app.post("/sentiment", tags=["sentiment"])
@@ -181,6 +181,7 @@ def sentiment_analysis(input_data_list: InputDataList) -> dict[str, float]:
         sentiment_scores.append(scores[0][1].item())  # Index 1 corresponds to positive sentiment
 
     average_sentiment = sum(sentiment_scores) / len(sentiment_scores)
+    print(average_sentiment)
     return {"average_sentiment": average_sentiment}
 
 def get_proba(tweet_vec) -> dict[str, float]:

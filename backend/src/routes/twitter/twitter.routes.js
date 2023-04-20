@@ -25,7 +25,7 @@ twitterRouter.post('/scrap', async (req, res) => {
             const userLikedTweets = await client.v2.userLikedTweets(toString(user.twitterId));
             const homeTimeline = await client.v2.homeTimeline({ exclude: 'replies' });
             const userTimeline = await client.v2.userTimeline(toString(user.twitterId));
-            console.log('TIMELINE: ', userTimeline._realData)
+            console.log('TIMELINE: ', userTimeline)
             const userLikedTweetsData = userLikedTweets.data.data
             const homeTimelineData = homeTimeline.data.data
             const userTimelineData = userTimeline.data.data
