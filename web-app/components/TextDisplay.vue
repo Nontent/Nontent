@@ -22,7 +22,7 @@ export default {
           title: "Public Opinion",
           description: "This cluster involves various topics of interest, public sentiment, and social media engagement. The political compass orientation of your tweets can range from left-wing to right-wing, and from authoritarian to libertarian, depending on the opinions expressed. By mainly interacting with this cluster, you might be missing opposing viewpoints or alternative perspectives on public opinion and social media's influence on society.",
           count: 4
-        } // UNRECORD
+        }
       ]
     }
   }

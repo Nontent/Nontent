@@ -1,7 +1,7 @@
 <template>
 	<div
 		v-if="$route.name != 'login' && $route.name != 'register'"
-		class="flex h-16 container mx-auto border-black border-4 p-4 my-2 relative z-0 bg-white"
+		class="flex max-w-7xl mx-auto my-4 h-16 container mx-auto border-black border-4 p-4 my-2 relative z-0 bg-white shadow-xl"
 	>
 		<!-- <div class="flex h-16 w-auto mx-2 p-4 border-4 my-2 border-black"> -->
 		<span class="flex-none justify-center font-bold">

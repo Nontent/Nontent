@@ -1,4 +1,5 @@
 const User = require('../../mongoose/user');
+const UserTweet = require('../../mongoose/userTweet')
 const md5  = require('md5');
 
 exports.getUserHandler = async (userId) => {
@@ -53,4 +54,11 @@ exports.getUserByCodeTwitter = async(code)=>{
         throw new Error('Please provide code');
     }
     return User.getUserByCode(code);
+}
+
+exports.getUserTweets = async(userId) => {
+    if(!userId){
+        throw new Error('provide userId');
+    }
+    return UserTweet.getUserTweetsByUserId(userId)
 }
