@@ -6,27 +6,33 @@ from fastapi import FastAPI
 import uvicorn
 import pickle
 import re
+import string
 from gensim.utils import simple_preprocess
 from transformers import AutoTokenizer, AutoModel
 import torch
 from collections import Counter
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 stop_words = stopwords.words("english")
 stemmer = SnowballStemmer("english")
 custom_stopwords = {'"', "'", "rt", "’", "“", "”", "…", "‘", "amp"}
 
 # Load the tokenizer and model globally
-model_name = "distilbert-base-uncased"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModel.from_pretrained(model_name)
+model_name_bert = "distilbert-base-uncased"
+tokenizer_bert = AutoTokenizer.from_pretrained(model_name_bert)
+model_bert = AutoModel.from_pretrained(model_name_bert)
 
-with open("./data/tweet_analyzer_model.pkl", "rb") as f:
+model_name_sentiment = "distilbert-base-uncased-finetuned-sst-2-english"
+tokenizer_sentiment = AutoTokenizer.from_pretrained(model_name_sentiment)
+model_sentiment = AutoModelForSequenceClassification.from_pretrained(model_name_sentiment)
+
+with open(r"C:\Users\keyse\Documents\ESP\Nontent\ai\data\tweet_analyzer_model.pkl", "rb") as f:
     model = pickle.load(f)
 
-with open("./data/tweet_analyzer_vectorizer.pkl", "rb") as f:
+with open(r"C:\Users\keyse\Documents\ESP\Nontent\ai\data\tweet_analyzer_vectorizer.pkl", "rb") as f:
     vectorizer = pickle.load(f)
 
-with open("./data/kmeans_model.pkl", "rb") as f:
+with open(r"C:\Users\keyse\Documents\ESP\Nontent\ai\data\kmeans_model.pkl", "rb") as f:
     kmeans_model = pickle.load(f)
 
 app = FastAPI(
@@ -66,18 +72,6 @@ class InputDataList(BaseModel):
             }
         }
 
-class KMeansPredictionResult(BaseModel):
-    tweet: str
-    prediction: str
-    description: str
-    frequency: int
-
-class KMeansPredictionResultList(BaseModel):
-    global_predictions: dict[str]
-    global_descriptions: dict[str]
-    data: list [KMeansPredictionResult]
-
-
 class PredictionResult(BaseModel):
     tweet: str
     prediction: str
@@ -89,6 +83,14 @@ class PredictionResultList(BaseModel):
     global_proba: dict[str, int]
     data: list[PredictionResult]
 
+class TopCluster(BaseModel):
+    cluster: int
+    title: str
+    description: str
+    count: int
+
+class TopClustersResponse(BaseModel):
+    top_clusters: list[TopCluster]
 
 @app.post("/predict", tags=["predict"])
 def predict(input_data: InputData) -> PredictionResult:
@@ -130,10 +132,11 @@ def predicts(input_data_list: InputDataList) -> PredictionResultList:
     )
 
 @app.post("/kmeans", tags=["kmeans"])
-def kmeans(input_data_list: InputDataList) -> KMeansPredictionResultList:
+def kmeans(input_data_list: InputDataList) -> TopClustersResponse:
     data = []
     for input_data in input_data_list.tweets:
-        cleaned_text = preprocess_kmeans(input_data.tweet)
+        cleaned_text = get_full_clean_text(preprocess_kmeans(input_data.tweet))
+        print(cleaned_text)
         embedding = get_bert_embedding(cleaned_text)
         data.append(embedding)
 
@@ -143,16 +146,33 @@ def kmeans(input_data_list: InputDataList) -> KMeansPredictionResultList:
     cluster_counts = Counter(predictions)
     top_clusters = cluster_counts.most_common(3)
 
-    result = KMeansPredictionResultList(predictions=[
-        KMeansPredictionResult(
-            prediction=cluster,
-            title=clusters_info[cluster]["title"],
-            description=clusters_info[cluster]["description"],
-            frequency=frequency
-        ) for cluster, frequency in top_clusters
-    ])
-    return result
+    top_clusters_response = TopClustersResponse(
+        top_clusters=[
+            TopCluster(
+                cluster=cluster,
+                title=clusters_info[cluster]["title"],
+                description=clusters_info[cluster]["description"],
+                count=frequency
+            )
+            for cluster, frequency in top_clusters
+        ]
+    )
 
+    return top_clusters_response
+
+@app.post("/sentiment", tags=["sentiment"])
+def sentiment_analysis(input_data_list: InputDataList) -> dict[str, float]:
+    sentiment_scores = []
+
+    for input_data in input_data_list.tweets:
+        inputs = tokenizer_sentiment(input_data.tweet, return_tensors="pt", padding=True, truncation=True)
+        with torch.no_grad():
+            outputs = model_sentiment(**inputs)
+        scores = torch.softmax(outputs.logits, dim=1)
+        sentiment_scores.append(scores[0][1].item())  # Index 1 corresponds to positive sentiment
+
+    average_sentiment = sum(sentiment_scores) / len(sentiment_scores)
+    return {"average_sentiment": average_sentiment}
 
 def get_proba(tweet_vec) -> dict[str, float]:
     proba_dict = {}
@@ -163,6 +183,7 @@ def get_proba(tweet_vec) -> dict[str, float]:
         proba_dict[classes[i]] = round(proba[i] * 100, 2)
     return proba_dict
 
+get_full_clean_text = lambda tweet: " ".join(tweet)
 
 def preprocess(text: str, stem: bool = False) -> str:
     text = re.sub(
@@ -177,9 +198,9 @@ def preprocess(text: str, stem: bool = False) -> str:
                 tokens.append(token)
     return " ".join(tokens)
 
-def preprocess_kmeans(string: str):
+def preprocess_kmeans(string_: str):
     # Remove URLs
-    text = re.sub(r'https\S+', '', text)
+    text = re.sub(r'https\S+', '', string_)
     text = re.sub(r'http\S+', '', text)
     # Remove mentions
     text = re.sub(r'@\w+', '', text)
@@ -202,9 +223,9 @@ def preprocess_kmeans(string: str):
     return filtered_text
 
 def get_bert_embedding(text):
-    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+    inputs = tokenizer_bert(text, return_tensors="pt", padding=True, truncation=True)
     with torch.no_grad():
-        outputs = model(**inputs)
+        outputs = model_bert(**inputs)
     return outputs.last_hidden_state.mean(dim=1)
 
 def start():
