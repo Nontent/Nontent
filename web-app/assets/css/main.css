@@ -8,15 +8,15 @@
 	}
 
 	.main-box {
-		@apply container mx-auto  border-black border-4 p-4 my-2 bg-white h-auto;
-	}
-
+		@apply max-w-5xl mx-auto my-4 border-black border-4 p-4 bg-white h-auto shadow-xl;
+	}	
+	
 	.drop-shadow-box-navbar {
 		@apply absolute transition ease-in-out delay-100 h-10 w-10 bg-black translate-x-1 -translate-y-9 -z-10 group-hover:-translate-y-10 group-hover:translate-x-0;
 	}
 
 	.input-form-box {
-		@apply transition ease-in-out delay-75 container mx-auto self-center pl-2 pb-1 bg-white border-b-slate-500 border-b-2;
+		@apply transition max-w-xl mx-auto my-4 ease-in-out delay-75 container mx-auto self-center pl-2 pb-1 bg-white border-b-slate-500 border-b-2;
 	}
 
 	.drop-shadow-box {
@@ -27,4 +27,7 @@
 		@apply absolute h-10 w-28 border-2 border-black text-white transition delay-100 ease-in-out hover:drop-shadow
 	}
 
+	.always-scrollbar {
+		@apply overflow-y-scroll;
+	}
 }

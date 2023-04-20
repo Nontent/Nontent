@@ -1,5 +1,5 @@
 <template>
-	<div class="main-box relative z-0 mt-11">
+	<div class="main-box relative z-0">
 		<div class="grid grid-cols-2 justify-self-start mb-5">
 			<div>
 				<Icon
