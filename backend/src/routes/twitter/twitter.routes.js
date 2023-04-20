@@ -34,12 +34,13 @@ twitterRouter.post('/scrap', async (req, res) => {
             await twitterService.addTweet(userTimelineData, client, user.id, "user_timeline");
 
             return res.status(200).json({
-                message: "success"
+                status: "success",
+                message: "The tweets have been successfully added."
             })
         }
     } catch (e) {
         console.log(e)
-       return res.send(e)
+        return res.send(e)
     }
 })
 

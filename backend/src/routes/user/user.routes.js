@@ -52,4 +52,20 @@ userRouter.delete('/delete/:userId', async (req, res) => {
     }
 })
 
+userRouter.get('/tweet/all', async (req, res) => {
+    try {
+        const user = await Auth.authenticationService(req);
+        if (!user) return res.status(403).json({
+            message: "Unauthorized",
+            status: 403
+        })
+        const userId = user.id;
+        const response = await UserService.getUserTweets(userId);
+        res.status(200).json({data: response});
+    } catch (error) {
+        console.log('ERROR => ', error);
+        res.status(404).json({ error });
+    }
+})
+
 module.exports = userRouter;
