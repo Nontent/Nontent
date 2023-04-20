@@ -50,3 +50,5 @@ Update:
 [Github du projet](https://github.com/Nontent/Nontent)
 
 [Postman](https://www.postman.com/warped-resonance-471784/workspace/nontent/request)
+
+[Extension Chrome](https://chrome.google.com/webstore/detail/nontent-extension/cimgcobaohhedehajjjpkgncigilaila?hl=fr&authuser=0)
