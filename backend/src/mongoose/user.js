@@ -119,17 +119,12 @@ exports.addUser = async (user) => {
 exports.updateUser = async (userId, update) => {
     try {
         await db.connect();
-        test = await Users.findByIdAndUpdate(userId, update, {
-            new: true
-        });
-        console.log("username:" + test.redditUsername + "suite:" + test.redditAccessToken); 
         return await Users.findByIdAndUpdate(userId, update, {
             new: true
         });
     } catch (error) {
         console.log('ERROR IN updateUser FUNCTION => ', error);
     }
-    throw new Error();
 }
 
 exports.getUserByState = async (state) => {
