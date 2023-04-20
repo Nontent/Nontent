@@ -1,4 +1,5 @@
 const User = require('../../mongoose/user');
+const UserTweet = require('../../mongoose/userTweet')
 const md5  = require('md5');
 
 exports.getUserHandler = async (userId) => {
@@ -31,9 +32,6 @@ exports.userCreationService = async (userBody) => {
 }
 
 exports.userUpdateService = async (userId, userBody) => {
-    if (userBody.password) {
-        userBody.password = md5(userBody.password)
-    }
     console.log('props', userId, userBody)
     if (!userId || !userBody) {
         throw new Error('Props invalid');
@@ -53,4 +51,11 @@ exports.getUserByCodeTwitter = async(code)=>{
         throw new Error('Please provide code');
     }
     return User.getUserByCode(code);
+}
+
+exports.getUserTweets = async(userId) => {
+    if(!userId){
+        throw new Error('provide userId');
+    }
+    return UserTweet.getUserTweetsByUserId(userId)
 }

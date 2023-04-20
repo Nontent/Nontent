@@ -2,10 +2,6 @@
 import { useMainStore } from "../store/main";
 definePageMeta({ middleware: ["auth"] });
 const store = useMainStore();
-const token = useCookie("nontentToken");
-token.value = store.token;
-const userId = useCookie("nontentUserId");
-userId.value = store.user.id;
 </script>
 <template>
 	<div>
@@ -29,6 +25,11 @@ userId.value = store.user.id;
 				:account="store.pinnedAccount"
 				class="border-0"
 			/>
+			<RedditBasicViewer
+				v-if="store.pinnedAccount.provider === 'Reddit'"
+				:account="store.pinnedAccount"
+				class="border-0"
+			/>
 			<div class="flex justify-center mt-2">
 				<div
 					class="mr-4"
@@ -39,6 +40,16 @@ userId.value = store.user.id;
 					"
 				>
 					<TwitterConnection />
+				</div>
+				<div
+					class="ml-4"
+					v-if="
+						!store.accounts.some(
+							(account) => account.provider == 'Reddit'
+						)
+					"
+				>
+					<RedditConnection />
 				</div>
 			</div>
 		</div>
