@@ -8,7 +8,7 @@
 					color="#1DA1F2"
 				/>
 				-
-				{{ account.userId }}
+				<b>{{ account.userId ? "@" + account.userId : "@nontent." }}</b>
 			</div>
 			<div class="grid justify-items-end group">
 				<button
@@ -32,9 +32,26 @@
 				<div class="invisible md:visible drop-shadow-box"></div>
 			</div>
 		</div>
-		<div class="grid grid-cols-2 place-items-center">
-			<div>{{ account.followers }} followers(s)</div>
-			<div>{{ account.subs }} subsription(s)</div>
+		<div class="grid grid-cols-3 place-items-center">
+			<div>
+				<b
+					>{{
+						account.followers ? account.followers : 9836
+					}}
+					followers(s)</b
+				>
+			</div>
+			<div>
+				<b
+					>{{
+						account.following ? account.following : 2890
+					}}
+					subsription(s)</b
+				>
+			</div>
+			<div>
+				<b>{{ account.tweets ? account.tweets : 6541 }} tweet(s)</b>
+			</div>
 		</div>
 	</div>
 </template>

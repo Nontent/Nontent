@@ -1,25 +1,25 @@
 import axios from 'axios';
+import { useMainStore } from '../store/main';
 
-const BASE_URL = 'http://localhost:3001/api';
-
-const mainConfig = {
-    headers: { Authorization: `${localStorage.getItem('token')}` }
-};
+// const BASE_URL = 'http://localhost:3001/api';
+const BASE_URL = 'http://localhost:1234/api';
+const BASE_URL_API_PREDICTION = 'http://localhost:8000';
+const store = useMainStore();
 
 class HTTP {
   constructor() {
   }
 
-  static get(url, params) {
-	return axios.get(BASE_URL + url, params);
+  static get(url, token) {
+	return axios.get(BASE_URL + url, token ? { headers: { Authorization: token } } : null);
   }
 
-  static post(url, data) {
-	return axios.post(BASE_URL + url, data);
+  static post(url, data, token) {
+	return axios.post(BASE_URL + url, data, token ? { headers: { Authorization: token } } : null );
   }
 
-  static put(url, data) {
-	return axios.put(BASE_URL + url, data);
+  static put(url, data, token) {
+	return axios.put(BASE_URL + url, data, { headers: { Authorization: token } });
   }
 
   static delete(url) {
@@ -41,37 +41,41 @@ export default class Providers {
 		return HTTP.post('/user', data);
 	}
 
-  	// reddit
-  
-	// connect reddit
-	static async connectReddit() {
-	  return HTTP.get('/auth/reddit');
+	// get user
+	static async getUser(userId, token) {
+		return HTTP.get('/user/' + userId, token);
 	}
 
-	//refresh token reddit
-	static async refreshTokenReddit() {
-		return HTTP.get('/auth/reddit/refresh');
-	}
-
-	// get suer posts
-	static async getUserRedditPosts() {
-		return HTTP.get('/user/reddit/posts/' + userId, { 'filter': 'all' });
-	}
-
-	// get user subs
-	static async getUserRedditSubs() {
-		return HTTP.get('/user/reddit/subs/' + userId);
+	// update user
+	static async updateUser(userId, data, token) {
+		return HTTP.put('/user/update/' + userId, data, token);
 	}
 
 	// twitter
 
 	// connnect twitter
-	static async connectTwitter() {
-		return HTTP.get('/auth/twitter', mainConfig);
+	static async connectTwitter(token) {
+		return HTTP.get('/auth/twitter', token);
+	}
+
+	// get token twitter
+	static async getTokenTwitter(data, token) {
+		return HTTP.post('/auth/twitter/callback', data, token);
 	}
 
 	// get user
-	static async getUserTwitter() {
-		return HTTP.get('/twitter/user');
+	static async getUserTwitter(token) {
+		return HTTP.get('/twitter/user', token);
 	}
+
+	// get tweets (home	timeline)
+	static async getHomeTweets(token) {
+		return HTTP.get('/twitter/user/home', token);
+	}
+
+	// get predictions
+	static async getPredictions(data) {
+		return axios.post(BASE_URL_API_PREDICTION + '/predicts', data);
+	}
+
 }
